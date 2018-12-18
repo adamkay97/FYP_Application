@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="mainAnchorPane" prefHeight="368.0" prefWidth="587.0" style="-fx-border-color: #000; -fx-background-color: #FFF; -fx-border-width: 3px; -fx-padding: 0;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PopUpMessageController">
+   <children>
+      <Pane layoutX="1.0" layoutY="-1.0" prefHeight="108.0" prefWidth="590.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="269.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblPopupHeader" layoutX="36.0" layoutY="39.0" text="Header" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="28.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pnlMessageContent" layoutX="28.0" layoutY="120.0" prefHeight="144.0" prefWidth="532.0" style="-fx-border-color: #696969; -fx-border-width: 5px; -fx-border-radius: 15px;">
+         <children>
+            <Label fx:id="lblMessage" layoutX="67.0" layoutY="23.0" prefHeight="99.0" prefWidth="398.0" text="Message" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="pnlOkBtn" layoutX="230.0" layoutY="275.0" prefHeight="72.0" prefWidth="128.0" visible="false">
+         <children>
+            <Button fx:id="btnOk" layoutX="15.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnOk_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Okay" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane fx:id="pnlYesNoBtn" layoutX="158.0" layoutY="275.0" prefHeight="72.0" prefWidth="273.0" visible="false">
+         <children>
+            <Button fx:id="btnYes" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnNo" layoutX="168.0" layoutY="13.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

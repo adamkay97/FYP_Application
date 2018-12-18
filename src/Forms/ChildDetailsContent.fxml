@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ChildDetailsContentController">
+   <children>
+      <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblHeader" layoutX="53.0" layoutY="80.0" text="Child's Details" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="32.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="87.0" layoutY="151.0" prefHeight="428.0" prefWidth="587.0" AnchorPane.bottomAnchor="84.0" AnchorPane.leftAnchor="87.0" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="151.0">
+         <children>
+            <Label layoutX="136.0" layoutY="27.0" prefHeight="84.0" prefWidth="317.0" text="Please fill in the following fields &#10;before starting the diagnosis." textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="82.0" layoutY="141.0" text="Childs First Name:" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="151.0" layoutY="201.0" text="Childs Age:" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtChildsName" focusColor="BLACK" layoutX="293.0" layoutY="127.0" prefHeight="31.0" prefWidth="227.0" unFocusColor="BLACK">
+               <font>
+                  <Font name="Berlin Sans FB" size="22.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="txtChildsAge" focusColor="BLACK" layoutX="294.0" layoutY="185.0" prefHeight="31.0" prefWidth="227.0" unFocusColor="BLACK">
+               <font>
+                  <Font name="Berlin Sans FB" size="22.0" />
+               </font>
+            </JFXTextField>
+            <Pane layoutX="282.0" layoutY="253.0" prefHeight="53.0" prefWidth="235.0">
+               <children>
+                  <JFXRadioButton fx:id="radBtnMale" layoutX="14.0" layoutY="16.0" style="-jfx-selected-color: #00FF00;" text="Male">
+                     <font>
+                        <Font name="Berlin Sans FB" size="20.0" />
+                     </font>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="genderGroup" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="radBtnFemale" layoutX="118.0" layoutY="16.0" text="Female" toggleGroup="$genderGroup">
+                     <font>
+                        <Font name="Berlin Sans FB" size="20.0" />
+                     </font>
+                  </JFXRadioButton>
+               </children>
+            </Pane>
+            <Label layoutX="119.0" layoutY="263.0" text="Childs Gender:" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnStartQuestions" layoutX="214.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnStartQuestions_Action" prefHeight="65.0" prefWidth="162.0" stylesheets="@../Styles/BigBtnStyles.css" text="Begin" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

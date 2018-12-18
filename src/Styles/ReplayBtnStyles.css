@@ -1,0 +1,24 @@
+.button{
+    -fx-background-color: #32CD32;
+    -fx-border-radius: 15px;
+    -fx-outline: none;
+    -fx-margin: 0 15px;
+    -fx-padding: 10 10 10 10;
+    -fx-effect: dropshadow( gaussian , #999 , 4,0,0,7 );
+    -fx-font: 24px "Berlin Sans FB";
+    -fx-color: white;
+    -fx-text-decoration: none;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-cursor: hand;
+}
+
+.button:hover { 
+    -fx-background-color: #228B22;
+}
+
+.button:pressed {
+    -fx-background-color: #32CD32;
+    -fx-effect: dropshadow( gaussian , #666 , 4,0,0,3 );
+    -fx-translate-y: 4;
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import com.jfoenix.svg.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="pnMainContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="663.0" prefWidth="760.0" style="-fx-background-color: #FFFFFF; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.QuestionaireContentController">
+   <children>
+      <Pane fx:id="pnlContentBorder" layoutX="46.0" layoutY="176.0" prefHeight="393.0" prefWidth="669.0" style="-fx-border-color: #696969; -fx-border-radius: 10; -fx-border-width: 4;">
+         <children>
+            <Label fx:id="lblQuestionText" alignment="TOP_CENTER" layoutX="24.0" layoutY="33.0" prefHeight="184.0" prefWidth="622.0" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="22.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnYes" layoutX="210.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnNo" layoutX="360.0" layoutY="225.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="35.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnYes1" layoutX="24.0" layoutY="318.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="148.0" stylesheets="@../Styles/ReplayBtnStyles.css" text="Replay" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+      <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblQuestionHeader" layoutX="53.0" layoutY="80.0" text="Question 1:" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="32.0" />
+               </font>
+            </Label>
+            <Label layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="32.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
