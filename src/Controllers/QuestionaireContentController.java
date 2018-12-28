@@ -37,11 +37,30 @@ public class QuestionaireContentController implements Initializable
         qIndex = 1;
         setQuestionText(qIndex);
     }
-     
+    
+    @FXML void btnYes_Action(ActionEvent event) 
+    {
+        QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES);
+        processAnswer();
+    }
+
+    @FXML void btnNo_Action(ActionEvent event) 
+    {
+        QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO);
+        processAnswer();     
+    }
+    
+    private void processAnswer()
+    {
+         if(qIndex != 20)
+            setQuestionText(++qIndex);
+        else
+            StageManager.loadContentScene(StageManager.FINISH);
+    }
+    
     private void setQuestionText(int index)
     {
-        String text = "If you point at something across the room, does your child look at it?\n\n" +
-                        "(For Example, if you point at a toy or an animal, does your child look at the toy or animal?)";
+        String text = QuestionaireManager.getQuestionText(index);
         lblQuestionText.setText(text);
 
         lblQuestionHeader.setText("Question " + index + ":");

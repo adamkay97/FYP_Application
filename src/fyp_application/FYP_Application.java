@@ -16,6 +16,7 @@ public class FYP_Application extends Application
         LoadFromDatabase();
         
         StageManager.loadForm(StageManager.MAIN, stage);
+        //StageManager.loadForm(StageManager.LOGIN, stage);
     }
     
     private void LoadFromDatabase()
