@@ -1,0 +1,6 @@
+.root{
+    -fx-border-color: #000000;
+    -fx-background-color: #ffffff;
+    -fx-border-width: 3px;
+    -fx-padding: 0px;
+}

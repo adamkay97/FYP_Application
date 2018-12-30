@@ -21,7 +21,7 @@ public class QuestionaireManager
                     flaggedQuestions.add(qNumber);
                 break;
             case NO:
-                if(qNumber != 2 || qNumber != 5 || qNumber != 12)
+                if(qNumber != 2 && qNumber != 5 && qNumber != 12)
                     flaggedQuestions.add(qNumber);
                 break;
         }       
