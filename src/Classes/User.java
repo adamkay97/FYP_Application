@@ -18,30 +18,10 @@ public class User
         lastName = lName;
     }
         
-    public int getUserId()
-    {
-        return userID;
-    }
-    
-    public String getUsername()
-    {
-        return username;
-    }
-    
-    public String getHashPassword()
-    {
-        return hashPassword;
-    }
-    
-    public String getFirstName()
-    {
-        return firstName;
-    }
-    
-    public String getLastName()
-    {
-        return lastName;
-    }
-    
+    public int getUserId() { return userID; }
+    public String getUsername() { return username; }
+    public String getHashPassword() { return hashPassword; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
     
 }

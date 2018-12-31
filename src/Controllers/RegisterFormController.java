@@ -30,11 +30,15 @@ public class RegisterFormController implements Initializable
     private final Pattern namePattern = Pattern.compile("^[a-zA-Z]{2,15}$");
 
     private boolean v1, v2, v3, v4, v5;
+    private DatabaseManager dbManager;
+    private HashMap<String, User> userMap;
+    private int newUserId = 0;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
         v1 = false; v2 = false; v3 = false; v4 = false; v5 = false;
+        loadUserMap();
         
         //Adds listener using lambda expression for username text field, if when 
         //lost focus the username does not match validation rules turns the field red else it will turn green.
@@ -46,7 +50,6 @@ public class RegisterFormController implements Initializable
                 if(inputMatcher.matches())
                 {
                     //Check to see if that username already exist in the userMap
-                    HashMap<String, User> userMap = DatabaseManager.getUserMap();
                     User currentUser = userMap.get(txtUsername.getText());
                     if(currentUser == null)
                         v1 = true;
@@ -139,14 +142,26 @@ public class RegisterFormController implements Initializable
         closeForm();
     }
     
+    private void loadUserMap()
+    {
+        dbManager = new DatabaseManager();
+        
+        if(dbManager.connect())
+        {
+            userMap = dbManager.loadUsers();
+            newUserId = dbManager.getNextUserID();
+            dbManager.disconnect();
+        }
+    }
+    
     private void createNewUser()
     {
         AuthenticationManager authManager = new AuthenticationManager();
         
         //Sets the user id to the size of the current users plus 1.
-        //Uses the instance of the AuthenticationManager to create a hashed password
+        //Uses the instance of the AuthenticationManager to create a hashed passwords
         //so it can be written to the database
-        int userId = DatabaseManager.getUserMap().size() + 1;
+        int userId = newUserId;
         String username = txtUsername.getText();
         String hashPassword = authManager.createPasswordHash(txtConfirmPassword.getText());
         String firstName = txtFirstName.getText();
@@ -155,14 +170,20 @@ public class RegisterFormController implements Initializable
         User newUser = new User(userId, username, hashPassword, firstName, lastName);
         
         //Call the DatabaseManager to write the new user to the database
-        if(DatabaseManager.writeUserToDatabase(newUser))
+        if(dbManager.connect())
         {
-            StageManager.loadPopupMessage("Success", "You have successfully created a new account, "
+            if(dbManager.writeUserToDatabase(newUser))
+                StageManager.loadPopupMessage("Success", "You have successfully created a new account, "
                     + "please use your details to login.", ButtonTypeEnum.OK);
+            else
+                StageManager.loadPopupMessage("Error", "There was an issue with saving your information, "
+                    + "please try again. If this error persists please contact support.", ButtonTypeEnum.OK);
+            
+            dbManager.disconnect();
         }
         else
         {
-            StageManager.loadPopupMessage("Error", "There was an issue with saving your information, "
+            StageManager.loadPopupMessage("Error", "There was an issue connecting to th database, "
                     + "please try again. If this error persists please contact support.", ButtonTypeEnum.OK);
         }
     }

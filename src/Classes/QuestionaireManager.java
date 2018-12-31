@@ -8,6 +8,7 @@ public class QuestionaireManager
     private static HashMap<Integer, Question> questionMap;
     private static Question currentQuestion;
     private static ArrayList<Integer> flaggedQuestions;
+    private static int currentChildId;
     
     public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer)
     {
@@ -65,5 +66,10 @@ public class QuestionaireManager
     {
         questionMap = questions;
         flaggedQuestions = new ArrayList<>();
+    }
+    
+    public static void setCurrentChildId(int id)
+    {
+        currentChildId = id;
     }
 }

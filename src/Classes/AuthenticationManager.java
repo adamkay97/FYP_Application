@@ -17,7 +17,15 @@ public class AuthenticationManager
     
     public boolean authenticateLogin(String username, String password)
     {
-        HashMap<String, User> userMap = DatabaseManager.getUserMap();
+        DatabaseManager dbManager = new DatabaseManager();
+        HashMap<String, User> userMap = new HashMap<String, User>();
+        
+        if(dbManager.connect())
+        {
+            userMap = dbManager.loadUsers();
+            dbManager.disconnect();
+        }
+        
         boolean authenticated = false;
         
         //First check the user exists by accessing it from the user map

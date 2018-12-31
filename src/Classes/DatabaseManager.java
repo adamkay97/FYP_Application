@@ -10,10 +10,9 @@ import java.util.HashMap;
 
 public class DatabaseManager 
 {
-    private static final String DBCONNSTRING = "jdbc:sqlite:Database\\FYP_Database.db";
+    private final String DBCONNSTRING = "jdbc:sqlite:Database\\FYP_Database.db";
     
-    private static Connection conn;
-    private static HashMap<String, User> userMap;
+    private Connection conn;
     
     public boolean connect() 
     {
@@ -59,9 +58,9 @@ public class DatabaseManager
         }
     }
     
-    public void loadUsers()
+    public HashMap<String, User> loadUsers()
     {
-        userMap = new HashMap<>();
+        HashMap<String, User> userMap = new HashMap<>();
         
         String query = "SELECT * FROM Users";
         
@@ -79,14 +78,59 @@ public class DatabaseManager
                 
                 userMap.put(uname, user);
             }
+            return userMap;
         }
         catch(SQLException ex)
         {
              System.out.println("Error when reading the user from the db - " + ex.getMessage());
         }
+        return null;
     }
     
-    public static boolean writeUserToDatabase(User user)
+    public boolean checkUserExists(String username)
+    {
+        boolean exists = false;
+        String query = "SELECT * FROM Users WHERE Username = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if(rs.first())
+                exists = true;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+        }
+        return exists;
+    }
+    
+    public boolean checkChildExists(Child child)
+    {
+        boolean exists = false;
+        String query = "SELECT * FROM Children WHERE Name = ? AND Age = ? AND Gender = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setString(1, child.getChildName());
+            pstmt.setInt(2, child.getChildAge());
+            pstmt.setString(3, child.getChildGender());
+            
+            ResultSet rs = pstmt.executeQuery();
+            
+            if(rs.first())
+                exists = true;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+        }
+        return exists;
+    }
+    
+    public boolean writeUserToDatabase(User user)
     {
         boolean success = true;
         String query = "INSERT INTO Users VALUES (?, ?, ?, ?, ?)";
@@ -98,6 +142,29 @@ public class DatabaseManager
             pstmt.setString(3, user.getHashPassword());
             pstmt.setString(4, user.getFirstName());
             pstmt.setString(5, user.getLastName());
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when writing user to the db - " + ex.getMessage());
+             success = false;
+        }
+        return success;
+    }
+    
+    public boolean writeChildToDatabase(Child child)
+    {
+        boolean success = true;
+        String query = "INSERT INTO Children VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setInt(1, child.getChildId());
+            pstmt.setString(2, child.getChildName());
+            pstmt.setInt(3, child.getChildAge());
+            pstmt.setString(4, child.getChildGender());
+            pstmt.setString(5, child.getResultText());
+            pstmt.setInt(6, child.getResultScore());
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -132,9 +199,44 @@ public class DatabaseManager
         return resultText;
     }
     
-    public static HashMap<String, User> getUserMap()
+    public int getNextUserID()
     {
-        return userMap;
+        String query = "SELECT UserID FROM Users ORDER BY UserID DESC LIMIT 1";
+        int userId = 0;
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {
+            while(results.next())
+                userId = results.getInt("UserId");
+            
+            userId++;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+        }
+        return userId;
+    }
+    
+    public int getNextChildID()
+    {
+        String query = "SELECT ChildID FROM Child ORDER BY ChildID DESC LIMIT 1";
+        int childId = 0;
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {
+            while(results.next())
+                childId = results.getInt("UserId");
+            
+            childId++;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+        }
+        return childId;
     }
     
     public void disconnect()
