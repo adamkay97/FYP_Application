@@ -1,5 +1,6 @@
 package Controllers;
 
+import Classes.DatabaseManager;
 import Classes.QuestionaireManager;
 import Classes.StageManager;
 import java.net.URL;
@@ -44,9 +45,8 @@ public class FinishQuestionaireContentController implements Initializable
         }
         else
         {
-            //SaveResult()
+            QuestionaireManager.saveFinalScore();
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
         }
     }
-    
 }

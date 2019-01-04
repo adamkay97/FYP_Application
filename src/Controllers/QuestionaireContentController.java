@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Classes.QuestionAnswer;
@@ -14,20 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 
-
-/**
- * FXML Controller class
- *
- * @author Adam
- */
 public class QuestionaireContentController implements Initializable 
 {
     @FXML private Button btnYes;
     @FXML private Button btnNo;
     @FXML private Label lblQuestionText;
     @FXML private Label lblQuestionHeader;
+    @FXML private TextArea txtNotes;
     
     private int qIndex;
     
@@ -40,13 +29,15 @@ public class QuestionaireContentController implements Initializable
     
     @FXML void btnYes_Action(ActionEvent event) 
     {
-        QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES);
+        String notes = txtNotes.getText();
+        QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES, notes);
         processAnswer();
     }
 
     @FXML void btnNo_Action(ActionEvent event) 
     {
-        QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO);
+        String notes = txtNotes.getText();
+        QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO, notes);
         processAnswer();     
     }
     

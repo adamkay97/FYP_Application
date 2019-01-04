@@ -14,26 +14,19 @@ public class StageManager
     public static final String REGISTER = "/Forms/RegisterForm.fxml";
     public static final String MAIN = "/Forms/MainForm.fxml";
     public static final String INSTRUCTIONS = "/Forms/InstructionsContent.fxml";
+    public static final String MAININFO = "/Forms/InformationContent.fxml";
+    public static final String MCHATINFO = "/Forms/MCHATContent.fxml";
     public static final String DETAILS = "/Forms/ChildDetailsContent.fxml";
     public static final String QUESTIONAIRE = "/Forms/QuestionaireContent.fxml";
     public static final String FINISH = "/Forms/FinishQuestionaireContent.fxml";
     public static final String POPUP = "/Forms/PopUpMessage.fxml";
     
     private static MainFormController mainFormController;
+    private static User currentUser;
     
     //Offsets used for calculating where the form should be once its been dragged
     private static double offsetX = 0;
     private static double offsetY = 0;
-    
-    /**
-     * Sets the mainFormController variable on the StageManager
-     * for use when setting the content pane nested in the main form
-     * @param controller 
-     */
-    public static void setMainFormController(MainFormController controller)
-    {
-        StageManager.mainFormController = controller;
-    }
     
     /**
      * Loads the scene passed as a parameter into
@@ -135,4 +128,24 @@ public class StageManager
             stage.setY(event.getScreenY() - offsetY);
         });
     }
+    
+    /**
+     * Sets the mainFormController variable on the StageManager
+     * for use when setting the content pane nested in the main form
+     * @param controller 
+     */
+    public static void setMainFormController(MainFormController controller)
+    {
+        StageManager.mainFormController = controller;
+    }
+    
+    //Used for getting the main form controller for setting values/designs on the main form 
+    //from other content controllers
+    public static MainFormController getMainFormController()
+    {
+        return StageManager.mainFormController;
+    }
+    
+    public static void setCurrentUser(User user) { currentUser = user; }
+    public static User getCurrentUser() { return currentUser; }
 }

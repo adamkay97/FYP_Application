@@ -37,4 +37,12 @@ public class InstructionsContentController implements Initializable
     {
         StageManager.loadContentScene(StageManager.DETAILS);
     }
+    
+    @FXML private void btnInformation_Action(ActionEvent event)
+    {
+        StageManager.loadContentScene(StageManager.MAININFO);
+        
+        //Sets the underlined side menu button to be the info page
+        StageManager.getMainFormController().setSelectedMenuButton("Info");
+    }
 }

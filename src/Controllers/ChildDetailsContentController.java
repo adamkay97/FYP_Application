@@ -39,15 +39,17 @@ public class ChildDetailsContentController implements Initializable {
     {
         if(validateUserInput())
         {
+            //Creates child with data needed for database including current users id for review purposes
+            /*int currentUserId = StageManager.getCurrentUser().getUserId();
             String name = txtChildsName.getText();
             int age = Integer.parseInt(txtChildsAge.getText());
             String gender = radBtnMale.isSelected() ? "Male" : "Female";
             
-            Child child = new Child(nextChildId, name, age, gender);
+            Child child = new Child(nextChildId, currentUserId, name, age, gender);
             
             //Check if there is already a child created with the exact same info
             if(!checkChildExists(child))
-                if(saveChildInfo(child))
+                if(saveChildInfo(child))*/
                     StageManager.loadContentScene(StageManager.QUESTIONAIRE);
         }
         else

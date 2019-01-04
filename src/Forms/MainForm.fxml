@@ -56,12 +56,12 @@
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuInfo" layoutX="59.0" layoutY="84.0" prefHeight="31.0" prefWidth="227.0" text="Information" textFill="WHITE">
+                              <JFXButton fx:id="btnMenuInfo" layoutX="59.0" layoutY="84.0" onAction="#btnMenuInfo_Action" prefHeight="31.0" prefWidth="227.0" text="Information" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuSettings" layoutX="59.0" layoutY="223.0" prefHeight="31.0" prefWidth="227.0" text="Settings" textFill="WHITE">
+                              <JFXButton fx:id="btnMenuSettings" layoutX="59.0" layoutY="223.0" onAction="#btnMenuSettings_Action" prefHeight="31.0" prefWidth="227.0" text="Settings" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
@@ -71,7 +71,7 @@
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuReview" layoutX="59.0" layoutY="156.0" prefHeight="31.0" prefWidth="227.0" text="Review" textFill="WHITE">
+                              <JFXButton fx:id="btnMenuReview" layoutX="59.0" layoutY="156.0" onAction="#btnMenuReview_Action" prefHeight="31.0" prefWidth="227.0" text="Review" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>

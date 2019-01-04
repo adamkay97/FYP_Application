@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DatabaseManager 
 {
@@ -82,7 +84,31 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the user from the db - " + ex.getMessage());
+             System.out.println("Error when reading the users from the db - " + ex.getMessage());
+        }
+        return null;
+    }
+    
+    public ArrayList<String> loadMCHATInformation()
+    {
+        ArrayList<String> mchatInfo = new ArrayList<>();
+        
+        String query = "SELECT * FROM MCHATInformation WHERE LanguageID = 1";
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+            {
+                String infoHeader = results.getString("InfoHeading");
+                String infoText = results.getString("InfoText");
+                mchatInfo.add(infoHeader + "%" + infoText);
+            }
+            return mchatInfo;
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the MCHAT information from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -102,7 +128,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+            System.out.println("Error when checking the user exists in the db - " + ex.getMessage());
         }
         return exists;
     }
@@ -125,7 +151,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+            System.out.println("Error when checking for an existing child in the db - " + ex.getMessage());
         }
         return exists;
     }
@@ -155,24 +181,42 @@ public class DatabaseManager
     public boolean writeChildToDatabase(Child child)
     {
         boolean success = true;
-        String query = "INSERT INTO Children VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Children VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
             pstmt.setInt(1, child.getChildId());
-            pstmt.setString(2, child.getChildName());
-            pstmt.setInt(3, child.getChildAge());
-            pstmt.setString(4, child.getChildGender());
-            pstmt.setString(5, child.getResultText());
-            pstmt.setInt(6, child.getResultScore());
+            pstmt.setInt(2, child.getCurrentUserId());
+            pstmt.setString(3, child.getChildName());
+            pstmt.setInt(4, child.getChildAge());
+            pstmt.setString(5, child.getChildGender());
+            pstmt.setString(6, child.getResultText());
+            pstmt.setInt(7, child.getResultScore());
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when writing user to the db - " + ex.getMessage());
+             System.out.println("Error when writing child to the db - " + ex.getMessage());
              success = false;
         }
         return success;
+    }
+    
+    public void updateChildScore(String scoreText, int score, int childId)
+    {
+        String query = "UPDATE Children SET ResultText = ?, ResultScore = ? WHERE ChildID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setString(1, scoreText);
+            pstmt.setInt(2, score);
+            pstmt.setInt(3, childId);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when updating childs score to the db - " + ex.getMessage());
+        }
     }
     
     public String getResultInfo(int riskId)
@@ -193,7 +237,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the user from the db - " + ex.getMessage());
+             System.out.println("Error when getting the result information from the db - " + ex.getMessage());
         }
         
         return resultText;
@@ -214,27 +258,27 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+            System.out.println("Error when getting the next user ID from the db - " + ex.getMessage());
         }
         return userId;
     }
     
     public int getNextChildID()
     {
-        String query = "SELECT ChildID FROM Child ORDER BY ChildID DESC LIMIT 1";
+        String query = "SELECT ChildID FROM Children ORDER BY ChildID DESC LIMIT 1";
         int childId = 0;
         
         try(Statement stmt = conn.createStatement(); 
                 ResultSet results = stmt.executeQuery(query)) 
         {
             while(results.next())
-                childId = results.getInt("UserId");
+                childId = results.getInt("ChildID");
             
             childId++;
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the user from the db - " + ex.getMessage());
+            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
         }
         return childId;
     }

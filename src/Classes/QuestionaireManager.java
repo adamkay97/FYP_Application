@@ -10,9 +10,10 @@ public class QuestionaireManager
     private static ArrayList<Integer> flaggedQuestions;
     private static int currentChildId;
     
-    public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer)
+    public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes)
     {
         currentQuestion.setQuestionAnswer(qAnswer);
+        currentQuestion.setQuestionNotes(qNotes);
         //questionMap.put(qNumber, currentQuestion);
         
         switch(qAnswer)
@@ -28,6 +29,21 @@ public class QuestionaireManager
         }       
     }
     
+    public static void saveFinalScore()
+    {
+        DatabaseManager dbManager = new DatabaseManager();
+        String scoreText = getResultInfo();
+        int score = flaggedQuestions.size();
+        
+        if(dbManager.connect())
+        {
+            dbManager.updateChildScore(scoreText, score, currentChildId);
+            dbManager.disconnect();
+            
+            flaggedQuestions = new ArrayList<>();
+        }
+    }
+    
     public static String getResultInfo()
     {
         DatabaseManager db = new DatabaseManager();
@@ -36,12 +52,9 @@ public class QuestionaireManager
         int score = flaggedQuestions.size();
         int riskId;
         
-        if(score <= 2) 
-            riskId = 1;
-        else if(score <= 7) 
-            riskId = 2;
-        else 
-            riskId = 3;
+        if(score <= 2) riskId = 1;
+        else if(score <= 7) riskId = 2;
+        else riskId = 3;
         
         if(db.connect())
         {
@@ -50,7 +63,7 @@ public class QuestionaireManager
         }
         return riskText;
     }
-    
+     
     public static int getQuestionaireScore()
     {
         return flaggedQuestions.size();

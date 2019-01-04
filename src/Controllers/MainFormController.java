@@ -31,10 +31,14 @@ public class MainFormController implements Initializable
     @FXML private JFXButton btnClose;
     @FXML private JFXButton btnMinimize;
     @FXML private JFXButton btnMenuStart;
+    @FXML private JFXButton btnMenuInfo;
+    @FXML private JFXButton btnMenuReview;
+    @FXML private JFXButton btnMenuSettings;
     @FXML private JFXHamburger btnMenuCollapse;
     @FXML private JFXDrawer menuDrawer;
     
     private final int MENU_SIZE = 288;
+    private String currentPage;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -45,28 +49,37 @@ public class MainFormController implements Initializable
         
         StageManager.setMainFormController(this);
         StageManager.loadContentScene(StageManager.INSTRUCTIONS);
+        currentPage = "Start";
     } 
     
     //FXML Actions
     @FXML private void btnMenuStart_Action(ActionEvent event)
     {
         StageManager.loadContentScene(StageManager.INSTRUCTIONS);
+        setSelectedMenuButton("Start");
     }
     
-    @FXML private void btnMenuQuit_Action(ActionEvent event) 
+    @FXML private void btnMenuInfo_Action(ActionEvent event)
     {
-        quitMainForm();
+        StageManager.loadContentScene(StageManager.MAININFO);
+        setSelectedMenuButton("Info");
     }
     
-    @FXML private void btnMinimize_Click(ActionEvent event)
+    @FXML private void btnMenuReview_Action(ActionEvent event)
     {
-        minimizeMainForm();
+        //StageManager.loadContentScene(StageManager.MAININFO);
+        setSelectedMenuButton("Review");
     }
     
-    @FXML private void btnQuit_Click(ActionEvent event) 
+    @FXML private void btnMenuSettings_Action(ActionEvent event)
     {
-        quitMainForm();
+        //StageManager.loadContentScene(StageManager.MAININFO);
+        setSelectedMenuButton("Settings");
     }
+    
+    @FXML private void btnMenuQuit_Action(ActionEvent event) { quitMainForm(); }
+    @FXML private void btnMinimize_Click(ActionEvent event) { minimizeMainForm(); }
+    @FXML private void btnQuit_Click(ActionEvent event) { quitMainForm(); }
     
     /**
      * Replaces the current scene in the Main
@@ -128,6 +141,48 @@ public class MainFormController implements Initializable
         imgNaoIcon.setVisible(visible);
     }
     
+    /**
+     * Underlines the button for the page passed in and
+     * removes the underline from the previous page button
+     * @param page name of base page for underlining
+     */
+    public void setSelectedMenuButton(String page)
+    {
+        switch(currentPage)
+        {
+            case "Start" :
+                btnMenuStart.setUnderline(false);
+                break;
+            case "Info" :
+                btnMenuInfo.setUnderline(false);
+                break;
+            case "Review" :
+                btnMenuReview.setUnderline(false);
+                break;
+            case "Settings" :
+                btnMenuSettings.setUnderline(false);
+                break;
+        }
+        
+        switch(page)
+        {
+            case "Start" :
+                btnMenuStart.setUnderline(true);
+                break;
+            case "Info" :
+                btnMenuInfo.setUnderline(true);
+                break;
+            case "Review" :
+                btnMenuReview.setUnderline(true);
+                break;
+            case "Settings" :
+                btnMenuSettings.setUnderline(true);
+                break;
+        }
+        
+        currentPage = page;
+    }
+     
     private void minimizeMainForm()
     {
         Stage currentStage = (Stage)btnMinimize.getScene().getWindow();

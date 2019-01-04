@@ -18,7 +18,7 @@ public class AuthenticationManager
     public boolean authenticateLogin(String username, String password)
     {
         DatabaseManager dbManager = new DatabaseManager();
-        HashMap<String, User> userMap = new HashMap<String, User>();
+        HashMap<String, User> userMap = new HashMap<>();
         
         if(dbManager.connect())
         {
@@ -35,7 +35,10 @@ public class AuthenticationManager
             //If the user exists on username call autheticate password to 
             //make sure the hashed passwords match
             if(authenticatePassword(password, currentUser.getHashPassword()))
+            {
                 authenticated = true;
+                StageManager.setCurrentUser(currentUser);
+            }
             else
             {
                 StageManager.loadPopupMessage("Warning", "Password is incorrect for this user, "
