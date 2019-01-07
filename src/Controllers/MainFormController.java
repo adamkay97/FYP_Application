@@ -39,6 +39,7 @@ public class MainFormController implements Initializable
     
     private final int MENU_SIZE = 288;
     private String currentPage;
+    private HamburgerBackArrowBasicTransition collapseTransition;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -104,7 +105,7 @@ public class MainFormController implements Initializable
         menuDrawer.open();
         
         //Create transition and sets initial state to close icon
-        HamburgerBackArrowBasicTransition collapseTransition = new HamburgerBackArrowBasicTransition(btnMenuCollapse);
+        collapseTransition = new HamburgerBackArrowBasicTransition(btnMenuCollapse);
         collapseTransition.setRate(1);
         collapseTransition.play();
         
@@ -112,33 +113,45 @@ public class MainFormController implements Initializable
         //pressed it will multipply the current state by -1 to get the opposite state
         btnMenuCollapse.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> 
         {
-            collapseTransition.setRate(collapseTransition.getRate() * -1);
-            collapseTransition.play();
-            
             if(menuDrawer.isOpened())
-            {
-                menuDrawer.close();
-                setControlsVisible(false);
-                pnlMenuContent.setTranslateX(-MENU_SIZE);
-                pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth() + MENU_SIZE);
-                pnlMainContentAnchor.setLayoutX(pnlMainContentAnchor.getLayoutX() - MENU_SIZE);
-            } 
+                closeMenuDrawer();
             else
-            {
-                menuDrawer.open();
-                setControlsVisible(true);
-                pnlMenuContent.setTranslateX(0);
-                pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth()- MENU_SIZE);
-                pnlMainContentAnchor.setLayoutX(pnlMainContentAnchor.getLayoutX() + MENU_SIZE);
-            }
+                openMenuDrawer();
         });
     }
     
-    private void setControlsVisible(Boolean visible)
+    public void openMenuDrawer()
     {
-        pnlTitle.setVisible(visible);
-        pnlMenuButtons.setVisible(visible);
-        imgNaoIcon.setVisible(visible);
+        collapseTransition.setRate(collapseTransition.getRate() * -1);
+        collapseTransition.play();
+        
+        //Add extra check for when function is called outside of Main controller
+        if(!menuDrawer.isOpened())
+        {
+            menuDrawer.open();
+            menuDrawer.toFront();
+            setControlsVisible(true);
+            pnlMenuContent.setTranslateX(0);
+            pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth()- MENU_SIZE);
+            pnlMainContentAnchor.setLayoutX(pnlMainContentAnchor.getLayoutX() + MENU_SIZE);
+        }
+    }
+    
+    public void closeMenuDrawer()
+    {
+        collapseTransition.setRate(collapseTransition.getRate() * -1);
+        collapseTransition.play();
+        
+        //Add extra check for when function is called outside of Main controller
+        if(menuDrawer.isOpened())
+        {
+            menuDrawer.close();
+            menuDrawer.toBack();
+            setControlsVisible(false);
+            pnlMenuContent.setTranslateX(-MENU_SIZE);
+            pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth() + MENU_SIZE);
+            pnlMainContentAnchor.setLayoutX(pnlMainContentAnchor.getLayoutX() - MENU_SIZE);
+        }
     }
     
     /**
@@ -183,6 +196,13 @@ public class MainFormController implements Initializable
         currentPage = page;
     }
      
+    private void setControlsVisible(Boolean visible)
+    {
+        pnlTitle.setVisible(visible);
+        pnlMenuButtons.setVisible(visible);
+        imgNaoIcon.setVisible(visible);
+    }
+    
     private void minimizeMainForm()
     {
         Stage currentStage = (Stage)btnMinimize.getScene().getWindow();

@@ -2,19 +2,21 @@ package Controllers;
 
 import Classes.DatabaseManager;
 import Classes.StageManager;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.*;
 
-public class MCHATContentController implements Initializable 
+public class MCHATInfoContentController implements Initializable 
 {
     @FXML VBox vboxInfoContent;
 
@@ -26,13 +28,22 @@ public class MCHATContentController implements Initializable
         
         if(dbManager.connect())
         {
-            mchatInfo = dbManager.loadMCHATInformation();
+            mchatInfo = dbManager.loadInformationData(1, "MCHAT");
             dbManager.disconnect();
-            
-            setVboxInformation(mchatInfo);
         }
+        setVboxInformation(mchatInfo);
     }
     
+    public void btnBack_Action(ActionEvent event)
+    {
+        StageManager.loadContentScene(StageManager.MAININFO);
+    }
+    
+    /**
+     * Writes the saved information in the db about the M-CHAT-R/F to the
+     * page, setting it out in text flows within a vbox
+     * @param mchatInfo List of separate paragraphs got from the db
+     */
     private void setVboxInformation(ArrayList<String> mchatInfo)
     {
         vboxInfoContent.setSpacing(20);
@@ -44,10 +55,8 @@ public class MCHATContentController implements Initializable
             
             if(splitInfo[0].equals("Link"))
             {
-                Hyperlink mchatLink = new Hyperlink();
-                mchatLink.setText(splitInfo[1]);
-                mchatLink.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 19));
-                vboxInfoContent.getChildren().add(mchatLink);
+                Hyperlink link = createHyperlink(splitInfo[1]);
+                vboxInfoContent.getChildren().add(link);
                 return;
             }
             else if(!splitInfo[0].equals(""))
@@ -66,8 +75,26 @@ public class MCHATContentController implements Initializable
         });
    }
     
-    public void btnBack_Action(ActionEvent event)
+    private Hyperlink createHyperlink(String url)
     {
-        StageManager.loadContentScene(StageManager.MAININFO);
+        Hyperlink mchatLink = new Hyperlink();
+        mchatLink.setText(url);
+        mchatLink.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 19));
+        
+        //Creates action for click of Hyperlink
+        //Checks to see if the current machine supports this class
+        mchatLink.setOnAction((ActionEvent e) -> {
+            if(Desktop.isDesktopSupported())
+            {
+                //if it does uses the desktop class to launch the URL on the current pc's native URL launcher
+                try {
+                    Desktop.getDesktop().browse(new URI(url));
+                } catch (IOException | URISyntaxException ex) {
+                    System.out.println("Failed when loading MCHAT link - " + ex.getMessage());
+                }
+            }
+        });
+        
+        return mchatLink;
     }
 }

@@ -30,5 +30,10 @@ public class FYP_Application extends Application
             db.loadQuestionList();
             db.disconnect();
         }
-    }    
+    }  
+    
+    public static void showWebpage(String url)
+    {
+        //getHostServices().showDocument(url);
+    }
 }

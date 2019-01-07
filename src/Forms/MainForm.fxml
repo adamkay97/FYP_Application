@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="1105.0" style="-fx-background-color: #FFFFFF; -fx-border-width: 3;" stylesheets="@../Styles/RootPaneStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainFormController">
    <children>
-      <AnchorPane fx:id="pnlMainContentAnchor" layoutX="345.0" layoutY="42.0" prefHeight="663.0" prefWidth="760.0" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
+      <AnchorPane fx:id="pnlMainContentAnchor" layoutX="345.0" layoutY="42.0" prefHeight="663.0" prefWidth="759.0" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
          <children>
             <StackPane fx:id="pnlMainContent" prefHeight="663.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>

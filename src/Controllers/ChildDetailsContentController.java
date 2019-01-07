@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Enums.ButtonTypeEnum;
 import Classes.*;
 import com.jfoenix.controls.*;
 import java.net.URL;

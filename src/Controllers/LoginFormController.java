@@ -6,7 +6,7 @@
 package Controllers;
 
 import Classes.AuthenticationManager;
-import Classes.ButtonTypeEnum;
+import Enums.ButtonTypeEnum;
 import Classes.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;

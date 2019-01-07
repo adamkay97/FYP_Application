@@ -89,15 +89,18 @@ public class DatabaseManager
         return null;
     }
     
-    public ArrayList<String> loadMCHATInformation()
+    public ArrayList<String> loadInformationData(int languageId, String pageName)
     {
         ArrayList<String> mchatInfo = new ArrayList<>();
         
-        String query = "SELECT * FROM MCHATInformation WHERE LanguageID = 1";
+        String query = "SELECT * FROM InformationPageData WHERE LanguageID = ? AND PageName = ?";
         
-        try(Statement stmt = conn.createStatement(); 
-                ResultSet results = stmt.executeQuery(query)) 
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {    
+            pstmt.setInt(1, languageId);
+            pstmt.setString(2, pageName);
+            ResultSet results = pstmt.executeQuery();
+            
             while(results.next())
             {
                 String infoHeader = results.getString("InfoHeading");

@@ -11,50 +11,39 @@
 
 <AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.InstructionsContentController">
    <children>
-      <AnchorPane layoutX="37.0" layoutY="154.0" prefHeight="384.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-width: 5px; -fx-border-radius: 15px;" AnchorPane.bottomAnchor="121.0" AnchorPane.leftAnchor="37.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="154.0">
+      <AnchorPane layoutX="36.0" layoutY="155.0" prefHeight="384.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" stylesheets="@../Styles/ContentPaneStyles.css" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="155.0">
          <children>
-            <ScrollPane fx:id="scrlPaneInstr" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" pannable="true" prefHeight="351.0" prefWidth="675.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="14.0">
+            <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" pannable="true" prefHeight="351.0" prefWidth="675.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
                <content>
-                  <Label fx:id="lblInstructions" alignment="TOP_CENTER" prefHeight="515.0" prefWidth="634.0" style="-fx-background-color: transparent;" text="This diagnosis consists of 20 questions, with each question requiring a Yes or No answer.&#10;&#10;After each question is presented on the screen you will be given 5 seconds to read the question before the Nao Robot will perform the behaviour.&#10;&#10;The behaviour can be replayed using the green replay button in the bottom corner.&#10;&#10;After all 20 questions have been asked, you will be given the result which the child scored. This will determine how the diagnosis preceeds.&#10;&#10;Depending on the result follow up questions will then be presented that will help to provide more insight into the questions that were flagged up in the first part.&#10;&#10;Before starting it is advised to read the further documentation that gives the full guidelines and information about the M-CHAT-R/F diagnosis found on the information page.&#10;&#10;" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="Berlin Sans FB" size="21.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                     </padding>
-                  </Label>
+                  <VBox fx:id="vboxInstructionsContent" prefHeight="347.0" prefWidth="642.0" />
                </content>
             </ScrollPane>
          </children>
       </AnchorPane>
       <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblHeader" layoutX="53.0" layoutY="80.0" text="Instructions" textFill="WHITE" wrapText="true">
+            <Label fx:id="lblHeader" layoutX="30.0" layoutY="60.0" text="Instructions" textFill="WHITE" wrapText="true">
                <font>
-                  <Font name="Berlin Sans FB" size="28.0" />
+                  <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
          </children>
       </Pane>
       <AnchorPane layoutX="40.0" layoutY="552.0" prefHeight="104.0" prefWidth="689.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="552.0">
          <children>
-            <AnchorPane layoutX="125.0" layoutY="5.0" prefHeight="95.0" prefWidth="439.0" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="5.0">
-               <children>
-                  <Button fx:id="btnInformation" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnInformation_Action" prefHeight="68.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Information" textFill="WHITE" AnchorPane.bottomAnchor="13.0" AnchorPane.topAnchor="14.0">
-                     <font>
-                        <Font name="Berlin Sans FB" size="26.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnContinue" layoutX="242.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.bottomAnchor="13.0" AnchorPane.topAnchor="14.0">
-                     <font>
-                        <Font name="Berlin Sans FB" size="26.0" />
-                     </font>
-                  </Button>
-               </children>
-            </AnchorPane>
+            <Button fx:id="btnContinue" layoutX="372.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Berlin Sans FB" size="26.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnInformation" layoutX="131.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnInformation_Action" prefHeight="68.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Information" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="15.0">
+               <font>
+                  <Font name="Berlin Sans FB" size="26.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>

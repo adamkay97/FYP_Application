@@ -1,5 +1,6 @@
 package Classes;
 
+import Enums.ButtonTypeEnum;
 import Controllers.*;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,7 @@ public class StageManager
     public static final String MAIN = "/Forms/MainForm.fxml";
     public static final String INSTRUCTIONS = "/Forms/InstructionsContent.fxml";
     public static final String MAININFO = "/Forms/InformationContent.fxml";
-    public static final String MCHATINFO = "/Forms/MCHATContent.fxml";
+    public static final String MCHATINFO = "/Forms/MCHATInfoContent.fxml";
     public static final String DETAILS = "/Forms/ChildDetailsContent.fxml";
     public static final String QUESTIONAIRE = "/Forms/QuestionaireContent.fxml";
     public static final String FINISH = "/Forms/FinishQuestionaireContent.fxml";

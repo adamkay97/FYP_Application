@@ -1,5 +1,6 @@
 package Controllers;
 
+import Enums.ButtonTypeEnum;
 import Classes.*;
 import java.net.URL;
 import java.util.ResourceBundle;
