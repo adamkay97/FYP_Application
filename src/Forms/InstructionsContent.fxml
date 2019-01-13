@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.InstructionsContentController">
    <children>
-      <AnchorPane layoutX="36.0" layoutY="155.0" prefHeight="384.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" stylesheets="@../Styles/ContentPaneStyles.css" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="155.0">
+      <AnchorPane layoutX="36.0" layoutY="155.0" prefHeight="384.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="155.0">
          <children>
             <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" pannable="true" prefHeight="351.0" prefWidth="675.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <padding>

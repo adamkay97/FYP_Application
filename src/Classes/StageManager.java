@@ -17,6 +17,7 @@ public class StageManager
     public static final String INSTRUCTIONS = "/Forms/InstructionsContent.fxml";
     public static final String MAININFO = "/Forms/InformationContent.fxml";
     public static final String MCHATINFO = "/Forms/MCHATInfoContent.fxml";
+    public static final String NAOINFO = "/Forms/NAOInfoContent.fxml";
     public static final String DETAILS = "/Forms/ChildDetailsContent.fxml";
     public static final String QUESTIONAIRE = "/Forms/QuestionaireContent.fxml";
     public static final String FINISH = "/Forms/FinishQuestionaireContent.fxml";

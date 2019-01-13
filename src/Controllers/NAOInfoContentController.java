@@ -11,10 +11,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
 
-public class MCHATInfoContentController implements Initializable 
+public class NAOInfoContentController implements Initializable 
 {
     @FXML VBox vboxInfoContent;
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
@@ -24,12 +24,12 @@ public class MCHATInfoContentController implements Initializable
         
         if(dbManager.connect())
         {
-            mchatInfo = dbManager.loadInformationData(1, "MCHAT");
+            mchatInfo = dbManager.loadInformationData(1, "NAO");
             dbManager.disconnect();
         }
         textLoader.setAllVboxInformation(mchatInfo);
         
-    }
+    }    
     
     public void btnBack_Action(ActionEvent event)
     {
