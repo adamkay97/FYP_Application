@@ -32,12 +32,13 @@ public class QuestionaireManager
     public static void saveFinalScore()
     {
         DatabaseManager dbManager = new DatabaseManager();
-        String scoreText = getResultInfo();
+        String text = getResultInfo();
+        String[] result = text.split("\n");
         int score = flaggedQuestions.size();
         
         if(dbManager.connect())
         {
-            dbManager.updateChildScore(scoreText, score, currentChildId);
+            dbManager.updateChildScore(result[0], score, currentChildId);
             dbManager.disconnect();
             
             flaggedQuestions = new ArrayList<>();

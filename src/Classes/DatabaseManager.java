@@ -60,6 +60,51 @@ public class DatabaseManager
         }
     }
     
+    public void loadFollowUpList()
+    {
+        HashMap<Integer, FollowUpFlow> followUpList = new HashMap<>();
+        
+        for (int i = 1; i <= 20; i++) 
+        {
+            FollowUpFlow question = loadFollowUpQuestion(i);
+            followUpList.put(i, question);
+        }
+        
+    }
+    
+    private FollowUpFlow loadFollowUpQuestion(int questionId)
+    {
+        String query = "SELECT * FROM FollowUpQuestionList WHERE QuestionID = ?";
+        List<FollowUpPart> partList = new ArrayList<>();
+        
+        //Loads all the questions in to the questionMap so it can be used 
+        //in the questionaire form
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setInt(1, questionId);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                int id = results.getInt("QuestionID");
+                int flowLevel = results.getInt("FlowLevel");
+                String branch = results.getString("FlowBranch");
+                String text = results.getString("FlowText");
+                String type = results.getString("TextType");
+                
+                FollowUpPart followPart = new FollowUpPart(id, flowLevel, branch, text, type);
+                partList.add(followPart);
+            }
+            
+            return createFollowUpFlow(partList);
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading follow up questions from the db - " + ex.getMessage());
+        }
+        return null;
+    }
+    
     public HashMap<String, User> loadUsers()
     {
         HashMap<String, User> userMap = new HashMap<>();
@@ -89,11 +134,44 @@ public class DatabaseManager
         return null;
     }
     
+    public ArrayList<Child> loadChildren()
+    {
+        ArrayList<Child> childList = new ArrayList<>();
+        
+        String query = "SELECT * FROM Children WHERE ResultText IS NOT NULL AND UserID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setInt(1, StageManager.getCurrentUser().getUserId());
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                int id = results.getInt("ChildID");
+                int userId = results.getInt("UserID");
+                String name = results.getString("Name");
+                int age = results.getInt("Age");
+                String gender = results.getString("Gender");
+                String resultText = results.getString("ResultText");
+                int resultScore = results.getInt("ResultScore");
+                Child child = new Child(id, userId, name, age, gender, resultText, resultScore);
+                
+                childList.add(child);
+            }
+            return childList;
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the users from the db - " + ex.getMessage());
+        }
+        return null;
+    }
+    
     public ArrayList<String> loadInformationData(int languageId, String pageName)
     {
         ArrayList<String> mchatInfo = new ArrayList<>();
         
-        String query = "SELECT * FROM InformationPageData WHERE LanguageID = ? AND PageName = ?";
+        String query = "SELECT * FROM RichTextData WHERE LanguageID = ? AND PageName = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {    
@@ -112,6 +190,33 @@ public class DatabaseManager
         catch(SQLException ex)
         {
              System.out.println("Error when reading the MCHAT information from the db - " + ex.getMessage());
+        }
+        return null;
+    }
+    
+    private FollowUpFlow createFollowUpFlow(List<FollowUpPart> partList)
+    {
+        FollowUpFlow followUp = new FollowUpFlow();
+        TreeNode currentNode = new TreeNode();
+        int flowLevel = 0;
+        
+        for(FollowUpPart part : partList)
+        {
+            int currentLevel = part.getFlowLevel();
+            
+            if(currentLevel == 0)
+            {
+                followUp.setRootNode(part);
+                
+            }
+            else if(flowLevel == currentLevel)
+            {
+                followUp.addChild(part);
+            }
+            else
+            {
+                
+            }
         }
         return null;
     }
@@ -184,17 +289,18 @@ public class DatabaseManager
     public boolean writeChildToDatabase(Child child)
     {
         boolean success = true;
-        String query = "INSERT INTO Children VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Children (UserID, Name, Age, Gender, ResultText, ResultScore) "
+                     + "VALUES (?, ?, ?, ?, ?, ?)";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
-            pstmt.setInt(1, child.getChildId());
-            pstmt.setInt(2, child.getCurrentUserId());
-            pstmt.setString(3, child.getChildName());
-            pstmt.setInt(4, child.getChildAge());
-            pstmt.setString(5, child.getChildGender());
-            pstmt.setString(6, child.getResultText());
-            pstmt.setInt(7, child.getResultScore());
+            //pstmt.setInt(1, child.getChildId());
+            pstmt.setInt(1, child.getCurrentUserId());
+            pstmt.setString(2, child.getChildName());
+            pstmt.setInt(3, child.getChildAge());
+            pstmt.setString(4, child.getChildGender());
+            pstmt.setString(5, child.getResultText());
+            pstmt.setInt(6, child.getResultScore());
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -202,6 +308,11 @@ public class DatabaseManager
              System.out.println("Error when writing child to the db - " + ex.getMessage());
              success = false;
         }
+        
+        //If it doenst fail set the childs id to the auto incremented value
+        if(success)
+            child.setChildId(getLastInsertedRowID("Children"));
+        
         return success;
     }
     
@@ -222,12 +333,32 @@ public class DatabaseManager
         }
     }
     
+    public int getLastInsertedRowID(String tableName)
+    {
+        String query = "SELECT seq FROM sqlite_sequence WHERE name = ?";
+        int id = 0;
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            pstmt.setString(1, tableName);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+                id = results.getInt("seq");
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
+        }
+        return id;
+    }
+    
     public String getResultInfo(int riskId)
     {
         String query = "SELECT * FROM ScoringRisk WHERE ScoringRiskID = ?";
         String resultText = "";
         
-        try(PreparedStatement pstmt = conn.prepareStatement(query);) 
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {
             pstmt.setInt(1, riskId);
             ResultSet results = pstmt.executeQuery();
@@ -244,46 +375,6 @@ public class DatabaseManager
         }
         
         return resultText;
-    }
-    
-    public int getNextUserID()
-    {
-        String query = "SELECT UserID FROM Users ORDER BY UserID DESC LIMIT 1";
-        int userId = 0;
-        
-        try(Statement stmt = conn.createStatement(); 
-                ResultSet results = stmt.executeQuery(query)) 
-        {
-            while(results.next())
-                userId = results.getInt("UserId");
-            
-            userId++;
-        }
-        catch(SQLException ex)
-        {
-            System.out.println("Error when getting the next user ID from the db - " + ex.getMessage());
-        }
-        return userId;
-    }
-    
-    public int getNextChildID()
-    {
-        String query = "SELECT ChildID FROM Children ORDER BY ChildID DESC LIMIT 1";
-        int childId = 0;
-        
-        try(Statement stmt = conn.createStatement(); 
-                ResultSet results = stmt.executeQuery(query)) 
-        {
-            while(results.next())
-                childId = results.getInt("ChildID");
-            
-            childId++;
-        }
-        catch(SQLException ex)
-        {
-            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
-        }
-        return childId;
     }
     
     public void disconnect()

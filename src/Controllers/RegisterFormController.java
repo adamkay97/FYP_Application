@@ -33,8 +33,7 @@ public class RegisterFormController implements Initializable
     private boolean v1, v2, v3, v4, v5;
     private DatabaseManager dbManager;
     private HashMap<String, User> userMap;
-    private int newUserId = 0;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
@@ -150,7 +149,6 @@ public class RegisterFormController implements Initializable
         if(dbManager.connect())
         {
             userMap = dbManager.loadUsers();
-            newUserId = dbManager.getNextUserID();
             dbManager.disconnect();
         }
     }
@@ -159,23 +157,25 @@ public class RegisterFormController implements Initializable
     {
         AuthenticationManager authManager = new AuthenticationManager();
         
-        //Sets the user id to the size of the current users plus 1.
         //Uses the instance of the AuthenticationManager to create a hashed passwords
         //so it can be written to the database
-        int userId = newUserId;
         String username = txtUsername.getText();
         String hashPassword = authManager.createPasswordHash(txtConfirmPassword.getText());
         String firstName = txtFirstName.getText();
         String lastName = txtLastName.getText();
         
-        User newUser = new User(userId, username, hashPassword, firstName, lastName);
+        User newUser = new User(username, hashPassword, firstName, lastName);
         
         //Call the DatabaseManager to write the new user to the database
         if(dbManager.connect())
         {
             if(dbManager.writeUserToDatabase(newUser))
+            {
                 StageManager.loadPopupMessage("Success", "You have successfully created a new account, "
                     + "please use your details to login.", ButtonTypeEnum.OK);
+                
+                newUser.setUserId(dbManager.getLastInsertedRowID("Users"));
+            }
             else
                 StageManager.loadPopupMessage("Error", "There was an issue with saving your information, "
                     + "please try again. If this error persists please contact support.", ButtonTypeEnum.OK);

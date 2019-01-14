@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" fx:id="mainAnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ReviewContentController">
+   <children>
+      <Label layoutX="40.0" layoutY="207.0" prefHeight="44.0" prefWidth="290.0" text="Cases: " wrapText="true">
+         <font>
+            <Font name="Berlin Sans FB" size="32.0" />
+         </font>
+      </Label>
+      <Pane layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="30.0" layoutY="60.0" text="Review" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="40.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="30.0" layoutY="258.0" prefHeight="322.0" prefWidth="700.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;">
+         <children>
+            <HBox layoutX="12.0" layoutY="10.0" prefHeight="250.0" prefWidth="675.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+               <children>
+                  <Pane prefHeight="228.0" prefWidth="90.0">
+                     <children>
+                        <ImageView fx:id="btnLeftArrow" fitHeight="117.0" fitWidth="65.0" layoutX="10.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/arrow-left.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <StackPane fx:id="stackPaneChildView" prefHeight="300.0" prefWidth="519.0" />
+                  <Pane prefHeight="228.0" prefWidth="90.0">
+                     <children>
+                        <ImageView fx:id="btnRightArrow" fitHeight="117.0" fitWidth="65.0" layoutX="10.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/arrow-right.png" />
+                           </image>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </ImageView>
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <Label layoutX="166.0" layoutY="157.0" prefHeight="44.0" prefWidth="428.0" text="Select the icon for the child you wish to review." textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

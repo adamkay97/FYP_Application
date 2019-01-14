@@ -20,14 +20,16 @@ public class NAOInfoContentController implements Initializable
     {
         DatabaseManager dbManager = new DatabaseManager();
         FormTextLoader textLoader = new FormTextLoader(vboxInfoContent);
-        ArrayList<String> mchatInfo = new ArrayList<>();
-        
+               
         if(dbManager.connect())
         {
+            ArrayList<String> mchatInfo = new ArrayList<>();
             mchatInfo = dbManager.loadInformationData(1, "NAO");
             dbManager.disconnect();
+            
+            textLoader.setAllVboxInformation(mchatInfo);
         }
-        textLoader.setAllVboxInformation(mchatInfo);
+        
         
     }    
     

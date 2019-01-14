@@ -68,13 +68,13 @@ public class MainFormController implements Initializable
     
     @FXML private void btnMenuReview_Action(ActionEvent event)
     {
-        //StageManager.loadContentScene(StageManager.MAININFO);
+        StageManager.loadContentScene(StageManager.REVIEW);
         setSelectedMenuButton("Review");
     }
     
     @FXML private void btnMenuSettings_Action(ActionEvent event)
     {
-        //StageManager.loadContentScene(StageManager.MAININFO);
+        StageManager.loadContentScene(StageManager.SETTINGS);
         setSelectedMenuButton("Settings");
     }
     

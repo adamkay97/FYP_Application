@@ -29,11 +29,6 @@ public class ChildDetailsContentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) 
     {
         dbManager = new DatabaseManager();
-        if(dbManager.connect())
-        {
-            nextChildId = dbManager.getNextChildID();
-            dbManager.disconnect();
-        }
     }    
 
     @FXML private void btnStartQuestions_Action(ActionEvent event)
@@ -41,16 +36,16 @@ public class ChildDetailsContentController implements Initializable {
         if(validateUserInput())
         {
             //Creates child with data needed for database including current users id for review purposes
-            /*int currentUserId = StageManager.getCurrentUser().getUserId();
+            int currentUserId = StageManager.getCurrentUser().getUserId();
             String name = txtChildsName.getText();
             int age = Integer.parseInt(txtChildsAge.getText());
             String gender = radBtnMale.isSelected() ? "Male" : "Female";
             
-            Child child = new Child(nextChildId, currentUserId, name, age, gender);
+            Child child = new Child(currentUserId, name, age, gender);
             
             //Check if there is already a child created with the exact same info
             if(!checkChildExists(child))
-                if(saveChildInfo(child))*/
+                if(saveChildInfo(child))
                     StageManager.loadContentScene(StageManager.QUESTIONAIRE);
         }
         else

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ChildReviewControlController">
+   <children>
+      <HBox layoutX="3.0" layoutY="3.0" prefHeight="300.0" prefWidth="519.0">
+         <children>
+            <Pane fx:id="pnlLeft" prefHeight="228.0" prefWidth="173.0" style=": ;">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/user-circle.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Pane id="detailsPane" fx:id="leftDetailsPane" layoutX="12.0" layoutY="165.0" prefHeight="102.0" prefWidth="150.0" stylesheets="@../Styles/ReviewControlStyles.css">
+                     <children>
+                        <VBox alignment="CENTER" layoutX="-2.0" prefHeight="102.0" prefWidth="154.0" spacing="5.0">
+                           <children>
+                              <Label fx:id="txtLeftName" text="Name" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtLeftAge" text="Age" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtLeftRisk" text="Risk" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </children>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Pane>
+            <Pane fx:id="pnlMiddle" prefHeight="228.0" prefWidth="173.0" style=": ;">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/user-circle.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Pane id="detailsPane" fx:id="midDetailsPane" layoutX="12.0" layoutY="165.0" prefHeight="102.0" prefWidth="150.0" stylesheets="@../Styles/ReviewControlStyles.css">
+                     <children>
+                        <VBox alignment="CENTER" layoutX="-2.0" prefHeight="102.0" prefWidth="154.0" spacing="5.0">
+                           <children>
+                              <Label fx:id="txtMidName" text="Name" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtMidAge" text="Age" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtMidRisk" text="Risk" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane fx:id="pnlRight" prefHeight="228.0" prefWidth="173.0" style=": ;">
+               <children>
+                  <ImageView fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../Icons/user-circle.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+                  <Pane id="detailsPane" fx:id="rightDetailsPane" layoutX="12.0" layoutY="165.0" prefHeight="102.0" prefWidth="150.0" stylesheets="@../Styles/ReviewControlStyles.css">
+                     <children>
+                        <VBox alignment="CENTER" layoutX="-2.0" prefHeight="102.0" prefWidth="154.0" spacing="5.0">
+                           <children>
+                              <Label fx:id="txtRightName" text="Name" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtRightAge" text="Age" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="txtRightRisk" text="Risk" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

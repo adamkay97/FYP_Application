@@ -3,6 +3,7 @@ package Classes;
 import Enums.ButtonTypeEnum;
 import Controllers.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +16,8 @@ public class StageManager
     public static final String REGISTER = "/Forms/RegisterForm.fxml";
     public static final String MAIN = "/Forms/MainForm.fxml";
     public static final String INSTRUCTIONS = "/Forms/InstructionsContent.fxml";
+    public static final String REVIEW = "/Forms/ReviewContent.fxml";
+    public static final String SETTINGS = "/Forms/SettingsContent.fxml";
     public static final String MAININFO = "/Forms/InformationContent.fxml";
     public static final String MCHATINFO = "/Forms/MCHATInfoContent.fxml";
     public static final String NAOINFO = "/Forms/NAOInfoContent.fxml";
@@ -22,6 +25,7 @@ public class StageManager
     public static final String QUESTIONAIRE = "/Forms/QuestionaireContent.fxml";
     public static final String FINISH = "/Forms/FinishQuestionaireContent.fxml";
     public static final String POPUP = "/Forms/PopUpMessage.fxml";
+    public static final String CHILDCONTROL = "/Forms/ChildReviewControl.fxml";
     
     private static MainFormController mainFormController;
     private static User currentUser;
@@ -80,8 +84,8 @@ public class StageManager
             System.out.println("Failed loading pop up message - " + ex.getMessage());
         }
         
-    }
-    
+    }    
+
     /**
      * Loads the main stages i.e login page, registration
      * and the main form. 
