@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controllers.FollowUpContentController">
+   <children>
+      <Pane layoutX="3.0" layoutY="8.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="30.0" layoutY="22.0" text="M-CHAT-R/F" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="32.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblQuestionHeader" alignment="TOP_LEFT" layoutX="46.0" layoutY="70.0" prefHeight="55.0" prefWidth="669.0" text="QuestionText" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <StackPane fx:id="stackPaneFollowUp" layoutX="55.0" layoutY="149.0" prefHeight="500.0" prefWidth="650.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="149.0" />
+   </children>
+</AnchorPane>

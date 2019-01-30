@@ -69,11 +69,12 @@ public class DatabaseManager
             FollowUpFlow question = loadFollowUpQuestion(i);
             followUpList.put(i, question);
         }
-        
+        QuestionaireManager.setFollowUpMap(followUpList);
     }
     
     private FollowUpFlow loadFollowUpQuestion(int questionId)
     {
+        FollowUpFlow followUp = new FollowUpFlow();
         String query = "SELECT * FROM FollowUpQuestionList WHERE QuestionID = ?";
         List<FollowUpPart> partList = new ArrayList<>();
         
@@ -90,13 +91,14 @@ public class DatabaseManager
                 int flowLevel = results.getInt("FlowLevel");
                 String branch = results.getString("FlowBranch");
                 String text = results.getString("FlowText");
-                String type = results.getString("TextType");
+                String type = results.getString("QuestionType");
                 
                 FollowUpPart followPart = new FollowUpPart(id, flowLevel, branch, text, type);
                 partList.add(followPart);
             }
             
-            return createFollowUpFlow(partList);
+            followUp.createFollowUpFlow(partList);
+            return followUp;
         }
         catch(SQLException ex)
         {
@@ -194,32 +196,7 @@ public class DatabaseManager
         return null;
     }
     
-    private FollowUpFlow createFollowUpFlow(List<FollowUpPart> partList)
-    {
-        FollowUpFlow followUp = new FollowUpFlow();
-        TreeNode currentNode = new TreeNode();
-        int flowLevel = 0;
-        
-        for(FollowUpPart part : partList)
-        {
-            int currentLevel = part.getFlowLevel();
-            
-            if(currentLevel == 0)
-            {
-                followUp.setRootNode(part);
-                
-            }
-            else if(flowLevel == currentLevel)
-            {
-                followUp.addChild(part);
-            }
-            else
-            {
-                
-            }
-        }
-        return null;
-    }
+    
     
     public boolean checkUserExists(String username)
     {

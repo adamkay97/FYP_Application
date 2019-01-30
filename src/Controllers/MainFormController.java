@@ -1,6 +1,7 @@
 package Controllers;
 
 import Classes.StageManager;
+import Enums.ButtonTypeEnum;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.*;
 import java.net.URL;
@@ -78,6 +79,16 @@ public class MainFormController implements Initializable
         setSelectedMenuButton("Settings");
     }
     
+    @FXML private void btnLogout_Action(ActionEvent event)
+    {
+        //StageManager.loadPopupMessage("Warning", "Are you sure you want to logout? If you are "
+                //+ "part way through the diagnosis your progress will not be saved.", ButtonTypeEnum.YESNO);
+        
+        //TODO: If yes then:
+        quitMainForm();
+        StageManager.loadForm(StageManager.LOGIN, new Stage());
+    }
+    
     @FXML private void btnMenuQuit_Action(ActionEvent event) { quitMainForm(); }
     @FXML private void btnMinimize_Click(ActionEvent event) { minimizeMainForm(); }
     @FXML private void btnQuit_Click(ActionEvent event) { quitMainForm(); }
@@ -149,7 +160,7 @@ public class MainFormController implements Initializable
             menuDrawer.toBack();
             setControlsVisible(false);
             pnlMenuContent.setTranslateX(-MENU_SIZE);
-            pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth() + MENU_SIZE);
+            pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth() + MENU_SIZE - 5);
             pnlMainContentAnchor.setLayoutX(pnlMainContentAnchor.getLayoutX() - MENU_SIZE);
         }
     }

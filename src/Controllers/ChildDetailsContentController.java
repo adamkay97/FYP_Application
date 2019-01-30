@@ -72,7 +72,7 @@ public class ChildDetailsContentController implements Initializable {
             
             //Set the current childs id on the QuestionaireManager for saving the score
             //to the db at the end of the diagnosis.
-            QuestionaireManager.setCurrentChildId(child.getChildId());
+            QuestionaireManager.setCurrentChild(child);
         }
         return true;
     }

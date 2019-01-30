@@ -6,9 +6,11 @@ import java.util.HashMap;
 public class QuestionaireManager 
 {
     private static HashMap<Integer, Question> questionMap;
+    private static HashMap<Integer, FollowUpFlow> followUpMap;
     private static Question currentQuestion;
+    private static FollowUpFlow currentFollowUp;
     private static ArrayList<Integer> flaggedQuestions;
-    private static int currentChildId;
+    private static Child currentChild;
     
     public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes)
     {
@@ -28,20 +30,26 @@ public class QuestionaireManager
                 break;
         }       
     }
-    
-    public static void saveFinalScore()
+        
+    public static void saveFirstStageScore(boolean finished)
     {
         DatabaseManager dbManager = new DatabaseManager();
         String text = getResultInfo();
         String[] result = text.split("\n");
         int score = flaggedQuestions.size();
         
-        if(dbManager.connect())
+        currentChild.setResultScore(score);
+        currentChild.setResultText(result[0]);
+        
+        if(finished)
         {
-            dbManager.updateChildScore(result[0], score, currentChildId);
-            dbManager.disconnect();
-            
-            flaggedQuestions = new ArrayList<>();
+            if(dbManager.connect())
+            {
+                dbManager.updateChildScore(result[0], score, currentChild.getChildId());
+                dbManager.disconnect();
+
+                flaggedQuestions = new ArrayList<>();
+            }
         }
     }
     
@@ -82,8 +90,14 @@ public class QuestionaireManager
         flaggedQuestions = new ArrayList<>();
     }
     
-    public static void setCurrentChildId(int id)
+    public static FollowUpFlow getFollowUpFlow(int fNumber)
     {
-        currentChildId = id;
+        currentFollowUp = followUpMap.get(fNumber);
+        return currentFollowUp;
     }
+    
+    public static void setCurrentChild(Child child) { currentChild = child; }
+    public static Child getCurrentChild() { return currentChild; }
+    public static ArrayList<Integer> getFlaggedQuestions() { return flaggedQuestions; }
+    public static void setFollowUpMap(HashMap<Integer, FollowUpFlow> followup) { followUpMap = followup; }
 }

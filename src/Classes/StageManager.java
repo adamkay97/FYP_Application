@@ -23,9 +23,16 @@ public class StageManager
     public static final String NAOINFO = "/Forms/NAOInfoContent.fxml";
     public static final String DETAILS = "/Forms/ChildDetailsContent.fxml";
     public static final String QUESTIONAIRE = "/Forms/QuestionaireContent.fxml";
+    public static final String FOLLOWUP = "/Forms/FollowUpContent.fxml";
     public static final String FINISH = "/Forms/FinishQuestionaireContent.fxml";
     public static final String POPUP = "/Forms/PopUpMessage.fxml";
-    public static final String CHILDCONTROL = "/Forms/ChildReviewControl.fxml";
+    
+    //Constants for FXML controls
+    public static final String CHILDCONTROL = "/Control/ChildReviewControl.fxml";
+    public static final String EXAMPLECONTROL = "/Control/ExampleControl.fxml";
+    public static final String YESNOCONTROL = "/Control/YesNoControl.fxml";
+    public static final String YNEXCONTROL = "/Control/YesNoExampleControl.fxml";
+    public static final String CHECKLISTCONTROL = "/Control/ChecklistControl.fxml";
     
     private static MainFormController mainFormController;
     private static User currentUser;

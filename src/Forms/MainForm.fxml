@@ -93,6 +93,15 @@
             <Font name="Verdana Bold" size="24.0" />
          </font>
       </JFXButton>
+      <JFXButton fx:id="btnLogout" ellipsisString="" layoutX="948.0" maxWidth="45.0" onAction="#btnLogout_Action" prefHeight="45.0" prefWidth="30.0" stylesheets="@../Styles/ControlButtonStyles.css" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/sign-out-icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
    <effect>
       <DropShadow />

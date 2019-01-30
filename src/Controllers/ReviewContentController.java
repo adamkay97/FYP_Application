@@ -107,7 +107,7 @@ public class ReviewContentController implements Initializable
     {
         try 
         {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Forms/ChildReviewControl.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controls/ChildReviewControl.fxml"));
             Parent root = (Parent)loader.load();
             
             ChildReviewControlController childControl = loader.<ChildReviewControlController>getController();

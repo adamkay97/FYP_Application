@@ -41,11 +41,12 @@ public class FinishQuestionaireContentController implements Initializable
     {
         if(followUp)
         {
-            //SaveResult()
+            QuestionaireManager.saveFirstStageScore(false);
+            StageManager.loadContentScene(StageManager.FOLLOWUP);
         }
         else
         {
-            QuestionaireManager.saveFinalScore();
+            QuestionaireManager.saveFirstStageScore(true);
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
         }
     }

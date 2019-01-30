@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controllers.ExampleControlController">
+   <children>
+      <Label fx:id="lblQuestionText" layoutX="25.0" layoutY="14.0" prefHeight="93.0" prefWidth="610.0" text="QuestionText" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnContinue" layoutX="257.0" layoutY="366.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="55.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Button>
+      <TextArea fx:id="txtExample" layoutX="25.0" layoutY="153.0" prefHeight="161.0" prefWidth="609.0" promptText="Example here..." AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <font>
+            <Font name="Berlin Sans FB" size="20.0" />
+         </font>
+      </TextArea>
+   </children>
+</AnchorPane>

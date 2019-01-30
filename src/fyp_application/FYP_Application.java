@@ -28,6 +28,7 @@ public class FYP_Application extends Application
         if(db.connect())
         {
             db.loadQuestionList();
+            db.loadFollowUpList();
             db.disconnect();
         }
     }  
