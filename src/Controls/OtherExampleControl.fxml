@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="65.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.OtherExampleControlController">
+   <children>
+      <Label fx:id="lblExampleText" layoutX="4.0" layoutY="17.0" prefHeight="34.0" prefWidth="195.0" text="Other (describe):" wrapText="true" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="430.0">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="txtAreaOther" layoutX="226.0" layoutY="4.0" prefHeight="57.0" prefWidth="399.0" promptText="Enter here..." wrapText="true" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="5.0">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </TextArea>
+   </children>
+</AnchorPane>

@@ -97,7 +97,7 @@ public class DatabaseManager
                 partList.add(followPart);
             }
             
-            followUp.createFollowUpFlow(partList);
+            followUp.createFollowUpFlow(partList, questionId);
             return followUp;
         }
         catch(SQLException ex)
@@ -208,7 +208,7 @@ public class DatabaseManager
             pstmt.setString(1, username);
             ResultSet rs = pstmt.executeQuery();
             
-            if(rs.first())
+            if(rs.next())
                 exists = true;
         }
         catch(SQLException ex)
@@ -231,7 +231,7 @@ public class DatabaseManager
             
             ResultSet rs = pstmt.executeQuery();
             
-            if(rs.first())
+            if(rs.next())
                 exists = true;
         }
         catch(SQLException ex)

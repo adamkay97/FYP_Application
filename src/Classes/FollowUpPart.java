@@ -36,7 +36,7 @@ public class FollowUpPart
             case "Yes1O": temp = FlowBranchEnum.Yes1O; break;
             case "PassOnly": temp = FlowBranchEnum.PassOnly; break;
             case "Pass": temp = FlowBranchEnum.Pass; break;
-            case "NoAny": temp = FlowBranchEnum.NoAny; break;
+            case "NoAll": temp = FlowBranchEnum.NoAll; break;
             case "NoOnly": temp = FlowBranchEnum.NoOnly; break;
             case "No1ON": temp = FlowBranchEnum.No1ON; break;
             case "FailOnly": temp = FlowBranchEnum.FailOnly; break;

@@ -143,7 +143,7 @@ public class MainFormController implements Initializable
             menuDrawer.toFront();
             setControlsVisible(true);
             pnlMenuContent.setTranslateX(0);
-            pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth()- MENU_SIZE);
+            pnlMainContentAnchor.setPrefWidth(pnlMainContentAnchor.getPrefWidth()- MENU_SIZE + 5);
             pnlMainContentAnchor.setLayoutX(pnlMainContentAnchor.getLayoutX() + MENU_SIZE);
         }
     }

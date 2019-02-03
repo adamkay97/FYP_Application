@@ -32,7 +32,10 @@
                                     <Image url="@../Icons/naoRobot.PNG" />
                                  </image>
                               </ImageView>
-                              <JFXHamburger fx:id="btnMenuCollapse" layoutX="301.0" layoutY="14.0" stylesheets="@../Styles/HamburgerStyles.css" />
+                              <JFXHamburger fx:id="btnMenuCollapse" layoutX="301.0" layoutY="14.0" stylesheets="@../Styles/HamburgerStyles.css">
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor></JFXHamburger>
                            </children>
                         </Pane>
                         <Pane fx:id="pnlTitle" prefHeight="134.0" prefWidth="323.0">
@@ -55,26 +58,41 @@
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                               <JFXButton fx:id="btnMenuInfo" layoutX="59.0" layoutY="84.0" onAction="#btnMenuInfo_Action" prefHeight="31.0" prefWidth="227.0" text="Information" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                               <JFXButton fx:id="btnMenuSettings" layoutX="59.0" layoutY="223.0" onAction="#btnMenuSettings_Action" prefHeight="31.0" prefWidth="227.0" text="Settings" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                               <JFXButton fx:id="btnMenuQuit" layoutX="59.0" layoutY="293.0" onAction="#btnMenuQuit_Action" prefHeight="31.0" prefWidth="227.0" text="Quit" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                               <JFXButton fx:id="btnMenuReview" layoutX="59.0" layoutY="156.0" onAction="#btnMenuReview_Action" prefHeight="31.0" prefWidth="227.0" text="Review" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
+                                 <cursor>
+                                    <Cursor fx:constant="HAND" />
+                                 </cursor>
                               </JFXButton>
                            </children>
                         </Pane>
@@ -87,13 +105,19 @@
          <font>
             <Font name="Verdana Bold" size="24.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
       <JFXButton fx:id="btnMinimize" layoutX="1007.0" layoutY="-0.5" onAction="#btnMinimize_Click" prefHeight="46.0" prefWidth="45.0" ripplerFill="WHITE" stylesheets="@../Styles/ControlButtonStyles.css" text="-" AnchorPane.topAnchor="-0.5">
          <font>
             <Font name="Verdana Bold" size="24.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
-      <JFXButton fx:id="btnLogout" ellipsisString="" layoutX="948.0" maxWidth="45.0" onAction="#btnLogout_Action" prefHeight="45.0" prefWidth="30.0" stylesheets="@../Styles/ControlButtonStyles.css" textAlignment="CENTER">
+      <JFXButton fx:id="btnLogout" ellipsisString="" layoutX="948.0" layoutY="3.0" maxWidth="59.0" onAction="#btnLogout_Action" prefHeight="20.0" prefWidth="59.0" stylesheets="@../Styles/ControlButtonStyles.css" textAlignment="CENTER">
          <graphic>
             <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -101,6 +125,9 @@
                </image>
             </ImageView>
          </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </JFXButton>
    </children>
    <effect>

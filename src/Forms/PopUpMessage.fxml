@@ -20,7 +20,7 @@
       </Pane>
       <Pane fx:id="pnlMessageContent" layoutX="28.0" layoutY="120.0" prefHeight="144.0" prefWidth="532.0" style="-fx-border-color: #696969; -fx-border-width: 5px; -fx-border-radius: 15px;">
          <children>
-            <Label fx:id="lblMessage" layoutX="67.0" layoutY="23.0" prefHeight="99.0" prefWidth="398.0" text="Message" textAlignment="CENTER" wrapText="true">
+            <Label fx:id="lblMessage" alignment="CENTER" layoutX="16.0" layoutY="9.0" prefHeight="126.0" prefWidth="501.0" text="Message" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>

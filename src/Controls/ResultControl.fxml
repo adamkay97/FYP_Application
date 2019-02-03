@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ResultControlController">
+   <children>
+      <Label alignment="CENTER" layoutX="55.0" layoutY="110.0" prefHeight="55.0" prefWidth="560.0" text="Follow up question completed:" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="55.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="110.0">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnNext" layoutX="263.0" layoutY="365.0" mnemonicParsing="false" onAction="#btnNext_Action" prefHeight="55.0" prefWidth="125.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Next" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Button>
+      <Label fx:id="lblResult" alignment="CENTER" layoutX="218.0" layoutY="195.0" prefHeight="90.0" prefWidth="216.0" style="-fx-background-color: #696969; -fx-background-radius: 25px;" text="PASS" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font name="Berlin Sans FB" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -12,6 +12,8 @@ public class TreeNode
     private FlowBranchEnum branch;
     private QuestionTypeEnum type;
     
+    private String answer;
+    
     public TreeNode() {}
     
     public TreeNode(String data, FlowBranchEnum b, QuestionTypeEnum t, TreeNode p)
@@ -22,6 +24,8 @@ public class TreeNode
         text = data;
         branch = b;
         type = t;
+        
+        answer = "";
     }
     
     public TreeNode addChildNode(TreeNode child)
@@ -48,4 +52,5 @@ public class TreeNode
     public FlowBranchEnum getFlowBranch() { return branch; }
     public QuestionTypeEnum getQuestionType() { return type; }
     
+    public void setNodeAnswer(String s) { answer = s; } 
 }

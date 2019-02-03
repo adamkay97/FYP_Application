@@ -33,7 +33,8 @@ public class ChildDetailsContentController implements Initializable {
 
     @FXML private void btnStartQuestions_Action(ActionEvent event)
     {
-        if(validateUserInput())
+        StageManager.loadContentScene(StageManager.FOLLOWUP);
+        /*if(validateUserInput())
         {
             //Creates child with data needed for database including current users id for review purposes
             int currentUserId = StageManager.getCurrentUser().getUserId();
@@ -54,7 +55,7 @@ public class ChildDetailsContentController implements Initializable {
                     + "All the fields must be filled in correctly before you can proceed.";
             
             StageManager.loadPopupMessage("Error", messageText, ButtonTypeEnum.OK);
-        }
+        }*/
 
     }
     
@@ -101,6 +102,7 @@ public class ChildDetailsContentController implements Initializable {
             {
                 StageManager.loadPopupMessage("Warning", "A child with these exact credentials has already been tested, "
                             + "you can see the results on the review page.", ButtonTypeEnum.OK);
+                exists = true;
             }
         }
         

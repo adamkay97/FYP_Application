@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.PassFailControlController">
+   <children>
+      <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="30.0" layoutY="59.0" pannable="true" prefHeight="356.0" prefWidth="600.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+         <content>
+            <VBox fx:id="vboxCheckExamples" alignment="CENTER" maxWidth="640.0" prefHeight="344.0" prefWidth="578.0" />
+         </content>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </ScrollPane>
+      <Label fx:id="lblChecklistText" layoutX="18.0" layoutY="14.0" prefHeight="44.0" prefWidth="622.0" text="ChecklistText" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnContinue" layoutX="257.0" layoutY="426.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

@@ -3,7 +3,6 @@ package Classes;
 import Enums.ButtonTypeEnum;
 import Controllers.*;
 import java.io.IOException;
-import java.util.ArrayList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
 import javafx.scene.input.MouseEvent;
@@ -82,6 +81,9 @@ public class StageManager
             popupController.setPopupContent(headerText, messageText, buttonType);
             
             Stage popupStage = new Stage();
+            
+            setFormMoveHandlers(root, popupStage);
+            
             popupStage.initStyle(StageStyle.UNDECORATED);
             popupStage.setScene(popup);
             popupStage.show();
@@ -110,6 +112,13 @@ public class StageManager
             Scene newScene = new Scene(root);
             
             setFormMoveHandlers(root, stage);
+            
+            //If the form to be loaded is the login form, call controller to create keyboard listener
+            if(formPath.equals(LOGIN))
+            {
+                LoginFormController loginController = loader.<LoginFormController>getController();
+                loginController.setKeyboardListener();
+            }
             
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(newScene);
@@ -141,7 +150,7 @@ public class StageManager
             stage.setY(event.getScreenY() - offsetY);
         });
     }
-    
+        
     /**
      * Sets the mainFormController variable on the StageManager
      * for use when setting the content pane nested in the main form

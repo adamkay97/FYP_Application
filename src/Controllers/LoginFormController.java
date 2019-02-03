@@ -14,7 +14,11 @@ import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -25,22 +29,13 @@ public class LoginFormController implements Initializable
     @FXML private JFXPasswordField txtPassword;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+    public void initialize(URL url, ResourceBundle rb) 
+    {
     } 
     
     @FXML private void btnLogin_Action(ActionEvent event)
     {
-        //Check that username and password fields arent empty
-        if(txtUsername.getText().equals("") || txtPassword.getText().equals(""))
-        {
-            StageManager.loadPopupMessage("Warning", "Please enter your username and password. "
-                    + "If you don't have an account please use the register page.", ButtonTypeEnum.OK);
-        }
-        else
-        {
-            attemptLogin();
-        }
+        loginProcess();
     }
     
     @FXML private void btnRegister_Action(ActionEvent event)
@@ -52,6 +47,30 @@ public class LoginFormController implements Initializable
     @FXML private void btnExit_Action(ActionEvent event) 
     {
         closeForm();
+    }
+    
+    public void setKeyboardListener()
+    {
+        Scene scene = mainAnchorPane.getScene();
+        
+        //Add Keyboard listener event for pressing enter instead of clicking button.
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent event) -> {    
+            if(event.getCode() == KeyCode.ENTER)
+            {
+                loginProcess();
+                event.consume();
+            }
+        });
+    }
+    
+    private void loginProcess()
+    {
+        //Check that username and password fields arent empty
+        if(txtUsername.getText().equals("") || txtPassword.getText().equals(""))
+            StageManager.loadPopupMessage("Warning", "Please enter your username and password. "
+                    + "If you don't have an account please use the register page.", ButtonTypeEnum.OK);
+        else
+            attemptLogin();
     }
     
     private void attemptLogin()

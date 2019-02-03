@@ -10,7 +10,9 @@ public class QuestionaireManager
     private static Question currentQuestion;
     private static FollowUpFlow currentFollowUp;
     private static ArrayList<Integer> flaggedQuestions;
+    private static int failedQuestions;
     private static Child currentChild;
+    private static boolean followUpCompleted = false;
     
     public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes)
     {
@@ -34,7 +36,7 @@ public class QuestionaireManager
     public static void saveFirstStageScore(boolean finished)
     {
         DatabaseManager dbManager = new DatabaseManager();
-        String text = getResultInfo();
+        String text = getResultInfo(1);
         String[] result = text.split("\n");
         int score = flaggedQuestions.size();
         
@@ -53,22 +55,36 @@ public class QuestionaireManager
         }
     }
     
-    public static String getResultInfo()
+    public static String getResultInfo(int stage)
     {
         DatabaseManager db = new DatabaseManager();
         String riskText = "";
-        
-        int score = flaggedQuestions.size();
         int riskId;
         
-        if(score <= 2) riskId = 1;
-        else if(score <= 7) riskId = 2;
-        else riskId = 3;
-        
-        if(db.connect())
+        if(stage == 1)
         {
-            riskText = db.getResultInfo(riskId);
-            db.disconnect();
+            int score = flaggedQuestions.size();
+
+            if(score <= 2) riskId = 1;
+            else if(score <= 7) riskId = 2;
+            else riskId = 3;
+
+            if(db.connect())
+            {
+                riskText = db.getResultInfo(riskId);
+                db.disconnect();
+            }
+        }
+        else
+        {
+            if(failedQuestions >= 2) riskId = 4;
+            else riskId = 5;
+            
+            if(db.connect())
+            {
+                riskText = db.getResultInfo(riskId);
+                db.disconnect();
+            }
         }
         return riskText;
     }
@@ -96,8 +112,14 @@ public class QuestionaireManager
         return currentFollowUp;
     }
     
+    public static void setFollowUpCompleted(boolean completed) { followUpCompleted = completed; }
+    public static void setFailedQuestions(int failed) { failedQuestions = failed; }
     public static void setCurrentChild(Child child) { currentChild = child; }
-    public static Child getCurrentChild() { return currentChild; }
-    public static ArrayList<Integer> getFlaggedQuestions() { return flaggedQuestions; }
     public static void setFollowUpMap(HashMap<Integer, FollowUpFlow> followup) { followUpMap = followup; }
+    
+    public static Child getCurrentChild() { return currentChild; }
+    public static boolean getFollowUpCompleted() { return followUpCompleted; }
+    public static int getFailedQuestions() { return failedQuestions; }
+    public static ArrayList<Integer> getFlaggedQuestions() { return flaggedQuestions; }
+    
 }

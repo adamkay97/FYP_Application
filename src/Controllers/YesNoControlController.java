@@ -1,5 +1,6 @@
 package Controllers;
 
+import Enums.FlowBranchEnum;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -9,25 +10,29 @@ import javafx.scene.control.Label;
 
 public class YesNoControlController implements Initializable 
 {
-    @FXML private Label lblQuestionText;
+    @FXML private Label lblQuestionText;    
     
     private FollowUpContentController followUpController;
-    
+
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }   
+    public void initialize(URL url, ResourceBundle rb) { }   
     
-    @FXML
-    void btnNo_Action(ActionEvent event) {
-
+    @FXML public void btnNo_Action(ActionEvent event) 
+    {
+        FlowBranchEnum result = FlowBranchEnum.No;      
+        
+        followUpController.setCurrentNodeAnswer("No");
+        followUpController.loadNextFollowUpPart(result);
     }
 
-    @FXML
-    void btnYes_Action(ActionEvent event) {
-
+    @FXML public void btnYes_Action(ActionEvent event) 
+    {
+        FlowBranchEnum result = FlowBranchEnum.Yes;
+        
+        followUpController.setCurrentNodeAnswer("Yes");
+        followUpController.loadNextFollowUpPart(result);
     }
     
-    public void setFollowUpController(FollowUpContentController controller) { followUpController = controller; } 
     public void setQuestionText(String text) { lblQuestionText.setText(text); }
+    public void setFollowUpController(FollowUpContentController controller) { followUpController = controller; }
 }

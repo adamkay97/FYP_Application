@@ -1,5 +1,7 @@
 package Controllers;
 
+import Classes.StageManager;
+import Enums.ButtonTypeEnum;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,8 +23,16 @@ public class ExampleControlController implements Initializable
 
     @FXML public void btnContinue_Action(ActionEvent event) 
     {
-        //TODO:: SaveAnswer
-        followUpController.loadNextFollowUpPart(null);
+        if(!txtExample.getText().equals(""))
+        {
+            followUpController.setCurrentNodeAnswer(lblQuestionText.getText() + " = " + txtExample.getText());
+            followUpController.loadNextFollowUpPart(null);
+        }
+        else
+        {
+            String errMsg = "Please make sure you have provided an example before proceeding.";
+            StageManager.loadPopupMessage("Warning", errMsg, ButtonTypeEnum.OK);
+        }
     }
     
     public void setFollowUpController(FollowUpContentController controller) { followUpController = controller; } 
