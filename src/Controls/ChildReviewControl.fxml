@@ -8,13 +8,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ChildReviewControlController">
+<AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.ChildReviewControlController">
    <children>
       <HBox layoutX="3.0" layoutY="3.0" prefHeight="300.0" prefWidth="519.0">
          <children>
             <Pane fx:id="pnlLeft" prefHeight="228.0" prefWidth="173.0" style=": ;">
                <children>
-                  <ImageView fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgIconLeft" fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Icons/user-circle.png" />
                      </image>
@@ -52,7 +52,7 @@
             </Pane>
             <Pane fx:id="pnlMiddle" prefHeight="228.0" prefWidth="173.0" style=": ;">
                <children>
-                  <ImageView fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgIconMid" fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Icons/user-circle.png" />
                      </image>
@@ -87,7 +87,7 @@
             </Pane>
             <Pane fx:id="pnlRight" prefHeight="228.0" prefWidth="173.0" style=": ;">
                <children>
-                  <ImageView fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgIconRight" fitHeight="130.0" fitWidth="121.0" layoutX="26.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Icons/user-circle.png" />
                      </image>

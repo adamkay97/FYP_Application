@@ -1,5 +1,7 @@
 package Classes;
 
+import Enums.QuestionAnswer;
+
 public class Question 
 {
     private final int questionID;

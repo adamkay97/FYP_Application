@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.ChecklistControlController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.ChecklistControlController">
    <children>
       <Label fx:id="lblChecklistText" layoutX="15.0" layoutY="20.0" prefHeight="44.0" prefWidth="622.0" text="ChecklistText" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>

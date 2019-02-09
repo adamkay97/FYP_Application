@@ -51,6 +51,7 @@ public class TreeNode
     public String getQuestionText() { return text; }
     public FlowBranchEnum getFlowBranch() { return branch; }
     public QuestionTypeEnum getQuestionType() { return type; }
+    public String getNodeAnswer() { return answer; } 
     
     public void setNodeAnswer(String s) { answer = s; } 
 }

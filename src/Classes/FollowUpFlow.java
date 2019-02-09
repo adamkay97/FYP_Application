@@ -54,7 +54,29 @@ public class FollowUpFlow
         return allBranches;
     }
     
+    public String getFollowUpNodeResults()
+    {
+        //String results = "";
+        TreeNode nextNode = null;
+        
+        
+        for (TreeNode child : currentNode.getChildren()) 
+        {
+            if(!child.getNodeAnswer().equals(""))
+                nextNode = child;
+        }
+        
+        if(nextNode != null)
+        {   
+            currentNode = nextNode;
+            return currentNode.getNodeAnswer() + "%" + getFollowUpNodeResults();
+        }
+        
+        return "";
+    }
+    
     public void traverseTreeLevel(FlowBranchEnum branch) { currentNode = currentNode.returnNextNode(branch); }
+    public void resetCurrentNode() { currentNode = rootNode; }
     
     public void setCurrentAnswer(String answer) { currentNode.setNodeAnswer(answer); }
     public void setFinalResult(String result) { finalResult = result; }

@@ -32,7 +32,7 @@
                <children>
                   <Pane prefHeight="228.0" prefWidth="90.0">
                      <children>
-                        <ImageView fx:id="btnLeftArrow" fitHeight="117.0" fitWidth="65.0" layoutX="10.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="btnLeftArrow" fitHeight="117.0" fitWidth="65.0" layoutX="10.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../Icons/arrow-left.png" />
                            </image>
@@ -42,10 +42,17 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <StackPane fx:id="stackPaneChildView" prefHeight="300.0" prefWidth="519.0" />
+                  <StackPane fx:id="stackPaneChildView" prefHeight="300.0" prefWidth="519.0">
+                     <children>
+                        <Label fx:id="lblNoCases" prefHeight="93.0" prefWidth="354.0" text="There are currently no finished cases for review." textAlignment="CENTER" visible="false" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="26.0" />
+                           </font>
+                        </Label>
+                     </children></StackPane>
                   <Pane prefHeight="228.0" prefWidth="90.0">
                      <children>
-                        <ImageView fx:id="btnRightArrow" fitHeight="117.0" fitWidth="65.0" layoutX="10.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="btnRightArrow" fitHeight="117.0" fitWidth="65.0" layoutX="10.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" visible="false">
                            <image>
                               <Image url="@../Icons/arrow-right.png" />
                            </image>

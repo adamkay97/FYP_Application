@@ -1,5 +1,6 @@
 package Controllers;
 
+import Classes.QuestionaireManager;
 import Classes.StageManager;
 import Enums.ButtonTypeEnum;
 import com.jfoenix.controls.*;
@@ -55,43 +56,54 @@ public class MainFormController implements Initializable
     } 
     
     //FXML Actions
-    @FXML private void btnMenuStart_Action(ActionEvent event)
+    @FXML public void btnMenuStart_Action(ActionEvent event)
     {
-        StageManager.loadContentScene(StageManager.INSTRUCTIONS);
-        setSelectedMenuButton("Start");
+        if(allowFormChange())
+        {
+            StageManager.loadContentScene(StageManager.INSTRUCTIONS);
+            setSelectedMenuButton("Start");
+        }
     }
     
-    @FXML private void btnMenuInfo_Action(ActionEvent event)
+    @FXML public void btnMenuInfo_Action(ActionEvent event)
     {
-        StageManager.loadContentScene(StageManager.MAININFO);
-        setSelectedMenuButton("Info");
+        if(allowFormChange())
+        {
+            StageManager.loadContentScene(StageManager.MAININFO);
+            setSelectedMenuButton("Info");
+        }
     }
     
-    @FXML private void btnMenuReview_Action(ActionEvent event)
+    @FXML public void btnMenuReview_Action(ActionEvent event)
     {
-        StageManager.loadContentScene(StageManager.REVIEW);
-        setSelectedMenuButton("Review");
+        if(allowFormChange())
+        {
+            StageManager.loadContentScene(StageManager.REVIEW);
+            setSelectedMenuButton("Review");
+        }
     }
     
-    @FXML private void btnMenuSettings_Action(ActionEvent event)
+    @FXML public void btnMenuSettings_Action(ActionEvent event)
     {
-        StageManager.loadContentScene(StageManager.SETTINGS);
-        setSelectedMenuButton("Settings");
+        if(allowFormChange())
+        {
+            StageManager.loadContentScene(StageManager.SETTINGS);
+            setSelectedMenuButton("Settings");
+        }
     }
     
-    @FXML private void btnLogout_Action(ActionEvent event)
+    @FXML public void btnLogout_Action(ActionEvent event)
     {
-        //StageManager.loadPopupMessage("Warning", "Are you sure you want to logout? If you are "
-                //+ "part way through the diagnosis your progress will not be saved.", ButtonTypeEnum.YESNO);
-        
-        //TODO: If yes then:
-        quitMainForm();
-        StageManager.loadForm(StageManager.LOGIN, new Stage());
+        if(allowFormChange())
+        {
+            quitMainForm();
+            StageManager.loadForm(StageManager.LOGIN, new Stage());
+        }
     }
     
-    @FXML private void btnMenuQuit_Action(ActionEvent event) { quitMainForm(); }
-    @FXML private void btnMinimize_Click(ActionEvent event) { minimizeMainForm(); }
-    @FXML private void btnQuit_Click(ActionEvent event) { quitMainForm(); }
+    @FXML public void btnMenuQuit_Action(ActionEvent event) { quitMainForm(); }
+    @FXML public void btnMinimize_Click(ActionEvent event) { minimizeMainForm(); }
+    @FXML public void btnQuit_Click(ActionEvent event) { quitMainForm(); }
     
     /**
      * Replaces the current scene in the Main
@@ -205,6 +217,27 @@ public class MainFormController implements Initializable
         }
         
         currentPage = page;
+    }
+    
+    private boolean allowFormChange()
+    {
+        boolean allow = true;
+        
+        //Checks to see if a diagnosis is in progress
+        if(StageManager.getInProgress())
+        {
+            //If it is ask for confirmation to leave as progress is not saved
+            String msg = "Are you sure you want to leave the diagnosis? Your progress will not be saved." ;
+            allow = StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.YESNO);
+            
+            //If they select yes to leave, reset Question maps on manager.
+            if(allow)
+            {
+                QuestionaireManager.resetQuestionaireManager();
+                StageManager.setInProgress(false);
+            }
+        }
+        return allow;
     }
      
     private void setControlsVisible(Boolean visible)

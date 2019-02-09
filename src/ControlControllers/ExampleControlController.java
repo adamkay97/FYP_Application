@@ -1,6 +1,7 @@
-package Controllers;
+package ControlControllers;
 
 import Classes.StageManager;
+import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
 import java.net.URL;
 import java.util.ResourceBundle;

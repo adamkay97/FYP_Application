@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="80.0" maxWidth="648.0" minHeight="80.0" minWidth="648.0" prefHeight="80.0" prefWidth="648.0" style="-fx-border-color: #1E90FF; -fx-border-radius: 3px; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.QuestionReviewControlController">
+   <children>
+      <HBox layoutY="-4.0" prefHeight="80.0" prefWidth="648.0" spacing="10.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+         <children>
+            <Pane prefHeight="74.0" prefWidth="138.0">
+               <children>
+                  <Label fx:id="lblQuestionNumber" alignment="CENTER" prefHeight="74.0" prefWidth="131.0" text="QNum" textAlignment="CENTER">
+                     <font>
+                        <Font name="Berlin Sans FB" size="24.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="80.0" layoutX="130.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="2.5" />
+               </children>
+            </Pane>
+            <VBox prefHeight="74.0" prefWidth="374.0">
+               <children>
+                  <Label fx:id="lblQuestionAnswer" prefHeight="40.0" prefWidth="374.0" text="Question Answer: ">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblASDRisk" prefHeight="40.0" prefWidth="374.0" text="ASD Risk: ">
+                     <font>
+                        <Font name="Berlin Sans FB" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Pane prefHeight="74.0" prefWidth="132.0">
+               <children>
+                  <Button fx:id="btnView" alignment="CENTER" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnView_Action" prefHeight="44.0" prefWidth="89.0" stylesheets="@../Styles/SmallBtnStyles.css" text="View" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="80.0" layoutX="-1.0" layoutY="-3.0" stroke="BLACK" strokeType="INSIDE" width="2.5" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

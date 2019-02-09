@@ -8,8 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="Controllers.SettingsContentController">
+<AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.SettingsContentController">
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -20,6 +19,13 @@
             </Label>
          </children>
       </Pane>
-      <AnchorPane layoutX="32.0" layoutY="173.0" prefHeight="423.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" />
+      <AnchorPane layoutX="32.0" layoutY="173.0" prefHeight="423.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;">
+         <children>
+            <Button fx:id="btnTest" layoutX="268.0" layoutY="171.0" mnemonicParsing="false" onAction="#btnTest_Action" prefHeight="65.0" prefWidth="162.0" stylesheets="@../Styles/BigBtnStyles.css" text="TEST" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

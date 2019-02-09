@@ -46,27 +46,15 @@ public class FinishQuestionaireContentController implements Initializable
         {
             lblHeader.setText("M-CHAT-R/F Diagnosis");
             lblScoreText.setText("You have now completed the second part of the Diagnosis.\n" +
-                                    "The score below represents the amount of follow up questions answered that were a Fail.");
+                                "The score below represents the amount of follow up questions answered that had a Fail result.");
             btnContinue.setText("Done");
             
             int failedQuestions = QuestionaireManager.getFailedQuestions();
             lblScore.setText(Integer.toString(failedQuestions) + " / " + Integer.toString(atRiskQuestions));
             
             atRiskText = QuestionaireManager.getResultInfo(2);
-            lblRiskText.setText(atRiskText);
+            lblRiskText.setText(atRiskText);         
             
-//            if(failedQuestions >= 2)
-//            {
-//                lblRiskText.setText("Screened Positive: 2 or more of the follow up questions were failed wich deems the "
-//                                    + "overall diagnosis as a positive screening. It is strongly recommended that your child is referred "
-//                                    + "for early intervention and diagnostic testing as soon as possible.");
-//            }
-//            else
-//            {
-//                lblRiskText.setText("Screened Negative: 1 or less of the follow up questions were failed wich deems the "
-//                                    + "overall diagnosis as a negative screening. If you or the healthcare provider still has"
-//                                    + "concerns about ASD then children should be referred for evaluation no matter the score from this diagnosis.");
-//            }
             followUp = false;  
         }
     }    
@@ -77,19 +65,23 @@ public class FinishQuestionaireContentController implements Initializable
         {
             if(followUp)
             {
-                QuestionaireManager.saveFirstStageScore(false);
+                QuestionaireManager.saveFirstStageScore();
                 StageManager.loadContentScene(StageManager.FOLLOWUP);
             }
             else
             {
-                QuestionaireManager.saveFirstStageScore(true);
+                QuestionaireManager.saveFirstStageScore();
+                QuestionaireManager.resetQuestionaireManager();
                 StageManager.loadContentScene(StageManager.INSTRUCTIONS);
+                StageManager.setInProgress(false);
             }
         }
         else
         {
-            //Save final score
+            QuestionaireManager.saveSecondStageScore();
+            QuestionaireManager.resetQuestionaireManager();
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
+            StageManager.setInProgress(false);
         }
     }
 }

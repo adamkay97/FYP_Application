@@ -1,5 +1,6 @@
 package Controllers;
 
+import ControlControllers.ChildReviewControlController;
 import Classes.Child;
 import Classes.DatabaseManager;
 import java.io.IOException;
@@ -10,10 +11,12 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -26,6 +29,7 @@ public class ReviewContentController implements Initializable
     @FXML private ImageView btnRightArrow;
     @FXML private StackPane stackPaneChildView;
     @FXML private AnchorPane mainAnchorPane;
+    @FXML private Label lblNoCases;
     
     private ArrayList<Parent> childViewControls;
     private int controlIndex;
@@ -36,21 +40,27 @@ public class ReviewContentController implements Initializable
         DatabaseManager dbManager = new DatabaseManager();
         childViewControls = new ArrayList<>();
         controlIndex = 0;
-        
+   
         if(dbManager.connect())
         {
             //Load children from the database to be added to the review control 
             ArrayList<Child> childList = dbManager.loadChildren();
             dbManager.disconnect();
             
-            loadChildView(childList);
-            
-            //If a control exists add the first one to the stack;
-            if(childViewControls.size() > 0)
-                stackPaneChildView.getChildren().add(childViewControls.get(controlIndex));
-            
-            setArrowButtonEvents();
+            //Runs below in a seperate thread, adding the work to the FX queue
+            //Means form can be loaded straight away without waiting for controls to load
+            Platform.runLater(() -> 
+            {
+                loadChildView(childList);
+
+                //If a control exists add the first one to the stack;
+                if(childViewControls.size() > 0)
+                    stackPaneChildView.getChildren().add(childViewControls.get(controlIndex));
+
+                setArrowButtonEvents();
+            });
         }
+        
     }    
     
     /**
@@ -63,27 +73,26 @@ public class ReviewContentController implements Initializable
         //need to be added to the view control
         if(childList.isEmpty())
         {
-            //SetNoChildren
+            lblNoCases.setVisible(true);
             return;
         }
             
-        //If the list is less than 3 only need one control so disable 
-        //the arrows and create one control with the current children
+        //If the list is less than 3 only need one control
         if(childList.size() <= 3)
-        {
-            setArrowVisible(false, btnLeftArrow);
-            setArrowVisible(false, btnRightArrow);
             createChildControl(childList);
-        }
         else
         {
             ArrayList<Child> shortList = new ArrayList<>();
+            
+            //Enable arrows for when there are more than 3 children
+            setArrowVisible(true, btnLeftArrow);
+            setArrowVisible(true, btnRightArrow);
             
             //Else for each child in the list add to a shorter list that will only ever have a max size of 3
             for (Child child : childList)
             {
                 shortList.add(child);
-                
+
                 //When the list is at its max pass to the control creater and then empty the list
                 if(shortList.size() == 3)
                 {
@@ -93,7 +102,7 @@ public class ReviewContentController implements Initializable
             }
             //If there are any children left that need to be added to the controls add them
             if(shortList.size() > 0)
-                createChildControl(shortList);
+                createChildControl(shortList);   
         }
     }
     

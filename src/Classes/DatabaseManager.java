@@ -196,7 +196,41 @@ public class DatabaseManager
         return null;
     }
     
-    
+    public ArrayList<ReviewData> loadReviewData(int childId, int userId)
+    {
+        ArrayList<ReviewData> reviewDataList = new ArrayList<>();
+        
+        String query = "SELECT dr.QuestionID, ql.QuestionText, dr.QuestionAnswer, dr.QuestionNotes, dr.FollowUpResult, dr.FollowUpAnswers "
+                    + "FROM DiagnosisReviewData dr "
+                    + "JOIN QuestionList ql ON dr.QuestionID = ql.QuestionID "
+                    + "WHERE dr.ChildID = ? AND dr.UserID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setInt(1, childId);
+            pstmt.setInt(2, userId);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                int qId = results.getInt("QuestionID");
+                String qText = results.getString("QuestionText");
+                String qAnswer = results.getString("QuestionAnswer");
+                String qNotes = results.getString("QuestionNotes");
+                String fResult = results.getString("FollowUpResult");
+                String fAnswer = results.getString("FollowUpAnswers");
+                
+                ReviewData reviewData = new ReviewData(qId, qText, qAnswer, qNotes, fResult, fAnswer);
+                reviewDataList.add(reviewData);
+            }
+            return reviewDataList;
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the Review Data from the db - " + ex.getMessage());
+        }
+        return null;
+    }
     
     public boolean checkUserExists(String username)
     {
@@ -271,7 +305,6 @@ public class DatabaseManager
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
-            //pstmt.setInt(1, child.getChildId());
             pstmt.setInt(1, child.getCurrentUserId());
             pstmt.setString(2, child.getChildName());
             pstmt.setInt(3, child.getChildAge());
@@ -293,6 +326,29 @@ public class DatabaseManager
         return success;
     }
     
+    public void writeDiagnosisToDatabase(int uId, int cId, int qId, String qAnswer, 
+            String qNotes, String fResult, String fText)
+    {
+        String query = "INSERT INTO DiagnosisReviewData (UserID, ChildID, QuestionID, QuestionAnswer, QuestionNotes, "
+                       + "FollowUpResult, FollowUpAnswers) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setInt(1, uId);
+            pstmt.setInt(2, cId);
+            pstmt.setInt(3, qId);
+            pstmt.setString(4, qAnswer);
+            pstmt.setString(5, qNotes);
+            pstmt.setString(6, fResult);
+            pstmt.setString(7, fText);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when writing review data to the db - " + ex.getMessage());
+        }
+    }
+    
     public void updateChildScore(String scoreText, int score, int childId)
     {
         String query = "UPDATE Children SET ResultText = ?, ResultScore = ? WHERE ChildID = ?";
@@ -302,6 +358,21 @@ public class DatabaseManager
             pstmt.setString(1, scoreText);
             pstmt.setInt(2, score);
             pstmt.setInt(3, childId);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when updating childs score to the db - " + ex.getMessage());
+        }
+    }
+    
+    public void removeCurrentChild(int childId)
+    {
+        String query = "DELETE FROM Children WHERE ChildID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setInt(1, childId);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -330,7 +401,7 @@ public class DatabaseManager
         return id;
     }
     
-    public String getResultInfo(int riskId)
+    public String getResultInfo(int riskId, int stage)
     {
         String query = "SELECT * FROM ScoringRisk WHERE ScoringRiskID = ?";
         String resultText = "";
@@ -342,7 +413,9 @@ public class DatabaseManager
             
             while(results.next())
             {
-                resultText = results.getString("RiskLevel") + "\n";
+                if(stage == 1)
+                    resultText = results.getString("RiskLevel") + "\n";
+                
                 resultText += results.getString("RiskText");
             }
         }

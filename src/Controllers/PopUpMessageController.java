@@ -17,14 +17,12 @@ public class PopUpMessageController implements Initializable
     @FXML private Pane pnlYesNoBtn;
     @FXML private Label lblMessage;
     @FXML private Label lblPopupHeader;
-    @FXML private Button btnOk;
-    @FXML private Button btnYes;
-    @FXML private Button btnNo;
+    @FXML public Button btnOk;
+    @FXML public Button btnYes;
+    @FXML public Button btnNo;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     public void setPopupContent(String headerText, String messageText, ButtonTypeEnum buttonType)
     {
@@ -42,7 +40,7 @@ public class PopUpMessageController implements Initializable
         }
     }
     
-    public void btnOk_Action(ActionEvent e)
+    @FXML public void btnOk_Action(ActionEvent e)
     {
         Stage currentStage = (Stage)mainAnchorPane.getScene().getWindow();
         currentStage.close();

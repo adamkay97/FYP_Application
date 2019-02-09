@@ -1,6 +1,6 @@
 package Controllers;
 
-import Classes.QuestionAnswer;
+import Enums.QuestionAnswer;
 import Classes.QuestionaireManager;
 import Classes.StageManager;
 import Enums.ButtonTypeEnum;

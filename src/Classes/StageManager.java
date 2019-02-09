@@ -16,6 +16,7 @@ public class StageManager
     public static final String MAIN = "/Forms/MainForm.fxml";
     public static final String INSTRUCTIONS = "/Forms/InstructionsContent.fxml";
     public static final String REVIEW = "/Forms/ReviewContent.fxml";
+    public static final String INDIREVIEW = "/Forms/IndividualReviewContent.fxml";
     public static final String SETTINGS = "/Forms/SettingsContent.fxml";
     public static final String MAININFO = "/Forms/InformationContent.fxml";
     public static final String MCHATINFO = "/Forms/MCHATInfoContent.fxml";
@@ -40,6 +41,9 @@ public class StageManager
     private static double offsetX = 0;
     private static double offsetY = 0;
     
+    private static boolean inProgress;
+    private static boolean popupAnswer;
+    
     /**
      * Loads the scene passed as a parameter into
      * the main content stack pane on the main form 
@@ -60,6 +64,24 @@ public class StageManager
     }
     
     /**
+     * Loads the scene passed as a parameter into
+     * the main content stack pane on the main form
+     * Used when scene needs function needs to be called on controller
+     * @param root actual scene to be loaded into main form
+     */
+    public static void loadContentSceneParent(Parent root)
+    {
+        try
+        {
+            mainFormController.setScene(root);
+        }
+        catch(Exception ex) 
+        {
+            System.out.println("Failed loading scene = " + ex.getMessage());
+        }
+    }
+    
+    /**
      * Loads a new stage for a pop up message, 
      * this could be used for errors or warning messages
      * that require a simple yes no input from the user
@@ -67,32 +89,52 @@ public class StageManager
      * @param headerText - Text for header on pop up
      * @param messageText - Text for actual message
      * @param buttonType - enum for button type that is wanted to be shown
+     * @return boolean for when a Yes/No pop up is required
      */
-    public static void loadPopupMessage(String headerText, String messageText, ButtonTypeEnum buttonType)
+    public static boolean loadPopupMessage(String headerText, String messageText, ButtonTypeEnum buttonType)
     {
         try
         {
+            //Initialise bool for 'OK' pop up types
+            popupAnswer = false;
+            
+            //Load popup form, pass variables to Popup controller for setting the text on the popup
             FXMLLoader loader = new FXMLLoader(StageManager.class.getResource(POPUP));
-
             Parent root = (Parent)loader.load();
             Scene popup = new Scene(root);
             PopUpMessageController popupController = loader.<PopUpMessageController>getController();
-            
             popupController.setPopupContent(headerText, messageText, buttonType);
             
             Stage popupStage = new Stage();
-            
             setFormMoveHandlers(root, popupStage);
             
+            //Add event handlers for YesNo popup buttons
+            if(buttonType == ButtonTypeEnum.YESNO)
+            {
+                popupController.btnYes.setOnAction(e -> 
+                {
+                    popupAnswer = true;
+                    popupStage.close();
+                });
+                
+                popupController.btnNo.setOnAction(e -> 
+                {
+                    popupAnswer = false;
+                    popupStage.close();
+                });
+            }
+            
+            //Set pop up style to Undecorated, set Modality to freeze rest of application until popup is closed
             popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.initModality(Modality.APPLICATION_MODAL);
             popupStage.setScene(popup);
-            popupStage.show();
+            popupStage.showAndWait();
         }
         catch(IOException ex)
         {
             System.out.println("Failed loading pop up message - " + ex.getMessage());
         }
-        
+        return popupAnswer;
     }    
 
     /**
@@ -167,6 +209,9 @@ public class StageManager
     {
         return StageManager.mainFormController;
     }
+    
+    public static void setInProgress(boolean start) { inProgress = start; }
+    public static boolean getInProgress() { return inProgress; }
     
     public static void setCurrentUser(User user) { currentUser = user; }
     public static User getCurrentUser() { return currentUser; }

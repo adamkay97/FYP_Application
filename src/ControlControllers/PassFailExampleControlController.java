@@ -1,4 +1,4 @@
-package Controllers;
+package ControlControllers;
 
 import com.jfoenix.controls.JFXRadioButton;
 import java.net.URL;

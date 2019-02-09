@@ -1,5 +1,6 @@
-package Controllers;
+package ControlControllers;
 
+import Controllers.FollowUpContentController;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;

@@ -1,31 +1,42 @@
-package Controllers;
+package ControlControllers;
 
 import Classes.Child;
+import Classes.StageManager;
+import Controllers.IndividualReviewContentController;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 public class ChildReviewControlController implements Initializable 
 {
     @FXML private Pane pnlLeft;
+    @FXML private ImageView imgIconLeft;
     @FXML private Label txtLeftName;
     @FXML private Label txtLeftAge;
     @FXML private Label txtLeftRisk;
     private Child leftChild;
     
     @FXML private Pane pnlMiddle;
+    @FXML private ImageView imgIconMid;
     @FXML private Label txtMidName;
     @FXML private Label txtMidAge;
     @FXML private Label txtMidRisk;
     private Child midChild;
     
     @FXML private Pane pnlRight;
+    @FXML private ImageView imgIconRight;
     @FXML private Label txtRightName;
     @FXML private Label txtRightAge;
     @FXML private Label txtRightRisk;
@@ -34,9 +45,7 @@ public class ChildReviewControlController implements Initializable
     private ArrayList<Child> childList;
  
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-    }    
+    public void initialize(URL url, ResourceBundle rb){}    
     
     /**
      * Depending on the number of children that are to be added to the control
@@ -58,7 +67,7 @@ public class ChildReviewControlController implements Initializable
                 txtMidAge.setText("Age: " + Integer.toString(midChild.getChildAge()));
                 txtMidRisk.setText(midChild.getResultText());
                 
-                createEventHandler(pnlMiddle);
+                createEventHandler(imgIconMid);
                 break;
             case 2:
                 pnlMiddle.setDisable(true);
@@ -75,8 +84,8 @@ public class ChildReviewControlController implements Initializable
                 txtRightAge.setText("Age: " + Integer.toString(rightChild.getChildAge()));
                 txtRightRisk.setText(rightChild.getResultText());
                 
-                createEventHandler(pnlLeft);
-                createEventHandler(pnlRight);
+                createEventHandler(imgIconLeft);
+                createEventHandler(imgIconRight);
                 break;
             default:
                 leftChild = childList.get(0);
@@ -95,9 +104,9 @@ public class ChildReviewControlController implements Initializable
                 txtRightAge.setText("Age: " + Integer.toString(rightChild.getChildAge()));
                 txtRightRisk.setText(rightChild.getResultText());
                 
-                createEventHandler(pnlLeft);
-                createEventHandler(pnlMiddle);
-                createEventHandler(pnlRight);
+                createEventHandler(imgIconLeft);
+                createEventHandler(imgIconMid);
+                createEventHandler(imgIconRight);
                 break;
         }
     }
@@ -107,11 +116,39 @@ public class ChildReviewControlController implements Initializable
      * to take user to the designated child review page 
      * @param pane The control to add an event to
      */
-    private void createEventHandler(Pane pane)
+    private void createEventHandler(ImageView imgView)
     {
-        //pane.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> {
+        imgView.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent event) -> 
+        {
+            Child currentChild;
             
-        //});
+            if(imgView.getId().equals("imgIconMid"))
+                currentChild = midChild;
+            else if(imgView.getId().equals("imgIconLeft"))
+                currentChild = leftChild;
+            else
+               currentChild = rightChild;
+            
+            loadIndividualReviewContent(currentChild);
+        });
+    }
+    
+    private void loadIndividualReviewContent(Child currentChild)
+    {
+        try 
+        {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(StageManager.INDIREVIEW));
+            Parent root = (Parent)loader.load();
+
+            IndividualReviewContentController individualReviewContent = loader.<IndividualReviewContentController>getController();
+            individualReviewContent.setupIndividualReviewContent(currentChild.getChildId(), currentChild.getChildName());
+
+            StageManager.loadContentSceneParent(root);
+        } 
+        catch (IOException ex) 
+        {
+            System.out.println("Error when loading IndividualReviewContent - " + ex.getMessage());
+        }
     }
     
     public void setChildList(ArrayList<Child> list) 

@@ -1,5 +1,6 @@
-package Controllers;
+package ControlControllers;
 
+import Controllers.FollowUpContentController;
 import Enums.FlowBranchEnum;
 import java.net.URL;
 import java.util.ResourceBundle;

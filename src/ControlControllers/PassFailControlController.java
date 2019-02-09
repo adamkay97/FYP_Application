@@ -1,6 +1,7 @@
-package Controllers;
+package ControlControllers;
 
 import Classes.StageManager;
+import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
 import Enums.FlowBranchEnum;
 import java.io.IOException;

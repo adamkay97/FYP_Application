@@ -33,8 +33,8 @@ public class ChildDetailsContentController implements Initializable {
 
     @FXML private void btnStartQuestions_Action(ActionEvent event)
     {
-        StageManager.loadContentScene(StageManager.FOLLOWUP);
-        /*if(validateUserInput())
+        //StageManager.loadContentScene(StageManager.FOLLOWUP);
+        if(validateUserInput())
         {
             //Creates child with data needed for database including current users id for review purposes
             int currentUserId = StageManager.getCurrentUser().getUserId();
@@ -47,7 +47,10 @@ public class ChildDetailsContentController implements Initializable {
             //Check if there is already a child created with the exact same info
             if(!checkChildExists(child))
                 if(saveChildInfo(child))
+                {
                     StageManager.loadContentScene(StageManager.QUESTIONAIRE);
+                    StageManager.setInProgress(true);
+                }
         }
         else
         {
@@ -55,7 +58,7 @@ public class ChildDetailsContentController implements Initializable {
                     + "All the fields must be filled in correctly before you can proceed.";
             
             StageManager.loadPopupMessage("Error", messageText, ButtonTypeEnum.OK);
-        }*/
+        }
 
     }
     
