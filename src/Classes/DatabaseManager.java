@@ -140,7 +140,10 @@ public class DatabaseManager
     {
         ArrayList<Child> childList = new ArrayList<>();
         
-        String query = "SELECT * FROM Children WHERE ResultText IS NOT NULL AND UserID = ?";
+        String query = "SELECT c.ChildID, c.UserID, c.Name, c.Age, c.Gender, d.StageOneScore, "
+                     + "d.StageOneRisk, d.StageTwoScore, d.OverallScreening FROM Children c "
+                     + "JOIN DiagnosisResults d "
+                     + "WHERE d.StageOneScore IS NOT NULL AND c.UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {    
@@ -154,9 +157,15 @@ public class DatabaseManager
                 String name = results.getString("Name");
                 int age = results.getInt("Age");
                 String gender = results.getString("Gender");
-                String resultText = results.getString("ResultText");
-                int resultScore = results.getInt("ResultScore");
-                Child child = new Child(id, userId, name, age, gender, resultText, resultScore);
+                
+                int s1Score = results.getInt("StageOneScore");
+                String s1Risk = results.getString("StageOneRisk");
+                int s2Score = results.getInt("StageTwoScore");
+                String screening = results.getString("OverallScreening");
+                
+                DiagnosisResult result = new DiagnosisResult(s1Score, s1Risk, s2Score, screening);
+                
+                Child child = new Child(id, userId, name, age, gender, result);
                 
                 childList.add(child);
             }
@@ -300,8 +309,8 @@ public class DatabaseManager
     public boolean writeChildToDatabase(Child child)
     {
         boolean success = true;
-        String query = "INSERT INTO Children (UserID, Name, Age, Gender, ResultText, ResultScore) "
-                     + "VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Children (UserID, Name, Age, Gender) "
+                     + "VALUES (?, ?, ?, ?)";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
@@ -309,8 +318,6 @@ public class DatabaseManager
             pstmt.setString(2, child.getChildName());
             pstmt.setInt(3, child.getChildAge());
             pstmt.setString(4, child.getChildGender());
-            pstmt.setString(5, child.getResultText());
-            pstmt.setInt(6, child.getResultScore());
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -349,56 +356,53 @@ public class DatabaseManager
         }
     }
     
-    public void updateChildScore(String scoreText, int score, int childId)
+    public void writeChildDiagnosisResult(int userId, int childId, int s1Score, String s1Risk, int s2Score, String result)
     {
-        String query = "UPDATE Children SET ResultText = ?, ResultScore = ? WHERE ChildID = ?";
+        String query = "INSERT INTO DiagnosisResults (UserID, ChildID, StageOneScore, StageOneRisk, StageTwoScore, OverallScreening) "
+                     + "VALUES (?, ?, ?, ?, ?, ?)";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
-            pstmt.setString(1, scoreText);
-            pstmt.setInt(2, score);
-            pstmt.setInt(3, childId);
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, childId);
+            pstmt.setInt(3, s1Score);
+            pstmt.setString(4, s1Risk);
+            pstmt.setInt(5, s2Score);
+            pstmt.setString(6, result);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when updating childs score to the db - " + ex.getMessage());
+            System.out.println("Error when writing childs diagnosis results to the db - " + ex.getMessage());
         }
     }
     
-    public void removeCurrentChild(int childId)
+    public DiagnosisResult getDiagnosisResults(int userId, int childId)
     {
-        String query = "DELETE FROM Children WHERE ChildID = ?";
-        
-        try(PreparedStatement pstmt = conn.prepareStatement(query))
-        {
-            pstmt.setInt(1, childId);
-            pstmt.executeUpdate();
-        }
-        catch(SQLException ex)
-        {
-            System.out.println("Error when updating childs score to the db - " + ex.getMessage());
-        }
-    }
-    
-    public int getLastInsertedRowID(String tableName)
-    {
-        String query = "SELECT seq FROM sqlite_sequence WHERE name = ?";
-        int id = 0;
+        String query = "SELECT * FROM DiagnosisResults WHERE UserID = ? AND ChildID = ?";
+        DiagnosisResult result = null;
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {
-            pstmt.setString(1, tableName);
+            pstmt.setInt(1, userId);
+            pstmt.setInt(2, childId);
             ResultSet results = pstmt.executeQuery();
             
             while(results.next())
-                id = results.getInt("seq");
+            {
+                int s1Score = results.getInt("StageOneScore");
+                String s1Risk = results.getString("StageOneRisk");
+                int s2Score = results.getInt("StageTwoScore");
+                String screening = results.getString("OverallScreening");
+                
+                result = new DiagnosisResult(s1Score, s1Risk, s2Score, screening);
+            }
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
+            System.out.println("Error when getting the diagnosis result information from the db - " + ex.getMessage());
         }
-        return id;
+        return result;
     }
     
     public String getResultInfo(int riskId, int stage)
@@ -425,6 +429,79 @@ public class DatabaseManager
         }
         
         return resultText;
+    }
+    
+    public String getNaoConnectionURL()
+    {
+        String query = "SELECT * FROM RobotData";
+        String url = "";
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+                url = results.getString("RobotConnectionURL");
+            
+            return url;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the users from the db - " + ex.getMessage());
+        }
+        return url;
+    }
+    
+    public void removeCurrentChild(int childId)
+    {
+        String query = "DELETE FROM Children WHERE ChildID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setInt(1, childId);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when updating childs score to the db - " + ex.getMessage());
+        }
+    }
+    
+    public void decreaseSequenceID(String tableName)
+    {
+        int seq = getLastInsertedRowID(tableName);
+        
+        String query = "UPDATE sqlite_sequence SET seq = ? WHERE name = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            pstmt.setInt(1, seq-1);
+            pstmt.setString(2, tableName);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
+        }
+    }
+    
+    public int getLastInsertedRowID(String tableName)
+    {
+        String query = "SELECT seq FROM sqlite_sequence WHERE name = ?";
+        int id = 0;
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            pstmt.setString(1, tableName);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+                id = results.getInt("seq");
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
+        }
+        return id;
     }
     
     public void disconnect()

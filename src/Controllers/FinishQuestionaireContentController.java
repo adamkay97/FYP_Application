@@ -5,6 +5,7 @@ import Classes.QuestionaireManager;
 import Classes.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -65,12 +66,12 @@ public class FinishQuestionaireContentController implements Initializable
         {
             if(followUp)
             {
-                QuestionaireManager.saveFirstStageScore();
+                QuestionaireManager.saveFirstStageScore(followUp);
                 StageManager.loadContentScene(StageManager.FOLLOWUP);
             }
             else
             {
-                QuestionaireManager.saveFirstStageScore();
+                QuestionaireManager.saveFirstStageScore(followUp);
                 QuestionaireManager.resetQuestionaireManager();
                 StageManager.loadContentScene(StageManager.INSTRUCTIONS);
                 StageManager.setInProgress(false);
@@ -78,8 +79,13 @@ public class FinishQuestionaireContentController implements Initializable
         }
         else
         {
-            QuestionaireManager.saveSecondStageScore();
-            QuestionaireManager.resetQuestionaireManager();
+            //Run saving of second stage results after the intructions scene has been 
+            //loaded in a seperate thread to stop the form loading from being held up
+            Platform.runLater(() -> {
+                QuestionaireManager.saveSecondStageScore();
+                QuestionaireManager.resetQuestionaireManager();
+            });
+            
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
             StageManager.setInProgress(false);
         }

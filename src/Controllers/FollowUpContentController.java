@@ -12,6 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,17 +43,19 @@ public class FollowUpContentController implements Initializable
         for (int i : flaggedQuestions)
             followUpList.add(QuestionaireManager.getFollowUpFlow(i));
         
-        //followUpList.add(QuestionaireManager.getFollowUpFlow(3));
+        //followUpList.add(QuestionaireManager.getFollowUpFlow(18));
             
         setupFollowUpQuestion();
     }
     
     private void setupFollowUpQuestion()
     {
-        int qNumber = currentFollowUp.getQuestionNumber();
+        //Check there are still follow up questions to be asked
         if(fIndex < followUpList.size())
         {
+            //If there are, set the currentFollowUp to be the right questions
             currentFollowUp = followUpList.get(fIndex);
+            int qNumber = currentFollowUp.getQuestionNumber();
             String header = qNumber + " : " +
                                 currentFollowUp.getCurrentNodeText().replace("#child#", 
                                     QuestionaireManager.getCurrentChild().getChildName());
@@ -65,6 +68,7 @@ public class FollowUpContentController implements Initializable
         {
             int totalFail = 0;
             
+            //Work out how many of the follow up questions asked recieved a fail screening
             for(FollowUpFlow followUp : followUpList)
             {
                 if(followUp.getFinalResult().equals("FAIL"))
@@ -73,14 +77,28 @@ public class FollowUpContentController implements Initializable
             
             QuestionaireManager.setFailedQuestions(totalFail);
             QuestionaireManager.setFollowUpCompleted(true);
-            StageManager.loadContentScene(StageManager.FINISH);
+            
+            //As question 13 has no corresponding follow up question must be checked
+            if(currentFollowUp.getQuestionNumber() == 13)
+            {
+                //If it is q13, as the first branch is a result two forms cant be loaded within the same
+                //thread so using Plaform.runLater to run the load of the finish scene after the other form thread has finished
+                Platform.runLater(() ->{
+                    StageManager.loadContentScene(StageManager.FINISH);
+                });
+            }
+            else
+                StageManager.loadContentScene(StageManager.FINISH);
         }
     }
     
     public void loadNextFollowUpPart(FlowBranchEnum branch)
     {
+        //Traverses to the next node of the current nodes children depending
+        //on which branch the previous question returned
         currentFollowUp.traverseTreeLevel(branch);
         
+        //If the 
         if(currentFollowUp.getCurrentNodeType() == QuestionTypeEnum.Result)
         {
             if(currentFollowUp.getCurrentNodeText().equals("PASS"))
@@ -89,7 +107,18 @@ public class FollowUpContentController implements Initializable
                 currentFollowUp.setFinalResult("FAIL");
             
             fIndex++;
-            setupFollowUpQuestion();
+            
+            if(currentFollowUp.getQuestionNumber() == 13)
+            {
+                //If it is q13, as the first branch is a result two forms cant be loaded within the same
+                //thread so using Plaform.runLater to run the load of the next scene after the other form thread has finished
+                Platform.runLater(() ->{
+                    setupFollowUpQuestion();
+                });
+            }
+            else
+                setupFollowUpQuestion();
+            
         }
         else
             createNextControl();
@@ -102,6 +131,8 @@ public class FollowUpContentController implements Initializable
         
         try
         {
+            //Depending on which node type the current part of the follow up is,
+            //load the corresponding control, passing in the relevant variables to the control controllers.
             switch(currentFollowUp.getCurrentNodeType())
             {
                 case Example :
@@ -139,15 +170,6 @@ public class FollowUpContentController implements Initializable
                     checklistControl.setFollowUpController(this);
                     checklistControl.setupChecklist(currentFollowUp.getCurrentNodeText());
                     break;
-                
-                /*case Result :
-                    loader = new FXMLLoader(getClass().getResource("/Controls/ResultControl.fxml"));
-                    root = (Parent)loader.load();
-                    
-                    ResultControlController resultControl = loader.<ResultControlController>getController();
-                    resultControl.setFollowUpController(this);
-                    resultControl.setResultText(currentFollowUp.getCurrentNodeText());
-                    break;*/
                     
                 default :
                     break;

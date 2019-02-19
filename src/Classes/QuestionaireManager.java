@@ -8,17 +8,20 @@ public class QuestionaireManager
 {
     private static HashMap<Integer, Question> questionMap;
     private static HashMap<Integer, FollowUpFlow> followUpMap;
-    private static Question currentQuestion;
-    private static ArrayList<Integer> flaggedQuestions;
-    private static int failedQuestions;
     private static Child currentChild;
+    private static Question currentQuestion;
+    
+    private static ArrayList<Integer> flaggedQuestions;
+    
+    private static int stageOneScore;
+    private static String stageOneRisk;
+    private static int failedQuestions;
     private static boolean followUpCompleted = false;
     
     public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes)
     {
         currentQuestion.setQuestionAnswer(qAnswer);
         currentQuestion.setQuestionNotes(qNotes);
-        //questionMap.put(qNumber, currentQuestion);
         
         switch(qAnswer)
         {
@@ -32,24 +35,61 @@ public class QuestionaireManager
                 break;
         }       
     }
-        
-    public static void saveFirstStageScore()
+     
+    /**
+     * After first Stage (M-CHAT-R) has been completed save the score to 
+     * the child. If they don't need to carry out any follow up questions
+     * write that child's question answers and diagnosis results to the database
+     * @param followUp boolean that says whether or not the follow up questions
+     * need to be administered.
+     */
+    public static void saveFirstStageScore(boolean followUp)
     {
         DatabaseManager dbManager = new DatabaseManager();
         String text = getResultInfo(1);
         String[] result = text.split("\n");
-        int score = flaggedQuestions.size();
         
-        currentChild.setResultScore(score);
-        currentChild.setResultText(result[0]);
+        //Save values on QuestionManager for writing the scores to DiagnosisResults
+        //either after first or second stage.
+        stageOneScore = flaggedQuestions.size();
+        stageOneRisk = result[0];
         
-        if(dbManager.connect())
+        if(!followUp)
         {
-            dbManager.updateChildScore(result[0], score, currentChild.getChildId());
-            dbManager.disconnect();
+            if(dbManager.connect())
+            {
+                int userId = StageManager.getCurrentUser().getUserId();
+                int childId = currentChild.getChildId();
+                
+                //Loop through each question in the questionMap
+                for (int i = 1; i <= 20; i++) 
+                {
+                    Question q = questionMap.get(i);
+                    String qAnswer;
+
+                    if(q.getQuestionAnswer() == QuestionAnswer.YES)
+                        qAnswer = "Yes";
+                    else
+                        qAnswer = "No";
+
+                    String qNotes = q.getQuestionNotes();
+                    
+                    //Write each questions answer and notes to db, but as no follow up is required here just n/a.
+                    dbManager.writeDiagnosisToDatabase(userId, childId, i, qAnswer, qNotes, "N/A", "N/A");
+                }
+                
+                dbManager.writeChildDiagnosisResult(userId, childId, stageOneScore, stageOneRisk, 0, "Negative");
+                dbManager.disconnect();
+            }
         }
     }
     
+    /**
+     * After the Second and final stage of the diagnosis has been completed
+     * gather all the data from the questions and follow up questions and write them 
+     * to the database for review purposes, before writing the overall result to the 
+     * DiagnosisResults table.
+     */
     public static void saveSecondStageScore()
     {
         DatabaseManager dbManager = new DatabaseManager();
@@ -57,9 +97,9 @@ public class QuestionaireManager
         int userId = StageManager.getCurrentUser().getUserId();
         int childId = currentChild.getChildId();
         
-        
         if(dbManager.connect())
         {
+            //Loop through each question in the questionMap
             for (int i = 1; i <= 20; i++) 
             {
                 Question q = questionMap.get(i);
@@ -76,6 +116,8 @@ public class QuestionaireManager
                 
                 if(flaggedQuestions.contains(i))
                 {
+                    //If the current question of the loop was one of the failed questions
+                    //get the corresponding followUp question and concat the answers together
                     FollowUpFlow followUp = followUpMap.get(i);
                     followUp.resetCurrentNode();
                     
@@ -84,12 +126,19 @@ public class QuestionaireManager
                 }
                 else
                 {
+                    //Else if this question was not required in the followUp just write n/a
                     fResult = "N/A";
                     fAnswers = "N/A";
                 }
                 
                 dbManager.writeDiagnosisToDatabase(userId, childId, i, qAnswer, qNotes, fResult, fAnswers);
             }
+            
+            //Work out whether the overall screening is positive or negative and then write the full result to the db
+            String overallScreening = failedQuestions >= 2 ? "Positive" : "Negative";
+            dbManager.writeChildDiagnosisResult(userId, currentChild.getChildId(), stageOneScore, 
+                    stageOneRisk, failedQuestions, overallScreening);
+            
             dbManager.disconnect();
         }
     }
@@ -135,9 +184,12 @@ public class QuestionaireManager
             dbManager.loadFollowUpList();
             
             //If the diagnosis was in progress also remove the current child from the db
+            //and decrease the AutoIncrement value in sqlite_sequence table
             if(StageManager.getInProgress())
+            {
                 dbManager.removeCurrentChild(currentChild.getChildId());
-            
+                dbManager.decreaseSequenceID("Children");
+            }
             dbManager.disconnect();
         }
     }

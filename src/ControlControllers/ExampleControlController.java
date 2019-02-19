@@ -26,7 +26,7 @@ public class ExampleControlController implements Initializable
     {
         if(!txtExample.getText().equals(""))
         {
-            followUpController.setCurrentNodeAnswer(lblQuestionText.getText() + " = " + txtExample.getText());
+            followUpController.setCurrentNodeAnswer(lblQuestionText.getText() + "=" + txtExample.getText());
             followUpController.loadNextFollowUpPart(null);
         }
         else

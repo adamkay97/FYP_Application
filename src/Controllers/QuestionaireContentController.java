@@ -2,6 +2,7 @@ package Controllers;
 
 import Enums.QuestionAnswer;
 import Classes.QuestionaireManager;
+import Classes.RobotManager;
 import Classes.StageManager;
 import Enums.ButtonTypeEnum;
 import java.net.URL;
@@ -13,8 +14,6 @@ import javafx.scene.control.*;
 
 public class QuestionaireContentController implements Initializable 
 {
-    @FXML private Button btnYes;
-    @FXML private Button btnNo;
     @FXML private Label lblQuestionText;
     @FXML private Label lblQuestionHeader;
     @FXML private TextArea txtNotes;
@@ -28,7 +27,7 @@ public class QuestionaireContentController implements Initializable
         setQuestionText(qIndex);
     }
     
-    @FXML void btnYes_Action(ActionEvent event) 
+    @FXML public void btnYes_Action(ActionEvent event) 
     {
         String notes = txtNotes.getText();
         
@@ -39,7 +38,7 @@ public class QuestionaireContentController implements Initializable
         }
     }
 
-    @FXML void btnNo_Action(ActionEvent event) 
+    @FXML public void btnNo_Action(ActionEvent event) 
     {
         String notes = txtNotes.getText();
         
@@ -47,6 +46,21 @@ public class QuestionaireContentController implements Initializable
         {
             QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO, notes);
             processAnswer();
+        }
+    }
+    
+    @FXML public void btnPlay_Action(ActionEvent event) 
+    {
+        String question = "Question" + Integer.toString(qIndex);
+        if(RobotManager.connectToRobot())
+            RobotManager.runBehaviour(question);
+        else
+        {
+            String msg = "There appears to be no viable connection to NAO. Do you wish to reset the connection?";
+            boolean reconnect = StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+            
+            if(reconnect)
+                RobotManager.connectToRobot();
         }
     }
     

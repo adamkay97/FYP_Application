@@ -44,6 +44,9 @@ public class StageManager
     private static boolean inProgress;
     private static boolean popupAnswer;
     
+    //Scene for when a childs diagnosis data is being reviewed, for easy access between forms
+    private static Parent currentChildReviewParent;
+    
     /**
      * Loads the scene passed as a parameter into
      * the main content stack pane on the main form 
@@ -53,7 +56,7 @@ public class StageManager
     {
         try
         {
-            mainFormController.setScene(
+            mainFormController.setAllScene(
                 FXMLLoader.load(StageManager.class.getResource(fxmlPath)
             ));
         }
@@ -66,14 +69,14 @@ public class StageManager
     /**
      * Loads the scene passed as a parameter into
      * the main content stack pane on the main form
-     * Used when scene needs function needs to be called on controller
+     * Used when scene needs variables to be passed to the controller
      * @param root actual scene to be loaded into main form
      */
     public static void loadContentSceneParent(Parent root)
     {
         try
         {
-            mainFormController.setScene(root);
+            mainFormController.setAllScene(root);
         }
         catch(Exception ex) 
         {
@@ -215,4 +218,7 @@ public class StageManager
     
     public static void setCurrentUser(User user) { currentUser = user; }
     public static User getCurrentUser() { return currentUser; }
+    
+    public static void setCurrentChildReviewParent(Parent node) { currentChildReviewParent = node; }
+    public static Parent getCurrentChildReviewParent() { return currentChildReviewParent; }
 }

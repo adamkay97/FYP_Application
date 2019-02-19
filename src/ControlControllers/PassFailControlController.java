@@ -44,7 +44,7 @@ public class PassFailControlController implements Initializable
             else
                 result = FlowBranchEnum.Fail;
             
-            followUpController.setCurrentNodeAnswer(lblChecklistText.getText() + " = " + splitAnswer[0]);
+            followUpController.setCurrentNodeAnswer(lblChecklistText.getText() + "=" + splitAnswer[0]);
             followUpController.loadNextFollowUpPart(result);
         }
         else
@@ -66,13 +66,11 @@ public class PassFailControlController implements Initializable
             {
                 String[] splitAnswer = answer.split(";");
                 
-                //If it is load Other control and pass it the text
                 loader = new FXMLLoader(getClass().getResource("/Controls/PassFailExampleControl.fxml"));
                 root = (Parent)loader.load();
 
                 PassFailExampleControlController passFailControl = loader.<PassFailExampleControlController>getController();
                 passFailControl.setExampleControl(splitAnswer[0], splitAnswer[1], answerGroup);
-                //otherControl.setCheckListController(this);
                 
                 vboxCheckExamples.getChildren().add(root);
             }

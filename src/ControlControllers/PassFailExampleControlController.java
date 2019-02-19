@@ -14,9 +14,7 @@ public class PassFailExampleControlController implements Initializable
     @FXML private JFXRadioButton radBtn;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     public void setExampleControl(String text, String pF, ToggleGroup toggleGroup)
     {
@@ -24,6 +22,4 @@ public class PassFailExampleControlController implements Initializable
         radBtn.setToggleGroup(toggleGroup);
         radBtn.setUserData(text+ ";" + pF);
     }
-    
-    //public void setCheckListController(PassFailControlController controller) { passFailController = controller; }
 }

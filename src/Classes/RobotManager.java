@@ -1,56 +1,27 @@
 package Classes;
 
 import com.aldebaran.qi.Application;
-import com.aldebaran.qi.Future;
-import com.aldebaran.qi.AnyObject;
-import com.aldebaran.qi.Session;
+import com.aldebaran.qi.helper.proxies.ALBehaviorManager;
 
 public class RobotManager 
 {
-    public static void main(String[] args) 
-    {
-
-        try
-        {
-            Application app = new Application(args);
-            Session session = new Session();
-            Future<Void> future = session.connect("tcp://nao.local:9559");
-            future.get();
-            synchronized(future) {
-                future.wait(1000);
-            }
-            
-            Object tts = null;
-            tts = session.service("ALTextToSpeech");
-            //tts.call("say", "Hello world");
-        }
-        catch(Exception ex)
-        {
-            System.out.println("Error connecting" + ex.getMessage());
-        }
-    }
+    private static Application application;
+    private static boolean connected;
     
-    /*public static boolean connectToRobot()
+    public static boolean connectToRobot()
     {
-        boolean connected = true;
+        connected = true;
         
-        String url = "";
-        String behaviour = "";
-        String[] args = {"tcp://192.168.0.102:9559"};
         try
         {
-            Application app = new Application(args);
-            app.start();
-            //Session session = new Session();
-            //Future<Void> future = session.connect(url);
-            //future.get();
-            //synchronized(future) {
-                //future.wait(1000);
-            //}
-            
-            //Object behaviourManager = session.service("ALBehaviourManager");
-            //behaviourManager.call("runBehaviour", behaviour).get();
-            
+           //Pass empty args and robot URL to NAOqi Application type
+           //To initiate connecting to NAO.
+           String[] args = {""};
+           String robotUrl = getNaoConnectionURL();
+           application = new Application(args, robotUrl);
+             
+           // Start your application
+           application.start(); 
         }
         catch(Exception ex)
         {
@@ -58,5 +29,37 @@ public class RobotManager
             connected = false;
         }
         return connected;
-    }*/
+    }
+    
+    public static void runBehaviour(String question)
+    {
+        try
+        {
+            ALBehaviorManager behMan = new ALBehaviorManager(application.session());
+            behMan.stopAllBehaviors();
+            String test = behMan.resolveBehaviorName("Questions/"+question);
+            behMan.runBehavior(test);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error when running behaviour for question " + 
+                    question + " - " + ex.getMessage());
+        }
+    }
+    
+    private static String getNaoConnectionURL()
+    {
+        DatabaseManager dbManager = new DatabaseManager();
+        String connectURL = "";
+        
+        if(dbManager.connect())
+        {
+            connectURL = dbManager.getNaoConnectionURL();
+            dbManager.disconnect();
+        }
+        
+        return connectURL;
+    }
+    
+    public boolean getRobotConnected() { return connected; }
 }

@@ -1,10 +1,10 @@
 package Controllers;
 
+import Classes.Child;
 import Classes.DatabaseManager;
 import Classes.ReviewData;
 import Classes.StageManager;
 import ControlControllers.QuestionReviewControlController;
-import ControlControllers.YesNoExampleControlController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,24 +19,40 @@ import javafx.scene.layout.VBox;
 
 public class IndividualReviewContentController implements Initializable 
 {
-    @FXML private Label lblReviewHeader; 
+    @FXML private Label lblReviewHeader;
+    @FXML private Label lblStage1Score;
+    @FXML private Label lblStage1Result;
+    @FXML private Label lblStage2Score;
+    @FXML private Label lblStage2Result;
     @FXML private VBox vboxReviewControls;
     
     @Override
     public void initialize(URL url, ResourceBundle rb){}    
     
-    public void setupIndividualReviewContent(int childId, String childName)
+    public void setupIndividualReviewContent(Child child)
     {
         DatabaseManager dbManager = new DatabaseManager();
         ArrayList<ReviewData> reviewData;
         
-        String header = lblReviewHeader.getText().replace("#child#", childName);
+        //Get and set the labels at the top of the form to be the diagnosis result values from
+        //the child object
+        String header = lblReviewHeader.getText().replace("#child#", child.getChildName());
+        String s1Score = String.format(lblStage1Score.getText() + "%d / 20", child.getDiagnosisResult().getStageOneScore());
+        String s1Risk = lblStage1Result.getText() + child.getDiagnosisResult().getStageOneRisk();
+        String s2Score = String.format(lblStage2Score.getText() + "%d / %d", child.getDiagnosisResult().getStageTwoScore(), 
+                                                                                child.getDiagnosisResult().getStageOneScore());
+        String screening = lblStage2Result.getText() + child.getDiagnosisResult().getOverallScreening();
+        
         lblReviewHeader.setText(header);
+        lblStage1Score.setText(s1Score);
+        lblStage1Result.setText(s1Risk);
+        lblStage2Score.setText(s2Score);
+        lblStage2Result.setText(screening);
         
         if(dbManager.connect())
         {
-            int userId = StageManager.getCurrentUser().getUserId();
-            reviewData = dbManager.loadReviewData(childId, userId);
+            reviewData = dbManager.loadReviewData(child.getChildId(), child.getCurrentUserId());
+            dbManager.disconnect();
             
             loadQuestionReviewControls(reviewData);
         }

@@ -65,7 +65,7 @@ public class ChildReviewControlController implements Initializable
                 
                 txtMidName.setText(midChild.getChildName());
                 txtMidAge.setText("Age: " + Integer.toString(midChild.getChildAge()));
-                txtMidRisk.setText(midChild.getResultText());
+                txtMidRisk.setText(midChild.getDiagnosisResult().getStageOneRisk());
                 
                 createEventHandler(imgIconMid);
                 break;
@@ -78,11 +78,11 @@ public class ChildReviewControlController implements Initializable
                 
                 txtLeftName.setText(leftChild.getChildName());
                 txtLeftAge.setText("Age: " + Integer.toString(leftChild.getChildAge()));
-                txtLeftRisk.setText(leftChild.getResultText());
+                txtLeftRisk.setText(leftChild.getDiagnosisResult().getStageOneRisk());
                 
                 txtRightName.setText(rightChild.getChildName());
                 txtRightAge.setText("Age: " + Integer.toString(rightChild.getChildAge()));
-                txtRightRisk.setText(rightChild.getResultText());
+                txtRightRisk.setText(rightChild.getDiagnosisResult().getStageOneRisk());
                 
                 createEventHandler(imgIconLeft);
                 createEventHandler(imgIconRight);
@@ -94,15 +94,15 @@ public class ChildReviewControlController implements Initializable
                 
                 txtLeftName.setText(leftChild.getChildName());
                 txtLeftAge.setText("Age: " + Integer.toString(leftChild.getChildAge()));
-                txtLeftRisk.setText(leftChild.getResultText());
+                txtLeftRisk.setText(leftChild.getDiagnosisResult().getStageOneRisk());
                 
                 txtMidName.setText(midChild.getChildName());
                 txtMidAge.setText("Age: " + Integer.toString(midChild.getChildAge()));
-                txtMidRisk.setText(midChild.getResultText());
+                txtMidRisk.setText(midChild.getDiagnosisResult().getStageOneRisk());
                 
                 txtRightName.setText(rightChild.getChildName());
                 txtRightAge.setText("Age: " + Integer.toString(rightChild.getChildAge()));
-                txtRightRisk.setText(rightChild.getResultText());
+                txtRightRisk.setText(rightChild.getDiagnosisResult().getStageOneRisk());
                 
                 createEventHandler(imgIconLeft);
                 createEventHandler(imgIconMid);
@@ -141,8 +141,11 @@ public class ChildReviewControlController implements Initializable
             Parent root = (Parent)loader.load();
 
             IndividualReviewContentController individualReviewContent = loader.<IndividualReviewContentController>getController();
-            individualReviewContent.setupIndividualReviewContent(currentChild.getChildId(), currentChild.getChildName());
-
+            individualReviewContent.setupIndividualReviewContent(currentChild);
+            
+            //Sets the review content to be loaded on the StageManager for easy access between question list
+            //and question review text
+            StageManager.setCurrentChildReviewParent(root);
             StageManager.loadContentSceneParent(root);
         } 
         catch (IOException ex) 

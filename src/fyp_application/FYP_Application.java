@@ -14,6 +14,7 @@ public class FYP_Application extends Application
     public void start(Stage stage) throws Exception 
     {
         LoadFromDatabase();
+        //RobotManager.connectToRobot();
         
         //StageManager.loadForm(StageManager.MAIN, stage);
         StageManager.loadForm(StageManager.LOGIN, stage);

@@ -22,7 +22,7 @@ public class YesNoControlController implements Initializable
     {
         FlowBranchEnum result = FlowBranchEnum.No;      
         
-        followUpController.setCurrentNodeAnswer("No");
+        followUpController.setCurrentNodeAnswer(lblQuestionText.getText() + "=No");
         followUpController.loadNextFollowUpPart(result);
     }
 
@@ -30,7 +30,7 @@ public class YesNoControlController implements Initializable
     {
         FlowBranchEnum result = FlowBranchEnum.Yes;
         
-        followUpController.setCurrentNodeAnswer("Yes");
+        followUpController.setCurrentNodeAnswer(lblQuestionText.getText() + "=Yes");
         followUpController.loadNextFollowUpPart(result);
     }
     

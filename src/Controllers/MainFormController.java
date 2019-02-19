@@ -7,6 +7,7 @@ import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -101,17 +102,28 @@ public class MainFormController implements Initializable
         }
     }
     
-    @FXML public void btnMenuQuit_Action(ActionEvent event) { quitMainForm(); }
+    @FXML public void btnMenuQuit_Action(ActionEvent event) 
+    { 
+        if(allowFormChange())
+            quitMainForm(); 
+    }
+    
+    @FXML public void btnQuit_Click(ActionEvent event) 
+    { 
+        if(allowFormChange())
+            quitMainForm(); 
+    }
+    
     @FXML public void btnMinimize_Click(ActionEvent event) { minimizeMainForm(); }
-    @FXML public void btnQuit_Click(ActionEvent event) { quitMainForm(); }
+    
     
     /**
-     * Replaces the current scene in the Main
+     * Replaces all of the current scenes in the Main
      * Content stack pane.
      * 
      * @param node the scene that is to replace the current scene
      */
-    public void setScene(Node node)
+    public void setAllScene(Node node)
     {
         pnlMainContent.getChildren().setAll(node);
     }

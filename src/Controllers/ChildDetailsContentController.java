@@ -46,11 +46,14 @@ public class ChildDetailsContentController implements Initializable {
             
             //Check if there is already a child created with the exact same info
             if(!checkChildExists(child))
+            {
                 if(saveChildInfo(child))
                 {
                     StageManager.loadContentScene(StageManager.QUESTIONAIRE);
+                    //StageManager.loadContentScene(StageManager.FOLLOWUP);
                     StageManager.setInProgress(true);
                 }
+            }
         }
         else
         {
@@ -107,6 +110,7 @@ public class ChildDetailsContentController implements Initializable {
                             + "you can see the results on the review page.", ButtonTypeEnum.OK);
                 exists = true;
             }
+            dbManager.disconnect();
         }
         
         return exists; 
