@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="195.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.RobotActionControlController">
+   <children>
+      <Button fx:id="btnPlay" layoutX="249.0" layoutY="76.0" mnemonicParsing="false" onAction="#btnPlay_Action" prefHeight="105.0" prefWidth="115.0" stylesheets="@../Styles/GreenBtnStyles.css" textFill="WHITE" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="249.0">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="71.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/playIcon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="41.0" prefHeight="25.0" prefWidth="301.0" text="Click to start Robot Behaviour:" textAlignment="CENTER" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="156.0">
+         <font>
+            <Font name="Berlin Sans FB" size="22.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

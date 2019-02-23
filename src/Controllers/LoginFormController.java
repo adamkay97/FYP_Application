@@ -6,6 +6,7 @@
 package Controllers;
 
 import Classes.AuthenticationManager;
+import Classes.DatabaseManager;
 import Enums.ButtonTypeEnum;
 import Classes.StageManager;
 import java.net.URL;
@@ -80,9 +81,22 @@ public class LoginFormController implements Initializable
         
         if(authManager.authenticateLogin(txtUsername.getText(), txtPassword.getText()))
         {
-            //If login successful open main form
+            //If login successful load user settings and open main form
+            loadUserSettings();    
             StageManager.loadForm(StageManager.MAIN, new Stage());
             closeForm();
+        }
+    }
+    
+    private void loadUserSettings()
+    {
+        DatabaseManager dbManager = new DatabaseManager();
+        
+        if(dbManager.connect())
+        {
+            int userId = StageManager.getCurrentUser().getUserId();
+            dbManager.loadApplicationSettings(userId);
+            dbManager.disconnect();
         }
     }
     

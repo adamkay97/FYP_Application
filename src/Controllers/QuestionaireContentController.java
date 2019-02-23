@@ -1,67 +1,147 @@
 package Controllers;
 
+import Classes.Question;
 import Enums.QuestionAnswer;
 import Classes.QuestionaireManager;
 import Classes.RobotManager;
+import Classes.SettingsManager;
 import Classes.StageManager;
+import ControlControllers.QuestionAnswerControlController;
+import ControlControllers.RobotActionControlController;
 import Enums.ButtonTypeEnum;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.StackPane;
 
 public class QuestionaireContentController implements Initializable 
 {
     @FXML private Label lblQuestionText;
     @FXML private Label lblQuestionHeader;
-    @FXML private TextArea txtNotes;
+    @FXML private StackPane stkpnQuestionControl;
+    @FXML private Button btnReplay;
     
+    private Parent robotActionControl;
+    private Parent questionAnswerControl;
+    
+    private String partIndex;
     private int qIndex;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
         qIndex = 1;
-        setQuestionText(qIndex);
+        partIndex = "Part1";
+        
+        try
+        {
+            //Load robot control and pass it the current controller and store this in a global variable 
+            //for use throughout first stage of diagnosis
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controls/RobotActionControl.fxml"));
+            Parent root = (Parent)loader.load();
+
+            RobotActionControlController robotControl = loader.<RobotActionControlController>getController();
+            robotControl.setupQuestionaireController(this);
+            robotActionControl = root;
+            
+            //Load question answer control and pass it the current controller and store this in a global variable 
+            //for use throughout first stage of diagnosis
+            loader = new FXMLLoader(getClass().getResource("/Controls/QuestionAnswerControl.fxml"));
+            root = (Parent)loader.load();
+
+            QuestionAnswerControlController questionControl = loader.<QuestionAnswerControlController>getController();
+            questionControl.setupQuestionaireController(this);
+            questionAnswerControl = root;
+            
+            setRobotControl();
+            setQuestionText(qIndex);
+        }
+        catch(IOException ex)
+        {
+            System.out.println("Error when loading Robot Action Control / Question Answer Control - " + ex.getMessage());
+        }
     }
     
-    @FXML public void btnYes_Action(ActionEvent event) 
+    @FXML public void btnReplay_Action(ActionEvent event) 
     {
-        String notes = txtNotes.getText();
+        handlePlayAction();
+    }
+    
+    public void handlePlayAction() 
+    {
+        final String question = "Question" + Integer.toString(qIndex);
         
+        if(true)//RobotManager.getRobotConnected())
+        {
+            //Check if current question is question 3 as there 
+            //are 2 parts to question 3's behaviour
+            if(qIndex == 3)
+            {
+                final String qPart = question + partIndex;
+                
+                Thread robotThread = new Thread(() -> {
+                    RobotManager.runBehaviour(qPart);
+                });
+                //robotThread.start();
+                
+                //Once the first part has been run pop up the message and then wait for the
+                //play button to be pressed again
+                if(partIndex.equals("Part1"))
+                {
+                    StageManager.loadPopupMessage("Information", "Please place the fake biscuit in NAO's "
+                            + "open hand now.", ButtonTypeEnum.OK);
+                    partIndex = "Part2";
+                }
+                else
+                    setQuestionAnswerControl();
+            }
+            else
+            {
+                Thread robotThread = new Thread(() -> {
+                    RobotManager.runBehaviour(question);
+                });
+                //robotThread.start();
+                
+                setQuestionAnswerControl();
+                
+            }
+        }
+        else
+        {
+            String msg = "There appears to be no viable connection to NAO. Do you wish to reset the connection?";
+            boolean reconnect = StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.YESNO);
+            
+            if(reconnect)
+                RobotManager.connectToRobot(SettingsManager.getRobotConnection());
+        }
+    }
+    
+    public boolean handleYesAction(String notes)
+    {        
         if(checkValidNotes(notes, true))
         {
             QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES, notes);
             processAnswer();
+            return true;
         }
+        return false;
     }
-
-    @FXML public void btnNo_Action(ActionEvent event) 
+    
+    public boolean handleNoAction(String notes) 
     {
-        String notes = txtNotes.getText();
-        
         if(checkValidNotes(notes, false))
         {
             QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO, notes);
             processAnswer();
+            return true;
         }
-    }
-    
-    @FXML public void btnPlay_Action(ActionEvent event) 
-    {
-        String question = "Question" + Integer.toString(qIndex);
-        if(RobotManager.connectToRobot())
-            RobotManager.runBehaviour(question);
-        else
-        {
-            String msg = "There appears to be no viable connection to NAO. Do you wish to reset the connection?";
-            boolean reconnect = StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
-            
-            if(reconnect)
-                RobotManager.connectToRobot();
-        }
+        return false;
     }
     
     private void processAnswer()
@@ -69,10 +149,22 @@ public class QuestionaireContentController implements Initializable
         if(qIndex != 20)
         {
             setQuestionText(++qIndex);
-            txtNotes.setText("");
+            setRobotControl();
         }
         else
             StageManager.loadContentScene(StageManager.FINISH);
+    }
+    
+    private void setRobotControl()
+    {
+        stkpnQuestionControl.getChildren().setAll(robotActionControl);
+        btnReplay.setVisible(false);
+    }
+    
+    private void setQuestionAnswerControl()
+    {
+        stkpnQuestionControl.getChildren().setAll(questionAnswerControl);
+        btnReplay.setVisible(true);
     }
     
     /**
@@ -117,9 +209,17 @@ public class QuestionaireContentController implements Initializable
      */
     private void setQuestionText(int index)
     {
-        String text = QuestionaireManager.getQuestionText(index);
-        lblQuestionText.setText(text);
-
+        Question question = QuestionaireManager.getQuestion(index);
+        lblQuestionText.setText(question.getQuestionText());
         lblQuestionHeader.setText("Question " + index + ":");
+        
+        //If the intructions arent null load the instructions popup
+        if(question.getQuestionInstructions() != null)
+        {
+            //Load in seperate thread after other form threads have finished
+            Platform.runLater(() -> {
+                StageManager.loadPopupInstruction(question.getQuestionInstructions(), qIndex);
+            });
+        }
     }
 }

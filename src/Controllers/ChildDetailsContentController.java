@@ -12,18 +12,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
-import javafx.scene.control.*;
 
 public class ChildDetailsContentController implements Initializable {
 
     @FXML private JFXRadioButton radBtnFemale;
     @FXML private JFXRadioButton radBtnMale;
-    @FXML private Button btnStartQuestions;
     @FXML private JFXTextField txtChildsAge;
     @FXML private JFXTextField txtChildsName;
     
     private DatabaseManager dbManager;
-    private int nextChildId;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -31,9 +28,8 @@ public class ChildDetailsContentController implements Initializable {
         dbManager = new DatabaseManager();
     }    
 
-    @FXML private void btnStartQuestions_Action(ActionEvent event)
+    @FXML public void btnStartQuestions_Action(ActionEvent event)
     {
-        //StageManager.loadContentScene(StageManager.FOLLOWUP);
         if(validateUserInput())
         {
             //Creates child with data needed for database including current users id for review purposes
@@ -49,9 +45,25 @@ public class ChildDetailsContentController implements Initializable {
             {
                 if(saveChildInfo(child))
                 {
-                    StageManager.loadContentScene(StageManager.QUESTIONAIRE);
-                    //StageManager.loadContentScene(StageManager.FOLLOWUP);
-                    StageManager.setInProgress(true);
+                    //Check that there is a valid connection to the Robot
+                    if(true)//RobotManager.getRobotConnected())
+                    {
+                        //Run start behaviour in seperate thread so the rest of the application is'nt held up
+                        Thread robotThread = new Thread(() -> {
+                            RobotManager.runStartEnd(true);
+                        });
+                        //robotThread.start();
+                        
+                        StageManager.loadContentScene(StageManager.QUESTIONAIRE);
+                        StageManager.setInProgress(true);
+                    }
+                    else
+                    {
+                        //If cannot connect, point user to settings page where they can test the connection.
+                        String msg = "There doesn't appear to be a valid connection to NAO. Please use the settings tab "
+                                + "to access the connection details for NAO.";
+                        StageManager.loadPopupMessage("Error", msg, ButtonTypeEnum.OK);
+                    }
                 }
             }
         }

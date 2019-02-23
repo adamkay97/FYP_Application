@@ -175,6 +175,9 @@ public class RegisterFormController implements Initializable
                     + "please use your details to login.", ButtonTypeEnum.OK);
                 
                 newUser.setUserId(dbManager.getLastInsertedRowID("Users"));
+                
+                //Create new default user settings for new user
+                dbManager.createUserSettings(newUser.getUserId());
             }
             else
                 StageManager.loadPopupMessage("Error", "There was an issue with saving your information, "

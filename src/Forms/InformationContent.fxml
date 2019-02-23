@@ -20,12 +20,12 @@
             </VBox>
             <AnchorPane layoutX="10.0" layoutY="350.0" prefHeight="97.0" prefWidth="677.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="345.0">
                <children>
-                  <Button fx:id="btnNAO" layoutX="374.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnNAO_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/ReplayBtnStyles.css" text="NAO Robot" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="5.0">
+                  <Button fx:id="btnNAO" layoutX="374.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnNAO_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/GreenBtnStyles.css" text="NAO Robot" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnMCHAT" layoutX="111.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnMCHAT_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/ReplayBtnStyles.css" text="M-CHAT-R/F" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="5.0">
+                  <Button fx:id="btnMCHAT" layoutX="111.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnMCHAT_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/GreenBtnStyles.css" text="M-CHAT-R/F" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="5.0">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>

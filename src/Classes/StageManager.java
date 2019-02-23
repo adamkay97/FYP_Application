@@ -26,6 +26,7 @@ public class StageManager
     public static final String FOLLOWUP = "/Forms/FollowUpContent.fxml";
     public static final String FINISH = "/Forms/FinishQuestionaireContent.fxml";
     public static final String POPUP = "/Forms/PopUpMessage.fxml";
+    public static final String POPUPINSTR = "/Forms/PopUpInstructions.fxml";
     
     //Constants for FXML controls
     public static final String CHILDCONTROL = "/Control/ChildReviewControl.fxml";
@@ -139,7 +140,40 @@ public class StageManager
         }
         return popupAnswer;
     }    
-
+    
+    /**
+     * Loads a new stage for a pop up instruction before a question, 
+     * that will provide an image and notes on what needs to be done 
+     * before the behaviour can ran
+     * @param messageText Text for the message from the db
+     * @param qIndex index of the question
+     */
+    public static void loadPopupInstruction(String messageText, int qIndex)
+    {
+        try
+        {
+            //Load popup form, pass variables to Popup controller for setting the text on the popup
+            FXMLLoader loader = new FXMLLoader(StageManager.class.getResource(POPUPINSTR));
+            Parent root = (Parent)loader.load();
+            Scene popup = new Scene(root);
+            PopUpInstructionsController popupController = loader.<PopUpInstructionsController>getController();
+            popupController.setInstructionsPopupContent(messageText, qIndex);
+            
+            Stage popupStage = new Stage();
+            setFormMoveHandlers(root, popupStage);
+            
+            //Set pop up style to Undecorated, set Modality to freeze rest of application until popup is closed
+            popupStage.initStyle(StageStyle.UNDECORATED);
+            popupStage.initModality(Modality.APPLICATION_MODAL);
+            popupStage.setScene(popup);
+            popupStage.showAndWait();
+        }
+        catch(IOException ex)
+        {
+            System.out.println("Failed loading pop up message - " + ex.getMessage());
+        }
+    }    
+    
     /**
      * Loads the main stages i.e login page, registration
      * and the main form. 

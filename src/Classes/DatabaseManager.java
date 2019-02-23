@@ -48,7 +48,8 @@ public class DatabaseManager
             {
                 int id = results.getInt("QuestionID");
                 String text = results.getString("QuestionText");
-                Question q = new Question(id, text);
+                String instruction = results.getString("QuestionInstruction");
+                Question q = new Question(id, text, instruction);
                 
                 questionMap.put(id, q);
             }
@@ -142,7 +143,7 @@ public class DatabaseManager
         
         String query = "SELECT c.ChildID, c.UserID, c.Name, c.Age, c.Gender, d.StageOneScore, "
                      + "d.StageOneRisk, d.StageTwoScore, d.OverallScreening FROM Children c "
-                     + "JOIN DiagnosisResults d "
+                     + "JOIN DiagnosisResults d ON c.ChildID = d.ChildID "
                      + "WHERE d.StageOneScore IS NOT NULL AND c.UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
@@ -239,6 +240,31 @@ public class DatabaseManager
              System.out.println("Error when reading the Review Data from the db - " + ex.getMessage());
         }
         return null;
+    }
+    
+    public void loadApplicationSettings(int userId)
+    {
+        
+        String query = "SELECT * FROM ApplicationSettings WHERE UserID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setInt(1, userId);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                String robotURL = results.getString("RobotConnectionURL");
+                int robotVolume = results.getInt("RobotVolume");
+                String noteMethod = results.getString("NoteMethod");
+                
+                SettingsManager.initialiseSettings(robotURL, robotVolume, noteMethod);
+            }
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the Application settings from the db - " + ex.getMessage());
+        }
     }
     
     public boolean checkUserExists(String username)
@@ -374,6 +400,40 @@ public class DatabaseManager
         catch(SQLException ex)
         {
             System.out.println("Error when writing childs diagnosis results to the db - " + ex.getMessage());
+        }
+    }
+    
+    public void createUserSettings(int userId)
+    {
+        String query = "INSERT INTO ApplicationSettings (UserID) VALUES (?)";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setInt(1, userId);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when creating user application settings in the db - " + ex.getMessage());
+        }
+    }
+    
+    public void updateUserSettings(int userId, String url, int volume, String noteMethod)
+    {
+        String query = "UPDATE ApplicationSettings SET RobotConnectionURL = ?, RobotVolume = ?, NoteMethod = ? "
+                     + "WHERE UserID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
+        {
+            pstmt.setString(1, url);
+            pstmt.setInt(2, volume);
+            pstmt.setString(3, noteMethod);
+            pstmt.setInt(4, userId);
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when updating application settings in the db - " + ex.getMessage());
         }
     }
     

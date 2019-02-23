@@ -18,6 +18,13 @@ public class QuestionaireManager
     private static int failedQuestions;
     private static boolean followUpCompleted = false;
     
+    /**
+     * Save the current questions answer and add question to flagged list if it 
+     * was answered with a risk of ASD.
+     * @param qNumber number of the question
+     * @param qAnswer question answer
+     * @param qNotes question notes
+     */
     public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes)
     {
         currentQuestion.setQuestionAnswer(qAnswer);
@@ -143,6 +150,12 @@ public class QuestionaireManager
         }
     }
     
+    /**
+     * Depending on which stage of the diagnosis, read the text result saved in
+     * the database for the result information provided at the end of the stage
+     * @param stage the current stage that the diagnosis is at (Either 1 or 2)
+     * @return the text from the database as a string
+     */
     public static String getResultInfo(int stage)
     {
         DatabaseManager db = new DatabaseManager();
@@ -171,10 +184,16 @@ public class QuestionaireManager
         return riskText;
     }
     
+    /**
+     * Resets all the static variables and question lists once the 
+     * diagnosis has been completed so its ready for the next diagnosis
+     */
     public static void resetQuestionaireManager()
     {
         DatabaseManager dbManager = new DatabaseManager();
         flaggedQuestions = new ArrayList<>();
+        stageOneScore = 0;
+        stageOneRisk = "";
         failedQuestions = 0;
         
         if(dbManager.connect())
@@ -199,10 +218,10 @@ public class QuestionaireManager
         return flaggedQuestions.size();
     }
     
-    public static String getQuestionText(int qNumber)
+    public static Question getQuestion(int qNumber)
     {
         currentQuestion = questionMap.get(qNumber);
-        return currentQuestion.getQuestionText();
+        return currentQuestion;
     }
     
     public static void setQuestionMap(HashMap<Integer, Question> questions)

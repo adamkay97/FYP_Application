@@ -28,7 +28,6 @@ public class ReviewContentController implements Initializable
     @FXML private ImageView btnLeftArrow;
     @FXML private ImageView btnRightArrow;
     @FXML private StackPane stackPaneChildView;
-    @FXML private AnchorPane mainAnchorPane;
     @FXML private Label lblNoCases;
     
     private ArrayList<Parent> childViewControls;

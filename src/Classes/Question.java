@@ -6,17 +6,20 @@ public class Question
 {
     private final int questionID;
     private final String questionText;
+    private final String questionInstructions;
     private QuestionAnswer questionAnswer;
     private String questionNotes;
     
-    public Question(int id, String qText)
+    public Question(int id, String qText, String instruction)
     {
         questionID = id;
         questionText = qText;
+        questionInstructions = instruction;
     }
     
     public int getQuestionId() { return questionID; }
     public String getQuestionText() { return questionText; }
+    public String getQuestionInstructions() { return questionInstructions; }
     public QuestionAnswer getQuestionAnswer() { return questionAnswer; }
     public String getQuestionNotes() { return questionNotes; }
     

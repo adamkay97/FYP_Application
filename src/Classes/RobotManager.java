@@ -8,7 +8,7 @@ public class RobotManager
     private static Application application;
     private static boolean connected;
     
-    public static boolean connectToRobot()
+    public static boolean connectToRobot(String connectionURL)
     {
         connected = true;
         
@@ -17,8 +17,7 @@ public class RobotManager
            //Pass empty args and robot URL to NAOqi Application type
            //To initiate connecting to NAO.
            String[] args = {""};
-           String robotUrl = getNaoConnectionURL();
-           application = new Application(args, robotUrl);
+           application = new Application(args, connectionURL);
              
            // Start your application
            application.start(); 
@@ -26,9 +25,31 @@ public class RobotManager
         catch(Exception ex)
         {
             System.out.println("Error when connecting to NAO - " + ex.getMessage());
+            application.stop();
             connected = false;
         }
         return connected;
+    }
+    
+    public static void runStartEnd(boolean start)
+    {
+        try
+        {
+            ALBehaviorManager behMan = new ALBehaviorManager(application.session());
+            behMan.stopAllBehaviors();
+            String behaviourName;
+
+            if(start)
+                behaviourName = behMan.resolveBehaviorName("Start");
+            else
+                behaviourName = behMan.resolveBehaviorName("Close");
+
+            behMan.runBehavior(behaviourName);
+        }
+        catch(Exception ex)
+        {
+            System.out.println("Error when running start or end behaviour");
+        }
     }
     
     public static void runBehaviour(String question)
@@ -37,8 +58,8 @@ public class RobotManager
         {
             ALBehaviorManager behMan = new ALBehaviorManager(application.session());
             behMan.stopAllBehaviors();
-            String test = behMan.resolveBehaviorName("Questions/"+question);
-            behMan.runBehavior(test);
+            String behaviourName = behMan.resolveBehaviorName("Questions/"+question);
+            behMan.runBehavior(behaviourName);
         }
         catch(Exception ex)
         {
@@ -47,19 +68,5 @@ public class RobotManager
         }
     }
     
-    private static String getNaoConnectionURL()
-    {
-        DatabaseManager dbManager = new DatabaseManager();
-        String connectURL = "";
-        
-        if(dbManager.connect())
-        {
-            connectURL = dbManager.getNaoConnectionURL();
-            dbManager.disconnect();
-        }
-        
-        return connectURL;
-    }
-    
-    public boolean getRobotConnected() { return connected; }
+    public static boolean getRobotConnected() { return connected; }
 }
