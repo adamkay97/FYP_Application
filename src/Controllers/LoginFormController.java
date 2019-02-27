@@ -5,10 +5,10 @@
  */
 package Controllers;
 
-import Classes.AuthenticationManager;
-import Classes.DatabaseManager;
+import Managers.AuthenticationManager;
+import Managers.DatabaseManager;
 import Enums.ButtonTypeEnum;
-import Classes.StageManager;
+import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;

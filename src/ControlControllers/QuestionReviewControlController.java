@@ -1,7 +1,8 @@
 package ControlControllers;
 
+import Classes.Child;
 import Classes.ReviewData;
-import Classes.StageManager;
+import Managers.StageManager;
 import Controllers.QuestionReviewContentController;
 import java.io.IOException;
 import java.net.URL;
@@ -21,6 +22,7 @@ public class QuestionReviewControlController implements Initializable
     @FXML private Button btnView;
     @FXML private Label lblQuestionNumber;
     
+    private Child currentChild;
     private ReviewData reviewData;
     
     @Override
@@ -34,7 +36,7 @@ public class QuestionReviewControlController implements Initializable
             Parent root = (Parent)loader.load();
             
             QuestionReviewContentController questionContent = loader.<QuestionReviewContentController>getController();
-            questionContent.setupQuestionReviewContent(reviewData);
+            questionContent.setupQuestionReviewContent(reviewData, currentChild);
             
             StageManager.loadContentSceneParent(root);
         } 
@@ -44,7 +46,7 @@ public class QuestionReviewControlController implements Initializable
         }
     }
     
-    public void setUpReviewControl(ReviewData data)
+    public void setUpReviewControl(ReviewData data, Child child)
     {
         int qId = data.getQuestionNumber();
         String answer = data.getQuestionAnswer();
@@ -64,6 +66,7 @@ public class QuestionReviewControlController implements Initializable
         lblASDRisk.setText("ASD Screening: " + risk);
         
         reviewData = data;
+        currentChild = child;
     }
     
 }

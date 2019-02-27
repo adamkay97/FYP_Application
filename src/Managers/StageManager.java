@@ -1,5 +1,6 @@
-package Classes;
+package Managers;
 
+import Classes.User;
 import Enums.ButtonTypeEnum;
 import Controllers.*;
 import java.io.IOException;

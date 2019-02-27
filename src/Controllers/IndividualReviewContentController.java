@@ -1,9 +1,9 @@
 package Controllers;
 
 import Classes.Child;
-import Classes.DatabaseManager;
+import Managers.DatabaseManager;
 import Classes.ReviewData;
-import Classes.StageManager;
+import Managers.StageManager;
 import ControlControllers.QuestionReviewControlController;
 import java.io.IOException;
 import java.net.URL;
@@ -54,11 +54,11 @@ public class IndividualReviewContentController implements Initializable
             reviewData = dbManager.loadReviewData(child.getChildId(), child.getCurrentUserId());
             dbManager.disconnect();
             
-            loadQuestionReviewControls(reviewData);
+            loadQuestionReviewControls(reviewData, child);
         }
     }
     
-    private void loadQuestionReviewControls(ArrayList<ReviewData> reviewData)
+    private void loadQuestionReviewControls(ArrayList<ReviewData> reviewData, Child child)
     {
         FXMLLoader loader;
         Parent root;
@@ -71,7 +71,7 @@ public class IndividualReviewContentController implements Initializable
                 root = (Parent)loader.load();
 
                 QuestionReviewControlController reviewControl = loader.<QuestionReviewControlController>getController();
-                reviewControl.setUpReviewControl(data);
+                reviewControl.setUpReviewControl(data, child);
                 
                 vboxReviewControls.getChildren().add(root);
             }

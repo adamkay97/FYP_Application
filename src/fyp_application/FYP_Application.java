@@ -1,5 +1,7 @@
 package fyp_application;
 
+import Managers.StageManager;
+import Managers.DatabaseManager;
 import Classes.*;
 import javafx.application.Application;
 import javafx.stage.Stage;

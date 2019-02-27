@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 
-public class QuestionAnswerControlController implements Initializable 
+public class QuestionTextAnswerControlController implements Initializable 
 {
     @FXML private TextArea txtNotes;
     
@@ -19,13 +19,13 @@ public class QuestionAnswerControlController implements Initializable
 
     @FXML public void btnYes_Action(ActionEvent event) 
     {
-        if(questionaireContentController.handleYesAction(txtNotes.getText()))
+        if(questionaireContentController.handleYesTextAction(txtNotes.getText()))
             txtNotes.setText("");
     }
 
     @FXML public void btnNo_Action(ActionEvent event) 
     {
-        if(questionaireContentController.handleNoAction(txtNotes.getText()))
+        if(questionaireContentController.handleNoTextAction(txtNotes.getText()))
             txtNotes.setText("");
     }
     

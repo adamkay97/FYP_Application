@@ -1,9 +1,10 @@
 package Controllers;
 
-import Classes.RobotManager;
-import Classes.SettingsManager;
-import Classes.StageManager;
+import Managers.RobotManager;
+import Managers.SettingsManager;
+import Managers.StageManager;
 import Enums.ButtonTypeEnum;
+import Managers.QuestionaireManager;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
@@ -11,10 +12,13 @@ import java.awt.Cursor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -29,8 +33,10 @@ public class SettingsContentController implements Initializable
     
     @FXML private JFXSlider sliderVolume;
     
+    @FXML private ToggleGroup noteMethodGroup;
     @FXML private JFXRadioButton radBtnText;
     @FXML private JFXRadioButton radBtnAudio;
+    @FXML private JFXTextField txtAudioFileLocation;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -38,6 +44,7 @@ public class SettingsContentController implements Initializable
         String robotURL = SettingsManager.getRobotConnection();
         int volume = SettingsManager.getRobotVolume();
         String noteMethod = SettingsManager.getNoteMethod();
+        String audioPath = SettingsManager.getAudioFileLocation();
         
         //Get the robot connection from the SettingsManager
         //Remove the 'tcp://' from the start and split on ':' to get Ip and Fixed Port
@@ -51,9 +58,28 @@ public class SettingsContentController implements Initializable
         
         sliderVolume.setValue(volume);
         if(noteMethod.equals("TextArea"))
+        {
             radBtnText.setSelected(true);
+            txtAudioFileLocation.setDisable(true);
+        }
         else
+        {
             radBtnAudio.setSelected(true);
+            txtAudioFileLocation.setDisable(false);
+        }
+        
+        //If the audio path is empty give the default path for where to save the audio files
+        if(audioPath.equals(""))
+        {
+            String username = StageManager.getCurrentUser().getUsername();
+            String currentDirectory = System.getProperty("user.dir");
+            txtAudioFileLocation.setText(String.format("%s\\AudioFiles\\%s\\", currentDirectory, username));
+        }
+        else
+            txtAudioFileLocation.setText(audioPath);
+        
+        //Create radio button listeners for enabling location text field
+        createRadioButtonListeners();
     }  
     
     @FXML public void btnSave_Action(ActionEvent event) 
@@ -131,6 +157,8 @@ public class SettingsContentController implements Initializable
         
         if(save)
         {
+            //If settings are to be saved then set the values on the Settings Manager
+            //Then call saveCurrentSettings to store the data in the db;
             String ip = txtIPAddress.getText();
             String port = txtFixedPort.getText();
             
@@ -138,16 +166,25 @@ public class SettingsContentController implements Initializable
             int volume = (int) sliderVolume.getValue();
             String noteMethod = radBtnText.isSelected() ? "TextArea" : "Audio";
             
+            if(noteMethod.equals("Audio"))
+                SettingsManager.setAudioFileLocation(txtAudioFileLocation.getText());
+            
             SettingsManager.setRobotConnection(url);
             SettingsManager.setRobotVolume(volume);
             SettingsManager.setNoteMethod(noteMethod);
             SettingsManager.saveCurrentSettings();
+            
+            String msg = "Success. Your settings have been saved.";
+            StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.OK);
         }
     }
     
     private void setConnectedImage(boolean connected)
     {
         Image connectIcon;
+        
+        //Depending if the robot is connected set the ImageView to show 
+        //corresponding connected icon
         if(connected)
         {
             connectIcon = new Image("Icons/connected.png");
@@ -160,6 +197,22 @@ public class SettingsContentController implements Initializable
             imgViewStatusIcon.setImage(connectIcon);
             lblConnectStatus.setText("Disconnected");
         }
+    }
+    
+    private void createRadioButtonListeners()
+    {
+        //Add listener to ToggleGroup to enable/disable the file path text field 
+        noteMethodGroup.selectedToggleProperty().addListener(
+            (ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) -> 
+            {
+                if (noteMethodGroup.getSelectedToggle() != null) 
+                {
+                    if(noteMethodGroup.getSelectedToggle().equals(radBtnAudio))
+                        txtAudioFileLocation.setDisable(false);
+                    else
+                        txtAudioFileLocation.setDisable(true);
+                } 
+            });
     }
     
     private boolean validateDetails(String ip, String port)

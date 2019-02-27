@@ -1,8 +1,9 @@
 package Controllers;
 
-import Classes.QuestionaireManager;
-import Classes.StageManager;
+import Managers.QuestionaireManager;
+import Managers.StageManager;
 import Enums.ButtonTypeEnum;
+import Managers.SettingsManager;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.*;
 import java.net.URL;
@@ -246,6 +247,7 @@ public class MainFormController implements Initializable
             if(allow)
             {
                 QuestionaireManager.resetQuestionaireManager();
+                SettingsManager.deleteCurrentAudioFiles();
                 StageManager.setInProgress(false);
             }
         }

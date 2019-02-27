@@ -1,12 +1,13 @@
 package Controllers;
 
 import Classes.Question;
+import ControlControllers.QuestionAudioAnswerControlController;
 import Enums.QuestionAnswer;
-import Classes.QuestionaireManager;
-import Classes.RobotManager;
-import Classes.SettingsManager;
-import Classes.StageManager;
-import ControlControllers.QuestionAnswerControlController;
+import Managers.QuestionaireManager;
+import Managers.RobotManager;
+import Managers.SettingsManager;
+import Managers.StageManager;
+import ControlControllers.QuestionTextAnswerControlController;
 import ControlControllers.RobotActionControlController;
 import Enums.ButtonTypeEnum;
 import java.io.IOException;
@@ -38,9 +39,12 @@ public class QuestionaireContentController implements Initializable
     {
         qIndex = 1;
         partIndex = "Part1";
+        String questionControlPath;
         
         try
         {
+            boolean usesTextArea = SettingsManager.getNoteMethod().equals("TextArea");
+            
             //Load robot control and pass it the current controller and store this in a global variable 
             //for use throughout first stage of diagnosis
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/Controls/RobotActionControl.fxml"));
@@ -50,13 +54,28 @@ public class QuestionaireContentController implements Initializable
             robotControl.setupQuestionaireController(this);
             robotActionControl = root;
             
+            //Depending on the users current settings set the control required for their method of note taking
+            if(usesTextArea)
+                questionControlPath = "/Controls/QuestionTextAnswerControl.fxml";
+            else
+                questionControlPath = "/Controls/QuestionAudioAnswerControl.fxml";
+            
             //Load question answer control and pass it the current controller and store this in a global variable 
             //for use throughout first stage of diagnosis
-            loader = new FXMLLoader(getClass().getResource("/Controls/QuestionAnswerControl.fxml"));
+            loader = new FXMLLoader(getClass().getResource(questionControlPath));
             root = (Parent)loader.load();
-
-            QuestionAnswerControlController questionControl = loader.<QuestionAnswerControlController>getController();
-            questionControl.setupQuestionaireController(this);
+            
+            if(usesTextArea)
+            {
+                QuestionTextAnswerControlController questionControl = loader.<QuestionTextAnswerControlController>getController();
+                questionControl.setupQuestionaireController(this);
+            }
+            else
+            {
+                QuestionAudioAnswerControlController questionControl = loader.<QuestionAudioAnswerControlController>getController();
+                questionControl.setupQuestionaireController(this);
+            }
+                
             questionAnswerControl = root;
             
             setRobotControl();
@@ -122,22 +141,44 @@ public class QuestionaireContentController implements Initializable
         }
     }
     
-    public boolean handleYesAction(String notes)
+    public boolean handleYesTextAction(String notes)
     {        
         if(checkValidNotes(notes, true))
         {
-            QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES, notes);
+            QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES, notes, false);
             processAnswer();
             return true;
         }
         return false;
     }
     
-    public boolean handleNoAction(String notes) 
+    public boolean handleNoTextAction(String notes) 
     {
         if(checkValidNotes(notes, false))
         {
-            QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO, notes);
+            QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO, notes, false);
+            processAnswer();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean handleYesAudioAction(boolean audioSet)
+    {        
+        if(checkValidAudio(audioSet, true))
+        {
+            QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.YES, "", true);
+            processAnswer();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean handleNoAudioAction(boolean audioSet) 
+    {
+        if(checkValidAudio(audioSet, false))
+        {
+            QuestionaireManager.saveQuestionAnswer(qIndex, QuestionAnswer.NO, "", true);
             processAnswer();
             return true;
         }
@@ -197,6 +238,41 @@ public class QuestionaireContentController implements Initializable
         {
             String msg = "Please add notes for why you have selected this answer. "
                    + "If you have nothing further to say please input 'N/A'.";
+            StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+        }
+        
+        return valid;
+    }
+    
+    /**
+     * Checks to make sure some audio has been recorded if the answer given 
+     * indicates a risk of ASD.
+     * @param audioSet Whether any audio has actually been set
+     * @param isYes Boolean to say whether the input has come from the Yes or No button
+     * @return 
+     */
+    private boolean checkValidAudio(boolean audioSet, boolean isYes)
+    {
+        boolean valid;
+        
+        if(!audioSet)
+        {
+            //Checks whether the questions answer is a negative response by
+            //checking against questions 2,5,12 which have alternate negative responses
+            if(isYes && (qIndex == 2 || qIndex == 5 || qIndex == 12))
+                valid = false;
+            else if (!isYes && (qIndex != 2 && qIndex != 5 && qIndex != 12))
+                valid = false;
+            else
+                valid = true;
+        }
+        else
+            valid = true;
+        
+        //If notes arent valid display popup message to screen
+        if(!valid)
+        {
+            String msg = "Please record audio explainng why you have selected this answer.";
             StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
         }
         

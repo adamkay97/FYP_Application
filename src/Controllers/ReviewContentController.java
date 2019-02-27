@@ -2,7 +2,7 @@ package Controllers;
 
 import ControlControllers.ChildReviewControlController;
 import Classes.Child;
-import Classes.DatabaseManager;
+import Managers.DatabaseManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;

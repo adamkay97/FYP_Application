@@ -5,6 +5,10 @@
  */
 package Controllers;
 
+import Managers.RobotManager;
+import Managers.StageManager;
+import Managers.DatabaseManager;
+import Managers.QuestionaireManager;
 import Enums.ButtonTypeEnum;
 import Classes.*;
 import com.jfoenix.controls.*;

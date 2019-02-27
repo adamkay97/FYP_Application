@@ -1,5 +1,8 @@
 package Controllers;
 
+import Managers.StageManager;
+import Managers.DatabaseManager;
+import Managers.AuthenticationManager;
 import Enums.ButtonTypeEnum;
 import Classes.*;
 import java.net.URL;

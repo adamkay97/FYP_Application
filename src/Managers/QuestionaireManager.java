@@ -1,5 +1,8 @@
-package Classes;
+package Managers;
 
+import Classes.Child;
+import Classes.FollowUpFlow;
+import Classes.Question;
 import Enums.QuestionAnswer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,11 +27,16 @@ public class QuestionaireManager
      * @param qNumber number of the question
      * @param qAnswer question answer
      * @param qNotes question notes
+     * @param usesAudio whether the note taking method is via audio recording
      */
-    public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes)
+    public static void saveQuestionAnswer(int qNumber, QuestionAnswer qAnswer, String qNotes, boolean usesAudio)
     {
         currentQuestion.setQuestionAnswer(qAnswer);
-        currentQuestion.setQuestionNotes(qNotes);
+        
+        if(usesAudio)
+            currentQuestion.setQuestionNotes("Audio");
+        else
+            currentQuestion.setQuestionNotes(qNotes);
         
         switch(qAnswer)
         {
@@ -240,6 +248,7 @@ public class QuestionaireManager
     public static void setCurrentChild(Child child) { currentChild = child; }
     public static void setFollowUpMap(HashMap<Integer, FollowUpFlow> followup) { followUpMap = followup; }
     
+    public static Question getCurrentQuestion() { return currentQuestion; }
     public static Child getCurrentChild() { return currentChild; }
     public static boolean getFollowUpCompleted() { return followUpCompleted; }
     public static int getFailedQuestions() { return failedQuestions; }

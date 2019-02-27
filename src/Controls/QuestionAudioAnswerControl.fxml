@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="195.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.QuestionAudioAnswerControlController">
+   <children>
+      <VBox alignment="CENTER" fillWidth="false" prefHeight="195.0" prefWidth="613.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane prefHeight="88.0" prefWidth="615.0">
+               <children>
+                  <Button fx:id="btnRecordAudio" layoutX="18.0" mnemonicParsing="false" onAction="#btnRecordAudio_Action" prefHeight="47.0" prefWidth="169.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Record Audio" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnStop" disable="true" layoutX="197.0" mnemonicParsing="false" onAction="#btnStop_Action" prefHeight="47.0" prefWidth="124.0" stylesheets="@../Styles/RedBtnStyles.css" text="Stop" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnPlayback" disable="true" layoutX="357.0" mnemonicParsing="false" onAction="#btnPlayback_Action" prefHeight="47.0" prefWidth="124.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Playback" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnReset" disable="true" layoutX="496.0" mnemonicParsing="false" onAction="#btnReset_Action" prefHeight="47.0" prefWidth="99.0" stylesheets="@../Styles/RedBtnStyles.css" text="Reset" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane prefHeight="73.0" prefWidth="462.0">
+               <children>
+                  <Button fx:id="btnYes" layoutX="89.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnNo" layoutX="274.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="35.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

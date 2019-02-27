@@ -25,7 +25,7 @@
          <children>
             <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="370.0" prefWidth="690.0">
                <children>
-                  <Pane prefHeight="206.0" prefWidth="645.0">
+                  <Pane prefHeight="180.0" prefWidth="645.0">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="NAO Connection" underline="true">
                            <font>
@@ -58,7 +58,7 @@
                            </font>
                         </Label>
                         <ImageView fx:id="imgViewStatusIcon" fitHeight="94.0" fitWidth="102.0" layoutX="495.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="btnTestConnection" layoutX="230.0" layoutY="137.0" mnemonicParsing="false" onAction="#btnTestConnection_Action" prefHeight="9.0" prefWidth="210.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Test Connection" textFill="WHITE">
+                        <Button fx:id="btnTestConnection" layoutX="230.0" layoutY="123.0" mnemonicParsing="false" onAction="#btnTestConnection_Action" prefHeight="13.0" prefWidth="210.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Test Connection" textFill="WHITE">
                            <font>
                               <Font name="Arial" size="24.0" />
                            </font>
@@ -85,14 +85,14 @@
                         <JFXSlider fx:id="sliderVolume" layoutX="300.0" layoutY="40.0" prefHeight="20.0" prefWidth="300.0" stylesheets="@../Styles/SliderStyles.css" value="50.0" />
                      </children>
                   </Pane>
-                  <Pane prefHeight="104.0" prefWidth="645.0">
+                  <Pane prefHeight="134.0" prefWidth="645.0">
                      <children>
                         <Label layoutX="14.0" layoutY="14.0" text="Questionaire Settings" underline="true">
                            <font>
                               <Font name="Berlin Sans FB" size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="44.0" layoutY="52.0" text="Note Taking Method:">
+                        <Label layoutX="60.0" layoutY="52.0" text="Note Taking Method:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
@@ -110,6 +110,16 @@
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </JFXRadioButton>
+                        <Label layoutX="27.0" layoutY="87.0" text="Audio File Save Location:">
+                           <font>
+                              <Font name="Berlin Sans FB" size="20.0" />
+                           </font>
+                        </Label>
+                        <JFXTextField fx:id="txtAudioFileLocation" focusColor="DODGERBLUE" layoutX="298.0" layoutY="80.0" prefHeight="36.0" prefWidth="311.0" unFocusColor="BLACK">
+                           <font>
+                              <Font name="Berlin Sans FB" size="20.0" />
+                           </font>
+                        </JFXTextField>
                      </children>
                   </Pane>
                </children>

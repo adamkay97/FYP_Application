@@ -1,5 +1,7 @@
 package Controllers;
 
+import Managers.StageManager;
+import Managers.QuestionaireManager;
 import ControlControllers.ChecklistControlController;
 import ControlControllers.PassFailControlController;
 import ControlControllers.ExampleControlController;

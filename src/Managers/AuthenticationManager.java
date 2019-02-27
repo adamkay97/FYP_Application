@@ -1,5 +1,6 @@
-package Classes;
+package Managers;
 
+import Classes.User;
 import Enums.ButtonTypeEnum;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

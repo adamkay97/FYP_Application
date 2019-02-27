@@ -1,8 +1,8 @@
 package Controllers;
 
-import Classes.DatabaseManager;
-import Classes.QuestionaireManager;
-import Classes.StageManager;
+import Managers.DatabaseManager;
+import Managers.QuestionaireManager;
+import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;

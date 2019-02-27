@@ -1,5 +1,12 @@
-package Classes;
+package Managers;
 
+import Classes.Child;
+import Classes.DiagnosisResult;
+import Classes.FollowUpFlow;
+import Classes.FollowUpPart;
+import Classes.Question;
+import Classes.ReviewData;
+import Classes.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -257,8 +264,9 @@ public class DatabaseManager
                 String robotURL = results.getString("RobotConnectionURL");
                 int robotVolume = results.getInt("RobotVolume");
                 String noteMethod = results.getString("NoteMethod");
+                String audioPath = results.getString("AudioFileLocation");
                 
-                SettingsManager.initialiseSettings(robotURL, robotVolume, noteMethod);
+                SettingsManager.initialiseSettings(robotURL, robotVolume, noteMethod, audioPath);
             }
         }
         catch(SQLException ex)
@@ -418,9 +426,9 @@ public class DatabaseManager
         }
     }
     
-    public void updateUserSettings(int userId, String url, int volume, String noteMethod)
+    public void updateUserSettings(int userId, String url, int volume, String noteMethod, String audioPath)
     {
-        String query = "UPDATE ApplicationSettings SET RobotConnectionURL = ?, RobotVolume = ?, NoteMethod = ? "
+        String query = "UPDATE ApplicationSettings SET RobotConnectionURL = ?, RobotVolume = ?, NoteMethod = ?, AudioFileLocation = ? "
                      + "WHERE UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
@@ -428,7 +436,8 @@ public class DatabaseManager
             pstmt.setString(1, url);
             pstmt.setInt(2, volume);
             pstmt.setString(3, noteMethod);
-            pstmt.setInt(4, userId);
+            pstmt.setString(4, audioPath);
+            pstmt.setInt(5, userId);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)

@@ -1,8 +1,8 @@
 package Controllers;
 
-import Classes.DatabaseManager;
+import Managers.DatabaseManager;
 import Classes.FormTextLoader;
-import Classes.StageManager;
+import Managers.StageManager;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

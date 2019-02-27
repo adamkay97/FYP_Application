@@ -1,6 +1,6 @@
 package ControlControllers;
 
-import Classes.StageManager;
+import Managers.StageManager;
 import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
 import Enums.FlowBranchEnum;

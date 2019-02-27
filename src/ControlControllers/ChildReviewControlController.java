@@ -1,7 +1,7 @@
 package ControlControllers;
 
 import Classes.Child;
-import Classes.StageManager;
+import Managers.StageManager;
 import Controllers.IndividualReviewContentController;
 import java.io.IOException;
 import java.net.URL;

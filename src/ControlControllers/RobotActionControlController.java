@@ -1,7 +1,7 @@
 package ControlControllers;
 
-import Classes.RobotManager;
-import Classes.StageManager;
+import Managers.RobotManager;
+import Managers.StageManager;
 import Controllers.QuestionaireContentController;
 import Enums.ButtonTypeEnum;
 import java.net.URL;
