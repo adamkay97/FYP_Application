@@ -14,15 +14,23 @@
             <Font name="Berlin Sans FB" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="btnNo" layoutX="352.0" layoutY="280.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="55.0" prefWidth="125.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="24.0" />
-         </font>
-      </Button>
-      <Button fx:id="btnYes" layoutX="173.0" layoutY="280.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="55.0" prefWidth="125.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
-         <font>
-            <Font name="Arial" size="24.0" />
-         </font>
-      </Button>
+      <VBox alignment="CENTER" fillWidth="false" layoutX="40.0" layoutY="208.0" prefHeight="200.0" prefWidth="571.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <Pane prefHeight="137.0" prefWidth="382.0">
+               <children>
+                  <Button fx:id="btnYes" layoutX="32.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="55.0" prefWidth="125.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnNo" layoutX="225.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="55.0" prefWidth="125.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

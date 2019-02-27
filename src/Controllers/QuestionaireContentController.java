@@ -31,12 +31,14 @@ public class QuestionaireContentController implements Initializable
     private Parent robotActionControl;
     private Parent questionAnswerControl;
     
+    private boolean usesNAORobot;
     private String partIndex;
     private int qIndex;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        usesNAORobot = SettingsManager.getUsesNaoRobot();
         qIndex = 1;
         partIndex = "Part1";
         String questionControlPath;
@@ -78,7 +80,13 @@ public class QuestionaireContentController implements Initializable
                 
             questionAnswerControl = root;
             
-            setRobotControl();
+            //If the robot is being used set the robot control
+            //Else set the question control
+            if(usesNAORobot)
+                setRobotControl();
+            else
+               setQuestionAnswerControl(); 
+            
             setQuestionText(qIndex);
         }
         catch(IOException ex)
@@ -96,7 +104,7 @@ public class QuestionaireContentController implements Initializable
     {
         final String question = "Question" + Integer.toString(qIndex);
         
-        if(true)//RobotManager.getRobotConnected())
+        if(RobotManager.getRobotConnected())
         {
             //Check if current question is question 3 as there 
             //are 2 parts to question 3's behaviour
@@ -107,7 +115,7 @@ public class QuestionaireContentController implements Initializable
                 Thread robotThread = new Thread(() -> {
                     RobotManager.runBehaviour(qPart);
                 });
-                //robotThread.start();
+                robotThread.start();
                 
                 //Once the first part has been run pop up the message and then wait for the
                 //play button to be pressed again
@@ -125,10 +133,9 @@ public class QuestionaireContentController implements Initializable
                 Thread robotThread = new Thread(() -> {
                     RobotManager.runBehaviour(question);
                 });
-                //robotThread.start();
+                robotThread.start();
                 
-                setQuestionAnswerControl();
-                
+                setQuestionAnswerControl();   
             }
         }
         else
@@ -190,10 +197,22 @@ public class QuestionaireContentController implements Initializable
         if(qIndex != 20)
         {
             setQuestionText(++qIndex);
-            setRobotControl();
+            
+            //If the robot is used set the robot control after each question
+            //Else just set the specified answer control
+            if(usesNAORobot)
+                setRobotControl();
+            else
+                setQuestionAnswerControl();
         }
         else
+        {
+            //If uses NAO robot run close behaviour
+            if(usesNAORobot)
+                RobotManager.runStartEnd(false);
+            
             StageManager.loadContentScene(StageManager.FINISH);
+        }
     }
     
     private void setRobotControl()
@@ -205,7 +224,10 @@ public class QuestionaireContentController implements Initializable
     private void setQuestionAnswerControl()
     {
         stkpnQuestionControl.getChildren().setAll(questionAnswerControl);
-        btnReplay.setVisible(true);
+        
+        //If robot is being used make the replay button visible
+        if(usesNAORobot)
+            btnReplay.setVisible(true);
     }
     
     /**
@@ -289,8 +311,8 @@ public class QuestionaireContentController implements Initializable
         lblQuestionText.setText(question.getQuestionText());
         lblQuestionHeader.setText("Question " + index + ":");
         
-        //If the intructions arent null load the instructions popup
-        if(question.getQuestionInstructions() != null)
+        //If the intructions arent null and the robot is being used, load the instructions popup
+        if(question.getQuestionInstructions() != null && usesNAORobot)
         {
             //Load in seperate thread after other form threads have finished
             Platform.runLater(() -> {

@@ -261,12 +261,13 @@ public class DatabaseManager
             
             while(results.next())
             {
+                String usesNao = results.getString("UsesNaoRobot");
                 String robotURL = results.getString("RobotConnectionURL");
                 int robotVolume = results.getInt("RobotVolume");
                 String noteMethod = results.getString("NoteMethod");
                 String audioPath = results.getString("AudioFileLocation");
                 
-                SettingsManager.initialiseSettings(robotURL, robotVolume, noteMethod, audioPath);
+                SettingsManager.initialiseSettings(usesNao, robotURL, robotVolume, noteMethod, audioPath);
             }
         }
         catch(SQLException ex)
@@ -426,18 +427,20 @@ public class DatabaseManager
         }
     }
     
-    public void updateUserSettings(int userId, String url, int volume, String noteMethod, String audioPath)
+    public void updateUserSettings(int userId, String usesNao, String url, int volume, String noteMethod, String audioPath)
     {
-        String query = "UPDATE ApplicationSettings SET RobotConnectionURL = ?, RobotVolume = ?, NoteMethod = ?, AudioFileLocation = ? "
+        String query = "UPDATE ApplicationSettings SET UsesNaoRobot = ?, RobotConnectionURL = ?, RobotVolume = ?, "
+                     + "NoteMethod = ?, AudioFileLocation = ? "
                      + "WHERE UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
-            pstmt.setString(1, url);
-            pstmt.setInt(2, volume);
-            pstmt.setString(3, noteMethod);
-            pstmt.setString(4, audioPath);
-            pstmt.setInt(5, userId);
+            pstmt.setString(1, usesNao);
+            pstmt.setString(2, url);
+            pstmt.setInt(3, volume);
+            pstmt.setString(4, noteMethod);
+            pstmt.setString(5, audioPath);
+            pstmt.setInt(6, userId);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)

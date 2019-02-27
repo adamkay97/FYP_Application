@@ -8,6 +8,8 @@ package Controllers;
 import Managers.AuthenticationManager;
 import Managers.DatabaseManager;
 import Enums.ButtonTypeEnum;
+import Managers.RobotManager;
+import Managers.SettingsManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,7 +17,6 @@ import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXPasswordField;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -30,9 +31,7 @@ public class LoginFormController implements Initializable
     @FXML private JFXPasswordField txtPassword;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-    } 
+    public void initialize(URL url, ResourceBundle rb) {} 
     
     @FXML private void btnLogin_Action(ActionEvent event)
     {
@@ -84,6 +83,16 @@ public class LoginFormController implements Initializable
             //If login successful load user settings and open main form
             loadUserSettings();    
             StageManager.loadForm(StageManager.MAIN, new Stage());
+            
+            if(SettingsManager.getUsesNaoRobot())
+            {
+                //Run the robot connection on a seperate thread using the settings manager
+                //after its been set above
+                Thread connectThread = new Thread(() -> {
+                    RobotManager.connectToRobot(SettingsManager.getRobotConnection());
+                });
+                connectThread.start();
+            }
             closeForm();
         }
     }

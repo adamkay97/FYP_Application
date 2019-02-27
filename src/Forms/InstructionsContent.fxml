@@ -11,27 +11,6 @@
 
 <AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.InstructionsContentController">
    <children>
-      <AnchorPane layoutX="36.0" layoutY="155.0" prefHeight="384.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="155.0">
-         <children>
-            <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" pannable="true" prefHeight="351.0" prefWidth="675.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-               <content>
-                  <VBox fx:id="vboxInstructionsContent" prefHeight="347.0" prefWidth="642.0" />
-               </content>
-            </ScrollPane>
-         </children>
-      </AnchorPane>
-      <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label fx:id="lblHeader" layoutX="30.0" layoutY="60.0" text="Instructions" textFill="WHITE" wrapText="true">
-               <font>
-                  <Font name="Berlin Sans FB" size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <AnchorPane layoutX="40.0" layoutY="552.0" prefHeight="104.0" prefWidth="689.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="31.0" AnchorPane.topAnchor="552.0">
          <children>
             <Button fx:id="btnContinue" layoutX="372.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="15.0">
@@ -46,5 +25,26 @@
             </Button>
          </children>
       </AnchorPane>
+      <AnchorPane layoutX="36.0" layoutY="155.0" prefHeight="384.0" prefWidth="697.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="155.0">
+         <children>
+            <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="11.0" layoutY="14.0" pannable="true" prefHeight="351.0" prefWidth="675.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <content>
+                  <VBox fx:id="vboxInstructionsContent" alignment="CENTER" prefHeight="347.0" prefWidth="642.0" />
+               </content>
+            </ScrollPane>
+         </children>
+      </AnchorPane>
+      <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblHeader" layoutX="30.0" layoutY="60.0" text="Instructions" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

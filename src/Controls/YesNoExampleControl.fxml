@@ -10,7 +10,12 @@
 
 <AnchorPane id="AnchorPane" prefHeight="45.0" prefWidth="630.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.YesNoExampleControlController">
    <children>
-      <Pane layoutX="449.0" prefHeight="53.0" prefWidth="167.0" AnchorPane.rightAnchor="10.0">
+      <Label fx:id="lblExampleText" prefHeight="53.0" prefWidth="445.0" text="Text" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="185.0">
+         <font>
+            <Font name="Berlin Sans FB" size="18.0" />
+         </font>
+      </Label>
+      <Pane layoutX="463.0" prefHeight="53.0" prefWidth="167.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXRadioButton fx:id="radBtnYes" layoutX="14.0" layoutY="16.0" style="-jfx-selected-color: #00FF00;" text="Yes">
                <font>
@@ -24,10 +29,5 @@
             </JFXRadioButton>
          </children>
       </Pane>
-      <Label fx:id="lblExampleText" layoutY="1.0" prefHeight="53.0" prefWidth="425.0" text="Text" wrapText="true" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="190.0">
-         <font>
-            <Font name="Berlin Sans FB" size="18.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>

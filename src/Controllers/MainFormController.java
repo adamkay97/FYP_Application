@@ -8,7 +8,6 @@ import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.*;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +31,6 @@ public class MainFormController implements Initializable
     @FXML private Pane pnlTitle;
     @FXML private Pane pnlMenuButtons;
     @FXML private ImageView imgNaoIcon;
-    @FXML private JFXButton btnClose;
     @FXML private JFXButton btnMinimize;
     @FXML private JFXButton btnMenuStart;
     @FXML private JFXButton btnMenuInfo;

@@ -23,42 +23,62 @@
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="pnlContentBorder" layoutX="46.0" layoutY="165.0" prefHeight="391.0" prefWidth="669.0" style="-fx-border-color: #696969; -fx-border-radius: 10; -fx-border-width: 4;">
+      <AnchorPane layoutX="46.0" layoutY="165.0" prefHeight="391.0" prefWidth="669.0" style="-fx-border-color: #696969; -fx-border-radius: 10; -fx-border-width: 4;" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="45.0">
          <children>
-            <Label fx:id="lblScoreText" alignment="TOP_CENTER" layoutX="24.0" layoutY="14.0" prefHeight="122.0" prefWidth="622.0" text="You have now completed the first part of the Diagnosis.&#10;The score below represents the amount of questions answered that indicated a risk of ASD in your child." textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Berlin Sans FB" size="22.0" />
-               </font>
-            </Label>
-            <Pane layoutX="200.0" layoutY="114.0" prefHeight="102.0" prefWidth="270.0" style="-fx-background-color: #1E90FF; -fx-background-radius: 20; -fx-border-radius: 20;">
+            <VBox alignment="CENTER" layoutX="9.0" layoutY="8.0" prefHeight="376.0" prefWidth="651.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
-                  <Label alignment="TOP_CENTER" layoutX="60.0" layoutY="3.0" prefHeight="36.0" prefWidth="151.0" text="Score: " textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <AnchorPane prefHeight="101.0" prefWidth="652.0">
+                     <children>
+                        <Label fx:id="lblScoreText" alignment="TOP_CENTER" layoutX="15.0" layoutY="6.0" prefHeight="90.0" prefWidth="622.0" text="You have now completed the first part of the Diagnosis.&#10;The score below represents the amount of questions answered that indicated a risk of ASD in your child." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                           <font>
+                              <Font name="Berlin Sans FB" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <VBox alignment="CENTER" fillWidth="false" prefHeight="119.0" prefWidth="652.0">
+                     <children>
+                        <Pane prefHeight="102.0" prefWidth="270.0" style="-fx-background-color: #1E90FF; -fx-background-radius: 20; -fx-border-radius: 20;">
+                           <children>
+                              <Label alignment="TOP_CENTER" layoutX="60.0" layoutY="3.0" prefHeight="36.0" prefWidth="151.0" text="Score: " textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="32.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblScore" alignment="TOP_CENTER" layoutX="60.0" layoutY="39.0" prefHeight="57.0" prefWidth="151.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="38.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </VBox>
+                  <AnchorPane prefHeight="142.0" prefWidth="652.0">
+                     <children>
+                        <Label fx:id="lblRiskText" alignment="CENTER" layoutX="15.0" layoutY="2.0" prefHeight="140.0" prefWidth="622.0" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                           <font>
+                              <Font name="Berlin Sans FB" size="22.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <VBox alignment="CENTER" fillWidth="false" layoutX="79.0" layoutY="562.0" prefHeight="90.0" prefWidth="601.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
+         <children>
+            <Pane prefHeight="84.0" prefWidth="219.0">
+               <children>
+                  <Button fx:id="btnContinue" layoutX="17.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE">
                      <font>
-                        <Font name="Berlin Sans FB" size="32.0" />
+                        <Font name="Berlin Sans FB" size="26.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="lblScore" alignment="TOP_CENTER" layoutX="60.0" layoutY="39.0" prefHeight="57.0" prefWidth="151.0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="Berlin Sans FB" size="38.0" />
-                     </font>
-                  </Label>
+                  </Button>
                </children>
             </Pane>
-            <Label fx:id="lblRiskText" alignment="TOP_CENTER" layoutX="24.0" layoutY="235.0" prefHeight="147.0" prefWidth="622.0" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Berlin Sans FB" size="22.0" />
-               </font>
-            </Label>
          </children>
-      </Pane>
-      <Pane layoutX="271.0" layoutY="565.0" prefHeight="84.0" prefWidth="219.0">
-         <children>
-            <Button fx:id="btnContinue" layoutX="16.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="26.0" />
-               </font>
-            </Button>
-         </children>
-      </Pane>
+      </VBox>
    </children>
 </AnchorPane>

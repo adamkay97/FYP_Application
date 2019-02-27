@@ -62,6 +62,8 @@ public class FinishQuestionaireContentController implements Initializable
     
     public void btnContinue_Action(ActionEvent event)
     {
+        Thread finishQuestionaire;
+        
         if(!QuestionaireManager.getFollowUpCompleted())
         {
             if(followUp)
@@ -71,20 +73,27 @@ public class FinishQuestionaireContentController implements Initializable
             }
             else
             {
-                QuestionaireManager.saveFirstStageScore(followUp);
-                QuestionaireManager.resetQuestionaireManager();
+                //Run saving of questionaire score in seperate thread so doesnt hold up the
+                //rest of the application
+                finishQuestionaire = new Thread(() -> {
+                    QuestionaireManager.saveFirstStageScore(followUp);
+                    QuestionaireManager.resetQuestionaireManager();
+                });
+                finishQuestionaire.start();
+                
                 StageManager.loadContentScene(StageManager.INSTRUCTIONS);
                 StageManager.setInProgress(false);
             }
         }
         else
         {
-            //Run saving of second stage results after the intructions scene has been 
-            //loaded in a seperate thread to stop the form loading from being held up
-            Platform.runLater(() -> {
+            //Run saving of second stage results in a seperate thread 
+            //to stop the form loading from being held up
+            finishQuestionaire = new Thread(() -> {
                 QuestionaireManager.saveSecondStageScore();
                 QuestionaireManager.resetQuestionaireManager();
             });
+            finishQuestionaire.start();
             
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
             StageManager.setInProgress(false);

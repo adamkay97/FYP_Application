@@ -4,11 +4,9 @@ import Managers.RobotManager;
 import Managers.SettingsManager;
 import Managers.StageManager;
 import Enums.ButtonTypeEnum;
-import Managers.QuestionaireManager;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
-import java.awt.Cursor;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -16,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
@@ -26,11 +25,16 @@ import javafx.scene.layout.AnchorPane;
 public class SettingsContentController implements Initializable 
 {
     @FXML private AnchorPane mainAnchorPane;
+    
+    @FXML private ToggleGroup useNaoGroup;
+    @FXML private JFXRadioButton radBtnNaoYes;
+    @FXML private JFXRadioButton radBtnNaoNo;
+    
     @FXML private JFXTextField txtIPAddress;
     @FXML private JFXTextField txtFixedPort;
     @FXML private Label lblConnectStatus;
     @FXML private ImageView imgViewStatusIcon;
-    
+    @FXML private Button btnTestConnection;
     @FXML private JFXSlider sliderVolume;
     
     @FXML private ToggleGroup noteMethodGroup;
@@ -41,6 +45,7 @@ public class SettingsContentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        boolean usesNAO = SettingsManager.getUsesNaoRobot();
         String robotURL = SettingsManager.getRobotConnection();
         int volume = SettingsManager.getRobotVolume();
         String noteMethod = SettingsManager.getNoteMethod();
@@ -53,10 +58,15 @@ public class SettingsContentController implements Initializable
         
         txtIPAddress.setText(urlSplit[0]);
         txtFixedPort.setText(urlSplit[1]);
-        
         setConnectedImage(RobotManager.getRobotConnected());
-        
         sliderVolume.setValue(volume);
+        
+        if(!usesNAO)
+        {
+            radBtnNaoNo.setSelected(true);
+            setNAOControls(true);
+        }
+        
         if(noteMethod.equals("TextArea"))
         {
             radBtnText.setSelected(true);
@@ -78,7 +88,7 @@ public class SettingsContentController implements Initializable
         else
             txtAudioFileLocation.setText(audioPath);
         
-        //Create radio button listeners for enabling location text field
+        //Create radio button listeners for UsesNao and UsesAudio
         createRadioButtonListeners();
     }  
     
@@ -144,7 +154,9 @@ public class SettingsContentController implements Initializable
     private void saveSettingsProcess()
     {
         boolean save = true;
-        if(!RobotManager.getRobotConnected())
+        boolean usesNAO = radBtnNaoYes.isSelected();
+        
+        if(!RobotManager.getRobotConnected() && usesNAO)
         {
             //If the robot is not connected Pop up a message checking the user 
             //still wants to save these ip and port settings
@@ -169,6 +181,7 @@ public class SettingsContentController implements Initializable
             if(noteMethod.equals("Audio"))
                 SettingsManager.setAudioFileLocation(txtAudioFileLocation.getText());
             
+            SettingsManager.setUsesNaoRobot(usesNAO);
             SettingsManager.setRobotConnection(url);
             SettingsManager.setRobotVolume(volume);
             SettingsManager.setNoteMethod(noteMethod);
@@ -199,9 +212,19 @@ public class SettingsContentController implements Initializable
         }
     }
     
+    private void setNAOControls(boolean disable)
+    {
+        txtIPAddress.setDisable(disable);
+        txtFixedPort.setDisable(disable);
+        lblConnectStatus.setDisable(disable);
+        imgViewStatusIcon.setVisible(!disable);
+        btnTestConnection.setDisable(disable);
+        sliderVolume.setDisable(disable);
+    }
+    
     private void createRadioButtonListeners()
     {
-        //Add listener to ToggleGroup to enable/disable the file path text field 
+        //Add listener to NoteToggleGroup to enable/disable the file path text field 
         noteMethodGroup.selectedToggleProperty().addListener(
             (ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) -> 
             {
@@ -211,6 +234,19 @@ public class SettingsContentController implements Initializable
                         txtAudioFileLocation.setDisable(false);
                     else
                         txtAudioFileLocation.setDisable(true);
+                } 
+            });
+        
+        //Add listener to UseNAO Toggle Group to enable or disable all NAO controls
+        useNaoGroup.selectedToggleProperty().addListener(
+            (ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) -> 
+            {
+                if (useNaoGroup.getSelectedToggle() != null) 
+                {
+                    if(useNaoGroup.getSelectedToggle().equals(radBtnNaoYes))
+                        setNAOControls(false);
+                    else
+                        setNAOControls(true);
                 } 
             });
     }

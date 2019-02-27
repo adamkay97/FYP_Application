@@ -10,8 +10,13 @@ public class RobotManager
     
     public static boolean connectToRobot(String connectionURL)
     {
-        connected = true;
+        connected = false;
         
+        if(application != null)
+        {
+            application.stop();
+            application = null;
+        }
         try
         {
            //Pass empty args and robot URL to NAOqi Application type
@@ -21,12 +26,12 @@ public class RobotManager
              
            // Start your application
            application.start(); 
+           connected = true;
         }
         catch(Exception ex)
         {
             System.out.println("Error when connecting to NAO - " + ex.getMessage());
-            application.stop();
-            connected = false;
+            //application.stop();
         }
         return connected;
     }

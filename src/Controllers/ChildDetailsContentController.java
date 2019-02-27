@@ -11,6 +11,7 @@ import Managers.DatabaseManager;
 import Managers.QuestionaireManager;
 import Enums.ButtonTypeEnum;
 import Classes.*;
+import Managers.SettingsManager;
 import com.jfoenix.controls.*;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,25 +50,18 @@ public class ChildDetailsContentController implements Initializable {
             {
                 if(saveChildInfo(child))
                 {
-                    //Check that there is a valid connection to the Robot
-                    if(true)//RobotManager.getRobotConnected())
+                    if(SettingsManager.getUsesNaoRobot())
                     {
-                        //Run start behaviour in seperate thread so the rest of the application is'nt held up
+                        //Run start behaviour in seperate thread so the rest of the application isn't held up
                         Thread robotThread = new Thread(() -> {
                             RobotManager.runStartEnd(true);
                         });
-                        //robotThread.start();
+                        robotThread.start();
+                    }
+                    
+                    StageManager.loadContentScene(StageManager.QUESTIONAIRE);
+                    StageManager.setInProgress(true);  
                         
-                        StageManager.loadContentScene(StageManager.QUESTIONAIRE);
-                        StageManager.setInProgress(true);
-                    }
-                    else
-                    {
-                        //If cannot connect, point user to settings page where they can test the connection.
-                        String msg = "There doesn't appear to be a valid connection to NAO. Please use the settings tab "
-                                + "to access the connection details for NAO.";
-                        StageManager.loadPopupMessage("Error", msg, ButtonTypeEnum.OK);
-                    }
                 }
             }
         }

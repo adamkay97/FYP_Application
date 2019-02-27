@@ -12,7 +12,6 @@ import Enums.QuestionTypeEnum;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -44,8 +43,7 @@ public class FollowUpContentController implements Initializable
         //Initialize followUpList with the FollowUpFlow of each flagged questions
         for (int i : flaggedQuestions)
             followUpList.add(QuestionaireManager.getFollowUpFlow(i));
-        
-        //followUpList.add(QuestionaireManager.getFollowUpFlow(18));
+
             
         setupFollowUpQuestion();
     }

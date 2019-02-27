@@ -2,7 +2,6 @@ package fyp_application;
 
 import Managers.StageManager;
 import Managers.DatabaseManager;
-import Classes.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -16,9 +15,6 @@ public class FYP_Application extends Application
     public void start(Stage stage) throws Exception 
     {
         LoadFromDatabase();
-        //RobotManager.connectToRobot();
-        
-        //StageManager.loadForm(StageManager.MAIN, stage);
         StageManager.loadForm(StageManager.LOGIN, stage);
     }
     

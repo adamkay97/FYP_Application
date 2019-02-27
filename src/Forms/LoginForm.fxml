@@ -46,6 +46,9 @@
                <font>
                   <Font name="Verdana Bold" size="24.0" />
                </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </JFXButton>
          </children>
       </Pane>
