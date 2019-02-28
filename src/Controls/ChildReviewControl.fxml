@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="300.0" prefWidth="519.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.ChildReviewControlController">
    <children>
-      <HBox layoutX="3.0" layoutY="3.0" prefHeight="300.0" prefWidth="519.0">
+      <HBox alignment="CENTER" layoutX="3.0" layoutY="3.0" prefHeight="300.0" prefWidth="519.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Pane fx:id="pnlLeft" prefHeight="228.0" prefWidth="173.0" style=": ;">
                <children>

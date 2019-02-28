@@ -19,7 +19,7 @@ import java.util.List;
 
 public class DatabaseManager 
 {
-    private final String DBCONNSTRING = "jdbc:sqlite:Database\\FYP_Database.db";
+    private final String DBCONNSTRING = "/Database/FYP_Database.db";
     
     private Connection conn;
     
@@ -29,7 +29,7 @@ public class DatabaseManager
         conn = null;
         try 
         {
-            conn = DriverManager.getConnection(DBCONNSTRING);
+            conn = DriverManager.getConnection("jdbc:sqlite::resource:" + getClass().getResource(DBCONNSTRING));
             System.out.println("A connection to the SQLite db has been established.");    
             return true;
         } 

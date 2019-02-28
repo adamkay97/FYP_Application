@@ -101,6 +101,18 @@
                </children>
             </Pane>
          </children></JFXDrawer>
+      <JFXButton fx:id="btnLogout" ellipsisString="" layoutX="948.0" layoutY="3.0" maxWidth="59.0" onAction="#btnLogout_Action" prefHeight="20.0" prefWidth="59.0" stylesheets="@../Styles/ControlButtonStyles.css" textAlignment="CENTER">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Icons/sign-out-icon.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </JFXButton>
       <JFXButton fx:id="btnQuit" layoutX="1054.5" layoutY="-0.5" onAction="#btnQuit_Click" prefHeight="46.0" prefWidth="45.0" ripplerFill="WHITE" stylesheets="@../Styles/ControlButtonStyles.css" text="X" AnchorPane.rightAnchor="-0.4" AnchorPane.topAnchor="-0.5">
          <font>
             <Font name="Verdana Bold" size="24.0" />
@@ -113,18 +125,6 @@
          <font>
             <Font name="Verdana Bold" size="24.0" />
          </font>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </JFXButton>
-      <JFXButton fx:id="btnLogout" ellipsisString="" layoutX="948.0" layoutY="3.0" maxWidth="59.0" onAction="#btnLogout_Action" prefHeight="20.0" prefWidth="59.0" stylesheets="@../Styles/ControlButtonStyles.css" textAlignment="CENTER">
-         <graphic>
-            <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../Icons/sign-out-icon.png" />
-               </image>
-            </ImageView>
-         </graphic>
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>

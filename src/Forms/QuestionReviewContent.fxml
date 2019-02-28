@@ -11,15 +11,15 @@
 
 <AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.QuestionReviewContentController">
    <children>
-      <Pane layoutX="3.0" layoutY="8.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblQuestionHeader" layoutX="41.0" layoutY="43.0" prefHeight="66.0" prefWidth="678.0" text="QuestionText" textFill="WHITE" wrapText="true">
+            <Label fx:id="lblQuestionHeader" layoutX="41.0" layoutY="37.0" prefHeight="66.0" prefWidth="678.0" text="QuestionText" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
                <font>
                   <Font name="Berlin Sans FB" size="24.0" />
                </font>
             </Label>
          </children>
-      </Pane>
+      </AnchorPane>
       <AnchorPane layoutX="29.0" layoutY="161.0" prefHeight="432.0" prefWidth="702.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="77.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="154.0">
          <children>
             <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="323.0" layoutY="37.0" pannable="true" prefHeight="351.0" prefWidth="675.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">

@@ -2,6 +2,7 @@ package Controllers;
 
 import Classes.Child;
 import Classes.ReviewData;
+import Enums.ButtonTypeEnum;
 import Managers.SettingsManager;
 import Managers.StageManager;
 import com.jfoenix.controls.JFXButton;
@@ -164,13 +165,21 @@ public class QuestionReviewContentController implements Initializable
         String audioPath = SettingsManager.getAudioFileLocation() + childFolder;
         File audioFile = new File(String.format("%s\\Question%d.wav", audioPath, reviewData.getQuestionNumber()));
         
-        Thread playThread = new Thread(() -> 
+        if(audioFile.exists())
         {
-            //Using the media and media player objects, find the file and play it back
-            Media audioPlayback = new Media(audioFile.toURI().toString());
-            MediaPlayer mediaPlayer = new MediaPlayer(audioPlayback);
-            mediaPlayer.play();
-        });
-        playThread.start();
+            Thread playThread = new Thread(() -> 
+            {
+                //Using the media and media player objects, find the file and play it back
+                Media audioPlayback = new Media(audioFile.toURI().toString());
+                MediaPlayer mediaPlayer = new MediaPlayer(audioPlayback);
+                mediaPlayer.play();
+            });
+            playThread.start();
+        }
+        else
+        {
+            String msg = "There was no audio recorded for this question.";
+            StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.OK);
+        }
     }
 }

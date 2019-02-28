@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="80.0" maxWidth="648.0" minHeight="80.0" minWidth="648.0" prefHeight="80.0" prefWidth="648.0" style="-fx-border-color: #1E90FF; -fx-border-radius: 3px; -fx-border-width: 2px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.QuestionReviewControlController">
    <children>
-      <HBox layoutY="-4.0" prefHeight="80.0" prefWidth="648.0" spacing="10.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
+      <HBox alignment="CENTER" layoutY="-4.0" prefHeight="80.0" prefWidth="648.0" spacing="10.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0">
          <children>
             <Pane prefHeight="74.0" prefWidth="138.0">
                <children>

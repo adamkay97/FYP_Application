@@ -156,12 +156,12 @@ public class MainFormController implements Initializable
     
     public void openMenuDrawer()
     {
-        collapseTransition.setRate(collapseTransition.getRate() * -1);
-        collapseTransition.play();
-        
         //Add extra check for when function is called outside of Main controller
         if(!menuDrawer.isOpened())
         {
+            collapseTransition.setRate(collapseTransition.getRate() * -1);
+            collapseTransition.play();
+        
             menuDrawer.open();
             menuDrawer.toFront();
             setControlsVisible(true);
@@ -173,12 +173,12 @@ public class MainFormController implements Initializable
     
     public void closeMenuDrawer()
     {
-        collapseTransition.setRate(collapseTransition.getRate() * -1);
-        collapseTransition.play();
-        
         //Add extra check for when function is called outside of Main controller
         if(menuDrawer.isOpened())
         {
+            collapseTransition.setRate(collapseTransition.getRate() * -1);
+            collapseTransition.play();
+            
             menuDrawer.close();
             menuDrawer.toBack();
             setControlsVisible(false);
