@@ -2,10 +2,11 @@ package Controllers;
 
 import Managers.DatabaseManager;
 import Managers.QuestionaireManager;
+import Managers.RobotManager;
+import Managers.SettingsManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,6 +31,15 @@ public class FinishQuestionaireContentController implements Initializable
         
         if(!QuestionaireManager.getFollowUpCompleted())
         {
+            if(SettingsManager.getUsesNaoRobot())
+            {
+                //Run end behaviour in seperate thread so the rest of the application isn't held up
+                Thread robotThread = new Thread(() -> {
+                    RobotManager.runStartEnd(false);
+                });
+                robotThread.start();
+            }
+            
             lblScore.setText(Integer.toString(atRiskQuestions) + " / 20");
 
             atRiskText = QuestionaireManager.getResultInfo(1);

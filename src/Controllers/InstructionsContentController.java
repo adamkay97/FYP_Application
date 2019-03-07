@@ -50,7 +50,7 @@ public class InstructionsContentController implements Initializable
     {
         if(readInstructions.isSelected())
         {
-            if(RobotManager.getRobotConnected() || !SettingsManager.getUsesNaoRobot())
+            if(true)//RobotManager.getRobotConnected() || !SettingsManager.getUsesNaoRobot())
                 StageManager.loadContentScene(StageManager.DETAILS);
             else
             {

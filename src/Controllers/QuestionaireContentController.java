@@ -314,10 +314,21 @@ public class QuestionaireContentController implements Initializable
         //If the intructions arent null and the robot is being used, load the instructions popup
         if(question.getQuestionInstructions() != null && usesNAORobot)
         {
-            //Load in seperate thread after other form threads have finished
-            Platform.runLater(() -> {
-                StageManager.loadPopupInstruction(question.getQuestionInstructions(), qIndex);
-            });
+            if(qIndex == 6)
+            {
+                //Q6 do not require a picture instruction so just output the instruction to a normal popup
+                //Load in seperate thread after other form threads have finished
+                Platform.runLater(() -> {
+                    StageManager.loadPopupMessage("Instruction", question.getQuestionInstructions(), ButtonTypeEnum.OK);
+                });
+            }
+            else
+            {
+                //Load in seperate thread after other form threads have finished
+                Platform.runLater(() -> {
+                    StageManager.loadPopupInstruction(question.getQuestionInstructions(), qIndex);
+                });
+            }
         }
     }
 }

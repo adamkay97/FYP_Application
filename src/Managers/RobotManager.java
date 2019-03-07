@@ -12,26 +12,22 @@ public class RobotManager
     {
         connected = false;
         
-        if(application != null)
-        {
-            application.stop();
-            application = null;
-        }
         try
         {
-           //Pass empty args and robot URL to NAOqi Application type
-           //To initiate connecting to NAO.
-           String[] args = {""};
-           application = new Application(args, connectionURL);
-             
-           // Start your application
-           application.start(); 
-           connected = true;
+            //Pass empty args and robot URL to NAOqi Application type
+            //To initiate connecting to NAO.
+            String[] args = {""};
+           
+            application = new Application(args, connectionURL);
+            // Start your application
+            application.start(); 
+            connected = true;
         }
         catch(Exception ex)
         {
             System.out.println("Error when connecting to NAO - " + ex.getMessage());
-            //application.stop();
+            application.stop();
+            System.gc();
         }
         return connected;
     }
