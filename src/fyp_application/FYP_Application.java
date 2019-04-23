@@ -1,4 +1,4 @@
-package fyp_application;
+package FYP_Application;
 
 import Managers.StageManager;
 import Managers.DatabaseManager;
