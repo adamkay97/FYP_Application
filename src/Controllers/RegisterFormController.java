@@ -85,7 +85,7 @@ public class RegisterFormController implements Initializable
                             digitCount++;
                     }
                     
-                    v2 = digitCount >= 2;
+                    v2 = digitCount >= 1;
                 }
                 
                 setPasswordFieldColor(txtPassword, v2);
