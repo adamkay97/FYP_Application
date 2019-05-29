@@ -37,7 +37,7 @@ public class StageManager
     public static final String CHECKLISTCONTROL = "/Control/ChecklistControl.fxml";
     
     private static MainFormController mainFormController;
-    private static User currentUser;
+    private static User currentUser = null;
     
     //Offsets used for calculating where the form should be once its been dragged
     private static double offsetX = 0;

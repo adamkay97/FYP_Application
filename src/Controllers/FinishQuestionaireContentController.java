@@ -1,5 +1,6 @@
 package Controllers;
 
+import Enums.ButtonTypeEnum;
 import Managers.DatabaseManager;
 import Managers.QuestionaireManager;
 import Managers.RobotManager;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 public class FinishQuestionaireContentController implements Initializable 
 {
@@ -72,7 +74,8 @@ public class FinishQuestionaireContentController implements Initializable
     
     public void btnContinue_Action(ActionEvent event)
     {
-        Thread finishQuestionaire;
+       Thread finishQuestionaire;
+       boolean save = false;
         
         if(!QuestionaireManager.getFollowUpCompleted())
         {
@@ -82,7 +85,7 @@ public class FinishQuestionaireContentController implements Initializable
                 StageManager.loadContentScene(StageManager.FOLLOWUP);
             }
             else
-            {
+            {   
                 //Run saving of questionaire score in seperate thread so doesnt hold up the
                 //rest of the application
                 finishQuestionaire = new Thread(() -> {
@@ -109,4 +112,22 @@ public class FinishQuestionaireContentController implements Initializable
             StageManager.setInProgress(false);
         }
     }
+    
+//    public boolean saveResult()
+//    {
+//        String msg = "Do you wish to save the result of this Diagnosis for review purposes?" ;
+//        boolean saveResult = StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.YESNO);
+//
+//        if(saveResult)
+//        {
+//            StageManager.loadForm(StageManager.LOGIN, new Stage());
+//            
+//            if(StageManager.getCurrentUser() != null)
+//                return true;
+//            else
+//                return false;
+//        }
+//        else
+//            return false;
+//    }
 }

@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +32,7 @@ public class MainFormController implements Initializable
     @FXML private Pane pnlTitle;
     @FXML private Pane pnlMenuButtons;
     @FXML private ImageView imgNaoIcon;
+    @FXML private ImageView maxResIcon;
     @FXML private JFXButton btnMinimize;
     @FXML private JFXButton btnMenuStart;
     @FXML private JFXButton btnMenuInfo;
@@ -41,6 +43,7 @@ public class MainFormController implements Initializable
     
     private final int MENU_SIZE = 288;
     private String currentPage;
+    private boolean maximized = false;
     private HamburgerBackArrowBasicTransition collapseTransition;
     
     @Override
@@ -98,6 +101,33 @@ public class MainFormController implements Initializable
         {
             quitMainForm();
             StageManager.loadForm(StageManager.LOGIN, new Stage());
+        }
+    }
+    
+    @FXML public void btnMaxRes_Action(ActionEvent event)
+    {
+        if(!maximized)
+        {
+            maxResIcon.getStyleClass().clear();
+            maxResIcon.getStyleClass().add("restore");
+            
+            Stage currentStage = (Stage)mainAnchorPane.getScene().getWindow();
+            
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+
+            currentStage.setX(bounds.getMinX());
+            currentStage.setY(bounds.getMinY());
+            currentStage.setWidth(bounds.getWidth());
+            currentStage.setHeight(bounds.getHeight());
+            
+            maximized = true;
+        }
+        else
+        {
+            maxResIcon.getStyleClass().clear();
+            maxResIcon.getStyleClass().add("maximize");
+            maximized = false;
         }
     }
     

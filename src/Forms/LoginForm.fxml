@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
@@ -9,40 +10,45 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="mainAnchorPane" prefHeight="390.0" prefWidth="462.0" stylesheets="@../Styles/RootPaneStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginFormController">
+<AnchorPane id="AnchorPane" fx:id="mainAnchorPane" prefHeight="400.0" prefWidth="475.0" stylesheets="@../Styles/RootPaneStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.LoginFormController">
    <children>
-      <Pane layoutX="47.0" layoutY="126.0" prefHeight="154.0" prefWidth="386.0" style="-fx-border-color: #fff; -fx-border-width: 5px; -fx-border-radius: 15px;">
+      <Pane layoutX="59.0" layoutY="113.0" prefHeight="192.0" prefWidth="358.0" style="-fx-border-color: #fff; -fx-border-width: 5px; -fx-border-radius: 15px;">
          <children>
-            <JFXTextField fx:id="txtUsername" focusColor="DODGERBLUE" layoutX="89.0" layoutY="14.0" promptText=" Username" unFocusColor="DIMGRAY">
+            <JFXTextField fx:id="txtUsername" focusColor="DODGERBLUE" layoutX="75.0" layoutY="14.0" prefHeight="41.0" prefWidth="254.0" promptText=" Username" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXTextField>
-            <ImageView fitHeight="28.0" fitWidth="55.0" layoutX="26.0" layoutY="27.0" pickOnBounds="true">
+            <ImageView fitHeight="28.0" fitWidth="55.0" layoutX="14.0" layoutY="21.0" pickOnBounds="true">
                <image>
                   <Image url="@../Icons/userIcon.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="28.0" fitWidth="55.0" layoutX="26.0" layoutY="90.0" pickOnBounds="true">
+            <ImageView fitHeight="28.0" fitWidth="55.0" layoutX="14.0" layoutY="89.0" pickOnBounds="true">
                <image>
                   <Image url="@../Icons/passwordIcon.png" />
                </image>
             </ImageView>
-            <JFXPasswordField fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="89.0" layoutY="82.0" prefHeight="31.0" prefWidth="236.0" promptText=" Password" unFocusColor="DIMGRAY">
+            <JFXPasswordField fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="75.0" layoutY="82.0" prefHeight="41.0" prefWidth="254.0" promptText=" Password" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXPasswordField>
+            <JFXCheckBox fx:id="chkRememberMe" checkedColor="LIMEGREEN" layoutX="110.0" layoutY="157.0" text="Remember Me" textFill="#4d4d4d">
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </JFXCheckBox>
          </children>
       </Pane>
-      <Pane layoutX="6.0" layoutY="6.0" prefHeight="98.0" prefWidth="462.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="289.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="6.0" layoutY="6.0" prefHeight="98.0" prefWidth="462.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="187.0" layoutY="27.0" text="Login" textFill="WHITE" wrapText="true">
+            <Label layoutX="196.0" layoutY="30.0" text="Login" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
-            <JFXButton fx:id="btnExit" layoutX="408.0" layoutY="-4.0" onAction="#btnExit_Action" prefHeight="46.0" prefWidth="45.0" ripplerFill="WHITE" text="X" textFill="WHITE">
+            <JFXButton fx:id="btnExit" layoutX="427.0" layoutY="-1.0" onAction="#btnExit_Action" prefHeight="46.0" prefWidth="45.0" ripplerFill="WHITE" text="X" textFill="WHITE">
                <font>
                   <Font name="Verdana Bold" size="24.0" />
                </font>
@@ -52,10 +58,10 @@
             </JFXButton>
          </children>
       </Pane>
-      <Pane layoutX="71.0" layoutY="272.0" prefHeight="87.0" prefWidth="320.0">
+      <Pane layoutX="78.0" layoutY="305.0" prefHeight="81.0" prefWidth="320.0">
          <children>
-            <Button fx:id="btnRegister" layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnRegister_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Register" />
-            <Button fx:id="btnLogin" layoutX="172.0" layoutY="20.0" mnemonicParsing="false" onAction="#btnLogin_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Login" />
+            <Button fx:id="btnRegister" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnRegister_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Register" />
+            <Button fx:id="btnLogin" layoutX="169.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnLogin_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Login" />
          </children>
       </Pane>
    </children>

@@ -19,8 +19,8 @@ import java.util.List;
 
 public class DatabaseManager 
 {
-    private final String DBCONNSTRING = "/Database/FYP_Database.db";
-    
+    //private final String DBCONNSTRING = "/Database/FYP_Database.db";
+    private final String DBCONNSTRING = "C:/Users/Adam/Documents/Degree/Third Year/Final Project/Application/FYP_Database.db";
     private Connection conn;
     
     public boolean connect() 
@@ -29,7 +29,8 @@ public class DatabaseManager
         conn = null;
         try 
         {
-            conn = DriverManager.getConnection("jdbc:sqlite::resource:" + getClass().getResource(DBCONNSTRING));
+            //conn = DriverManager.getConnection("jdbc:sqlite::resource:" + getClass().getResource(DBCONNSTRING));
+            conn = DriverManager.getConnection("jdbc:sqlite:" + DBCONNSTRING);
             System.out.println("A connection to the SQLite db has been established.");    
             return true;
         } 
@@ -111,6 +112,33 @@ public class DatabaseManager
         catch(SQLException ex)
         {
             System.out.println("Error when reading follow up questions from the db - " + ex.getMessage());
+        }
+        return null;
+    }
+    
+    public User loadUser(int userId)
+    {
+        String query = "SELECT * FROM Users WHERE UserID = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setInt(1, userId);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                String uname = results.getString("Username");
+                String pword = results.getString("HashPassword");
+                String fname = results.getString("FirstName");
+                String lname = results.getString("LastName");
+                User user = new User(userId, uname, pword, fname, lname);
+                
+                return user;
+            }
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the user from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -319,18 +347,37 @@ public class DatabaseManager
         return exists;
     }
     
+    public int checkForRememberedUser()
+    {
+        String query = "SELECT * FROM RememberedUser";
+        int userId = -1;
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+                userId = results.getInt("UserID");
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading remembered users from the db - " + ex.getMessage());
+        }
+        return userId;
+    }
+    
     public boolean writeUserToDatabase(User user)
     {
         boolean success = true;
-        String query = "INSERT INTO Users VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Users (Username, HashPassword, FirstName, LastName) "
+                     + "VALUES (?, ?, ?, ?)";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
-            pstmt.setInt(1, user.getUserId());
-            pstmt.setString(2, user.getUsername());
-            pstmt.setString(3, user.getHashPassword());
-            pstmt.setString(4, user.getFirstName());
-            pstmt.setString(5, user.getLastName());
+            //pstmt.setInt(1, user.getUserId());
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getHashPassword());
+            pstmt.setString(3, user.getFirstName());
+            pstmt.setString(4, user.getLastName());
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -501,6 +548,25 @@ public class DatabaseManager
         }
         
         return resultText;
+    }
+    
+    public void rememberUser(int userId, boolean remember)
+    {
+        String query = "UPDATE RememberedUser SET UserID = ?";;
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            if(remember)
+                pstmt.setInt(1, userId);
+            else
+                pstmt.setInt(1, -1);
+            
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when setting Remembered User in the db - " + ex.getMessage());
+        }
     }
     
     public String getNaoConnectionURL()

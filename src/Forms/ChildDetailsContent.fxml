@@ -45,7 +45,7 @@
                   </Pane>
                   <Pane prefHeight="53.0" prefWidth="467.0">
                      <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="95.0" layoutY="15.0" text="Childs Age:" wrapText="true">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="2.0" layoutY="13.0" text="Childs Age (Months):" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>

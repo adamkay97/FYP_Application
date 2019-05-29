@@ -5,12 +5,14 @@
  */
 package Controllers;
 
+import Classes.User;
 import Managers.AuthenticationManager;
 import Managers.DatabaseManager;
 import Enums.ButtonTypeEnum;
 import Managers.RobotManager;
 import Managers.SettingsManager;
 import Managers.StageManager;
+import com.jfoenix.controls.JFXCheckBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -29,9 +31,28 @@ public class LoginFormController implements Initializable
     @FXML private AnchorPane mainAnchorPane;
     @FXML private JFXTextField txtUsername;
     @FXML private JFXPasswordField txtPassword;
+    @FXML private JFXCheckBox chkRememberMe;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {} 
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        User user = StageManager.getCurrentUser();
+        if(user != null)
+        {
+            DatabaseManager dbManager = new DatabaseManager();
+            
+            if(dbManager.connect())
+            {
+                int id = dbManager.checkForRememberedUser();
+                
+                if(id == user.getUserId())
+                {
+                    txtUsername.setText(user.getUsername());
+                    chkRememberMe.setSelected(true);
+                }
+            }
+        }
+    } 
     
     @FXML private void btnLogin_Action(ActionEvent event)
     {
@@ -77,11 +98,21 @@ public class LoginFormController implements Initializable
     {
         //Creates instance of authentication manager to authenticate the login
         AuthenticationManager authManager = new AuthenticationManager();
+        DatabaseManager dbManager = new DatabaseManager();
+        boolean rememberMe = chkRememberMe.isSelected();
         
         if(authManager.authenticateLogin(txtUsername.getText(), txtPassword.getText()))
         {
             //If login successful load user settings and open main form
             loadUserSettings();    
+            
+            if(dbManager.connect())
+            {
+                int userId = StageManager.getCurrentUser().getUserId();
+                dbManager.rememberUser(userId, rememberMe);
+                dbManager.disconnect();
+            }
+            
             StageManager.loadForm(StageManager.MAIN, new Stage());
             
             if(SettingsManager.getUsesNaoRobot())

@@ -1,5 +1,6 @@
 package FYP_Application;
 
+import Classes.User;
 import Managers.StageManager;
 import Managers.DatabaseManager;
 import javafx.application.Application;
@@ -7,6 +8,8 @@ import javafx.stage.Stage;
 
 public class FYP_Application extends Application 
 {
+    private boolean rememberedUser;
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -14,8 +17,14 @@ public class FYP_Application extends Application
     @Override
     public void start(Stage stage) throws Exception 
     {
+        rememberedUser = false;
         LoadFromDatabase();
-        StageManager.loadForm(StageManager.LOGIN, stage);
+        
+        if(rememberedUser)
+            StageManager.loadForm(StageManager.MAIN, new Stage());
+        else
+            StageManager.loadForm(StageManager.LOGIN, stage);
+        
     }
     
     private void LoadFromDatabase()
@@ -26,6 +35,22 @@ public class FYP_Application extends Application
         //static variables on the DatabaseManager class
         if(db.connect())
         {
+            //Check to see if there is a user that has been 
+            int userId = db.checkForRememberedUser();
+            User user;
+            
+            if(userId != -1)
+            {
+                user = db.loadUser(userId);
+                
+                if(user != null)
+                {
+                    StageManager.setCurrentUser(user);
+                    db.loadApplicationSettings(userId);
+                    rememberedUser = true;
+                }
+            }
+            
             db.loadQuestionList();
             db.loadFollowUpList();
             db.disconnect();
