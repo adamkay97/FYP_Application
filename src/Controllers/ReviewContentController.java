@@ -3,6 +3,8 @@ package Controllers;
 import ControlControllers.ChildReviewControlController;
 import Classes.Child;
 import Managers.DatabaseManager;
+import Managers.LanguageManager;
+import Managers.StageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -19,7 +21,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
@@ -59,7 +60,7 @@ public class ReviewContentController implements Initializable
                 setArrowButtonEvents();
             });
         }
-        
+        LanguageManager.setFormText("Review", StageManager.getRootScene());
     }    
     
     /**

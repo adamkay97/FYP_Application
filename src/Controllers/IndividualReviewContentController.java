@@ -5,6 +5,7 @@ import Managers.DatabaseManager;
 import Classes.ReviewData;
 import Managers.StageManager;
 import ControlControllers.QuestionReviewControlController;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -27,7 +28,10 @@ public class IndividualReviewContentController implements Initializable
     @FXML private VBox vboxReviewControls;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb){}    
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        LanguageManager.setFormText("IndividualReview", StageManager.getRootScene());
+    }    
     
     public void setupIndividualReviewContent(Child child)
     {

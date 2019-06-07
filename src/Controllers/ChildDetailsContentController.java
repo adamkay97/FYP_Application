@@ -11,6 +11,7 @@ import Managers.DatabaseManager;
 import Managers.QuestionaireManager;
 import Enums.ButtonTypeEnum;
 import Classes.*;
+import Managers.LanguageManager;
 import Managers.SettingsManager;
 import com.jfoenix.controls.*;
 import java.net.URL;
@@ -18,8 +19,8 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 
-public class ChildDetailsContentController implements Initializable {
-
+public class ChildDetailsContentController implements Initializable 
+{
     @FXML private JFXRadioButton radBtnFemale;
     @FXML private JFXRadioButton radBtnMale;
     @FXML private JFXTextField txtChildsAge;
@@ -31,6 +32,7 @@ public class ChildDetailsContentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) 
     {
         dbManager = new DatabaseManager();
+        LanguageManager.setFormText("ChildInfo", StageManager.getRootScene());
     }    
 
     @FXML public void btnStartQuestions_Action(ActionEvent event)

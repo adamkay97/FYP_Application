@@ -14,30 +14,30 @@
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblHeader" layoutX="30.0" layoutY="60.0" text="Settings" textFill="WHITE" wrapText="true">
+            <Label id="1" fx:id="lblHeader" layoutX="30.0" layoutY="60.0" text="Settings" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <StackPane layoutX="30.0" layoutY="169.0" prefHeight="427.0" prefWidth="700.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="169.0">
+      <StackPane layoutX="30.0" layoutY="148.0" prefHeight="448.0" prefWidth="700.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="148.0">
          <children>
             <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="370.0" prefWidth="690.0">
                <children>
                   <Pane prefHeight="231.0" prefWidth="645.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="14.0" text="NAO Connection" underline="true">
+                        <Label id="2" layoutX="14.0" layoutY="14.0" text="NAO Connection" underline="true">
                            <font>
                               <Font name="Berlin Sans FB" size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="51.0" layoutY="99.0" text="NAO IP Address:">
+                        <Label id="6" layoutX="51.0" layoutY="99.0" text="NAO IP Address:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <Label layoutX="51.0" layoutY="137.0" text="NAO Fixed Port:">
+                        <Label id="7" layoutX="51.0" layoutY="137.0" text="NAO Fixed Port:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
@@ -52,13 +52,13 @@
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </JFXTextField>
-                        <Label fx:id="lblConnectStatus" alignment="CENTER" layoutX="488.0" layoutY="167.0" prefHeight="21.0" prefWidth="112.0" text="Connected" textAlignment="CENTER">
+                        <Label id="9" fx:id="lblConnectStatus" alignment="CENTER" layoutX="488.0" layoutY="167.0" prefHeight="21.0" prefWidth="112.0" text="Connected" textAlignment="CENTER">
                            <font>
                               <Font name="Berlin Sans FB" size="18.0" />
                            </font>
                         </Label>
                         <ImageView fx:id="imgViewStatusIcon" fitHeight="94.0" fitWidth="102.0" layoutX="493.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button fx:id="btnTestConnection" layoutX="228.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnTestConnection_Action" prefHeight="36.0" prefWidth="210.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Test Connection" textFill="WHITE">
+                        <Button id="8" fx:id="btnTestConnection" layoutX="228.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnTestConnection_Action" prefHeight="36.0" prefWidth="210.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Test Connection" textFill="WHITE">
                            <font>
                               <Font name="Arial" size="24.0" />
                            </font>
@@ -68,12 +68,12 @@
                               <Font name="Arial" size="24.0" />
                            </font>
                         </Button>
-                        <Label layoutX="14.0" layoutY="49.0" text="Use NAO Interaction:">
+                        <Label id="3" layoutX="14.0" layoutY="55.0" text="Use NAO Interaction:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <JFXRadioButton fx:id="radBtnNaoNo" layoutX="305.0" layoutY="50.0" style="-jfx-selected-color: #00FF00;" text="No">
+                        <JFXRadioButton id="5" fx:id="radBtnNaoNo" layoutX="305.0" layoutY="50.0" style="-jfx-selected-color: #00FF00;" text="No">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
@@ -81,26 +81,26 @@
                               <ToggleGroup fx:id="useNaoGroup" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="radBtnNaoYes" layoutX="219.0" layoutY="50.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Yes" toggleGroup="$useNaoGroup">
+                        <JFXRadioButton id="4" fx:id="radBtnNaoYes" layoutX="219.0" layoutY="50.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Yes" toggleGroup="$useNaoGroup">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </JFXRadioButton>
                      </children>
                   </Pane>
-                  <Pane prefHeight="152.0" prefWidth="645.0">
+                  <Pane prefHeight="177.0" prefWidth="645.0">
                      <children>
-                        <Label layoutX="14.0" layoutY="18.0" text="Questionaire Settings" underline="true">
+                        <Label id="10" layoutX="14.0" layoutY="18.0" text="Questionaire Settings" underline="true">
                            <font>
                               <Font name="Berlin Sans FB" size="22.0" />
                            </font>
                         </Label>
-                        <Label layoutX="60.0" layoutY="56.0" text="Note Taking Method:">
+                        <Label id="12" layoutX="60.0" layoutY="89.0" text="Note Taking Method:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <JFXRadioButton fx:id="radBtnText" layoutX="300.0" layoutY="56.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Text Area">
+                        <JFXRadioButton id="13" fx:id="radBtnText" layoutX="300.0" layoutY="89.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Text Area">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
@@ -108,36 +108,27 @@
                               <ToggleGroup fx:id="noteMethodGroup" />
                            </toggleGroup>
                         </JFXRadioButton>
-                        <JFXRadioButton fx:id="radBtnAudio" layoutX="437.0" layoutY="56.0" style="-jfx-selected-color: #00FF00;" text="Audio Recording" toggleGroup="$noteMethodGroup">
+                        <JFXRadioButton id="14" fx:id="radBtnAudio" layoutX="437.0" layoutY="89.0" style="-jfx-selected-color: #00FF00;" text="Audio Recording" toggleGroup="$noteMethodGroup">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </JFXRadioButton>
-                        <Label layoutX="27.0" layoutY="91.0" text="Audio File Save Location:">
+                        <Label id="15" layoutX="27.0" layoutY="124.0" text="Audio File Save Location:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <JFXTextField fx:id="txtAudioFileLocation" focusColor="DODGERBLUE" layoutX="298.0" layoutY="84.0" prefHeight="36.0" prefWidth="311.0" unFocusColor="BLACK">
+                        <JFXTextField fx:id="txtAudioFileLocation" focusColor="DODGERBLUE" layoutX="298.0" layoutY="117.0" prefHeight="36.0" prefWidth="311.0" unFocusColor="BLACK">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </JFXTextField>
-                     </children>
-                  </Pane>
-                  <Pane disable="true" prefHeight="28.0" prefWidth="645.0" visible="false">
-                     <children>
-                        <Label layoutX="14.0" layoutY="2.0" text="NAO Settings" underline="true">
-                           <font>
-                              <Font name="Berlin Sans FB" size="22.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="45.0" layoutY="37.0" text="NAO Voice/Music Volume:">
+                        <Label id="11" layoutX="148.0" layoutY="54.0" text="Language:">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <JFXSlider fx:id="sliderVolume" layoutX="301.0" layoutY="41.0" prefHeight="20.0" prefWidth="300.0" stylesheets="@../Styles/SliderStyles.css" value="50.0" />
+                        <JFXComboBox fx:id="cmbBoxLanguage" focusColor="DODGERBLUE" layoutX="300.0" layoutY="42.0" prefHeight="31.0" prefWidth="249.0" />
                      </children>
                   </Pane>
                </children>
@@ -146,7 +137,7 @@
       </StackPane>
       <VBox alignment="CENTER" fillWidth="false" layoutX="122.0" layoutY="598.0" prefHeight="56.0" prefWidth="516.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="122.0">
          <children>
-            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#btnSave_Action" prefHeight="41.0" prefWidth="162.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Save" textFill="WHITE">
+            <Button id="16" fx:id="btnSave" mnemonicParsing="false" onAction="#btnSave_Action" prefHeight="41.0" prefWidth="162.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Save" textFill="WHITE">
                <font>
                   <Font name="Arial" size="24.0" />
                </font>

@@ -10,9 +10,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MCHATInfoContentController">
    <children>
-      <Pane layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="30.0" layoutY="60.0" text="Information - M-CHAT-R/F" textFill="WHITE" wrapText="true">
+            <Label id="1" layoutX="30.0" layoutY="60.0" text="Information - M-CHAT-R/F" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
@@ -34,7 +34,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </AnchorPane>
-      <Button fx:id="btnBack" layoutX="639.0" layoutY="599.0" mnemonicParsing="false" onAction="#btnBack_Action" prefHeight="50.0" prefWidth="107.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      <Button id="2" fx:id="btnBack" layoutX="639.0" layoutY="599.0" mnemonicParsing="false" onAction="#btnBack_Action" prefHeight="50.0" prefWidth="107.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <font>
             <Font name="Arial" size="24.0" />
          </font>

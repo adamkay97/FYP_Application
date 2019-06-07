@@ -13,9 +13,9 @@
 
 <AnchorPane id="AnchorPane" fx:id="mainAnchorPane" prefHeight="663.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.IndividualReviewContentController">
    <children>
-      <AnchorPane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblReviewHeader" layoutX="15.0" layoutY="15.0" text="Review: #child#" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+            <Label id="1" fx:id="lblReviewHeader" layoutX="15.0" layoutY="15.0" text="Review: #child#" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
@@ -24,22 +24,22 @@
                <children>
                   <Pane prefHeight="75.0" prefWidth="677.0">
                      <children>
-                        <Label fx:id="lblStage1Score" layoutX="14.0" layoutY="8.0" text="M-CHAT-R Score =  " textFill="WHITE" wrapText="true">
+                        <Label id="2" fx:id="lblStage1Score" layoutX="14.0" layoutY="8.0" text="M-CHAT-R Score =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblStage1Result" layoutX="27.0" layoutY="39.0" text="M-CHAT-R Risk =  " textFill="WHITE" wrapText="true">
+                        <Label id="3" fx:id="lblStage1Result" layoutX="27.0" layoutY="39.0" text="M-CHAT-R Risk =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblStage2Score" layoutX="370.0" layoutY="9.0" text="M-CHAT-R/F Score =  " textFill="WHITE" wrapText="true">
+                        <Label id="4" fx:id="lblStage2Score" layoutX="370.0" layoutY="9.0" text="M-CHAT-R/F Score =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="lblStage2Result" layoutX="385.0" layoutY="40.0" text="Overall Screening =  " textFill="WHITE" wrapText="true">
+                        <Label id="5" fx:id="lblStage2Result" layoutX="385.0" layoutY="40.0" text="Overall Screening =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
@@ -50,23 +50,23 @@
             </VBox>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="29.0" layoutY="156.0" prefHeight="432.0" prefWidth="702.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0">
+      <AnchorPane layoutX="29.0" layoutY="156.0" prefHeight="432.0" prefWidth="702.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="156.0">
          <children>
             <VBox alignment="CENTER" fillWidth="false" prefHeight="50.0" prefWidth="672.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="40.0" prefWidth="665.0" spacing="10.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="134.0" text="Question Id">
+                        <Label id="6" alignment="CENTER" prefHeight="44.0" prefWidth="134.0" text="Question Id">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="363.0" text="Question Answer/Notes">
+                        <Label id="7" alignment="CENTER" prefHeight="44.0" prefWidth="363.0" text="Question Answer/Notes">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" prefHeight="44.0" prefWidth="143.0" text="View More">
+                        <Label id="8" alignment="CENTER" prefHeight="44.0" prefWidth="143.0" text="View More">
                            <font>
                               <Font name="Berlin Sans FB" size="20.0" />
                            </font>
@@ -89,7 +89,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </AnchorPane>
-      <Button fx:id="btnBack" layoutX="624.0" layoutY="599.0" mnemonicParsing="false" onAction="#btnBack_Action" prefHeight="50.0" prefWidth="107.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
+      <Button id="9" fx:id="btnBack" layoutX="624.0" layoutY="599.0" mnemonicParsing="false" onAction="#btnBack_Action" prefHeight="50.0" prefWidth="107.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Back" textFill="WHITE" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0">
          <font>
             <Font name="Arial" size="24.0" />
          </font>

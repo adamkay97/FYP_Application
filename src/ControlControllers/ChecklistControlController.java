@@ -4,21 +4,24 @@ import Managers.StageManager;
 import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
 import Enums.FlowBranchEnum;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 public class ChecklistControlController implements Initializable 
 {
+    @FXML private AnchorPane rootPane;
     @FXML private Label lblChecklistText;
     @FXML private VBox vboxCheckExamples;
     
@@ -245,6 +248,8 @@ public class ChecklistControlController implements Initializable
                     
                     //Add toggleGroup to list for review purposes
                     radBtnList.add(yesNoGroup);
+                    
+                    LanguageManager.setFormText("StageTwoYesNoExample", StageManager.getRootScene());
                 }
                 else
                 {
@@ -256,6 +261,8 @@ public class ChecklistControlController implements Initializable
                     otherControl.setExampleControl(example);
                     otherControl.setCheckListController(this);
                     usesOther = true;
+                    
+                    LanguageManager.setFormText("StageTwoOtherExample", StageManager.getRootScene());
                 }
                 vboxCheckExamples.getChildren().add(root);
             }

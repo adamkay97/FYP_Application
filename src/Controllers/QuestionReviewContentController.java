@@ -3,6 +3,7 @@ package Controllers;
 import Classes.Child;
 import Classes.ReviewData;
 import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
 import Managers.SettingsManager;
 import Managers.StageManager;
 import com.jfoenix.controls.JFXButton;
@@ -34,7 +35,10 @@ public class QuestionReviewContentController implements Initializable
     private Child currentChild;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        LanguageManager.setFormText("QuestionReviewControl", StageManager.getRootScene());
+    }
     
     public void btnBack_Action(ActionEvent event) throws IOException
     {

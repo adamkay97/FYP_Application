@@ -14,12 +14,12 @@
             <Font name="Berlin Sans FB" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="btnContinue" layoutX="257.0" layoutY="366.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="55.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0">
+      <Button id="2" fx:id="btnContinue" layoutX="257.0" layoutY="366.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="55.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0">
          <font>
             <Font name="Arial" size="24.0" />
          </font>
       </Button>
-      <TextArea fx:id="txtExample" layoutX="25.0" layoutY="153.0" prefHeight="161.0" prefWidth="609.0" promptText="Example here..." wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
+      <TextArea id="1" fx:id="txtExample" layoutX="25.0" layoutY="153.0" prefHeight="161.0" prefWidth="609.0" promptText="Example here..." wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font>

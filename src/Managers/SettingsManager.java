@@ -7,6 +7,7 @@ public class SettingsManager
     private static boolean usesNaoInteraction;
     private static String robotConnectionURL;
     private static int robotVolume;
+    private static String language;
     private static String noteMethod;
     private static String audioFileLocation;
     
@@ -15,16 +16,21 @@ public class SettingsManager
      * @param usesNao Whether the interaction with the robot is actually wanted
      * @param url URL of the robot for connection
      * @param volume Volume of the robot
+     * @param lang Language of the application
      * @param method The way notes are taken 
      * @param audioPath The path for which the audio files will be saved 
      */
-    public static void initialiseSettings(String usesNao, String url, int volume, String method, String audioPath)
+    public static void initialiseSettings(String usesNao, String url, int volume, 
+        String lang, String method, String audioPath)
     {
         usesNaoInteraction = usesNao.equals("YES");
         robotConnectionURL = url;
         robotVolume = volume;
+        language = lang;
         noteMethod = method;
         audioFileLocation = audioPath;
+        
+        LanguageManager.setLanguage(language);
     }
     
     /**
@@ -40,7 +46,9 @@ public class SettingsManager
             int userId = StageManager.getCurrentUser().getUserId();
             String usesNao = usesNaoInteraction ? "YES" : "NO";
             dbManager.updateUserSettings(userId, usesNao, robotConnectionURL, robotVolume, 
-                                            noteMethod, audioFileLocation);
+                                            language, noteMethod, audioFileLocation);
+            LanguageManager.setLanguage(language);
+            
             dbManager.disconnect();
         }
     }
@@ -70,12 +78,14 @@ public class SettingsManager
     public static boolean getUsesNaoRobot() { return usesNaoInteraction; }
     public static String getRobotConnection() { return robotConnectionURL; }
     public static int getRobotVolume() { return robotVolume; }
+    public static String getLanguage() { return language; }
     public static String getNoteMethod() { return noteMethod; }
     public static String getAudioFileLocation() { return audioFileLocation; }
     
     public static void setUsesNaoRobot(boolean usesNao) { usesNaoInteraction = usesNao; }
     public static void setRobotConnection(String url) { robotConnectionURL = url; }
     public static void setRobotVolume(int volume) { robotVolume = volume; }
+    public static void setLanguage(String lang) { language = lang; }
     public static void setNoteMethod(String method) { noteMethod = method; }
     public static void setAudioFileLocation(String path) { audioFileLocation = path; }
 }

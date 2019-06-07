@@ -13,12 +13,12 @@
          <children>
             <Pane prefHeight="73.0" prefWidth="396.0">
                <children>
-                  <Button fx:id="btnYes" layoutX="58.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+                  <Button id="C2" fx:id="btnYes" layoutX="58.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNo" layoutX="239.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="35.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+                  <Button id="C3" fx:id="btnNo" layoutX="239.0" layoutY="16.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="35.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -27,7 +27,7 @@
             </Pane>
          </children>
       </VBox>
-      <TextArea fx:id="txtNotes" layoutX="10.0" layoutY="8.0" prefHeight="103.0" prefWidth="593.0" promptText="Add notes if required." wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+      <TextArea id="C1" fx:id="txtNotes" layoutX="10.0" layoutY="8.0" prefHeight="103.0" prefWidth="593.0" promptText="Add notes if required." wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
          <font>
             <Font name="Berlin Sans FB" size="20.0" />
          </font>

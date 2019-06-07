@@ -46,8 +46,13 @@ public class StageManager
     private static boolean inProgress;
     private static boolean popupAnswer;
     
+    //Used for when Main Form is first loaded
+    private static boolean onLoad = true;
+    
     //Scene for when a childs diagnosis data is being reviewed, for easy access between forms
     private static Parent currentChildReviewParent;
+    
+    private static Scene rootScene;
     
     /**
      * Loads the scene passed as a parameter into
@@ -200,6 +205,7 @@ public class StageManager
                 loginController.setKeyboardListener();
             }
             
+            rootScene = newScene;
             stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(newScene);
             stage.show();
@@ -248,6 +254,9 @@ public class StageManager
         return StageManager.mainFormController;
     }
     
+    public static void setOnLoad(boolean loaded) { onLoad = loaded; }
+    public static boolean getOnLoad() { return onLoad; }
+    
     public static void setInProgress(boolean start) { inProgress = start; }
     public static boolean getInProgress() { return inProgress; }
     
@@ -256,4 +265,7 @@ public class StageManager
     
     public static void setCurrentChildReviewParent(Parent node) { currentChildReviewParent = node; }
     public static Parent getCurrentChildReviewParent() { return currentChildReviewParent; }
+    
+    public static void setRootScene(Scene scene) { rootScene = scene; }
+    public static Scene getRootScene() { return rootScene; }        
 }

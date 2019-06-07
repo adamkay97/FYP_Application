@@ -2,10 +2,11 @@ package Controllers;
 
 import Managers.RobotManager;
 import Managers.SettingsManager;
+import Managers.LanguageManager;
 import Managers.StageManager;
 import Enums.ButtonTypeEnum;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,61 +36,24 @@ public class SettingsContentController implements Initializable
     @FXML private Label lblConnectStatus;
     @FXML private ImageView imgViewStatusIcon;
     @FXML private Button btnTestConnection;
-    @FXML private JFXSlider sliderVolume;
     
+    @FXML private JFXComboBox cmbBoxLanguage;
     @FXML private ToggleGroup noteMethodGroup;
     @FXML private JFXRadioButton radBtnText;
     @FXML private JFXRadioButton radBtnAudio;
     @FXML private JFXTextField txtAudioFileLocation;
     
+    private boolean resetLanguage = false;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        boolean usesNAO = SettingsManager.getUsesNaoRobot();
-        String robotURL = SettingsManager.getRobotConnection();
-        int volume = SettingsManager.getRobotVolume();
-        String noteMethod = SettingsManager.getNoteMethod();
-        String audioPath = SettingsManager.getAudioFileLocation();
+        setupSettingsOptions();
+        LanguageManager.setFormText("Settings", StageManager.getRootScene());
         
-        //Get the robot connection from the SettingsManager
-        //Remove the 'tcp://' from the start and split on ':' to get Ip and Fixed Port
-        robotURL = robotURL.substring(6);
-        String[] urlSplit = robotURL.split(":");
-        
-        txtIPAddress.setText(urlSplit[0]);
-        txtFixedPort.setText(urlSplit[1]);
-        setConnectedImage(RobotManager.getRobotConnected());
-        sliderVolume.setValue(volume);
-        
-        if(!usesNAO)
-        {
-            radBtnNaoNo.setSelected(true);
-            setNAOControls(true);
-        }
-        
-        if(noteMethod.equals("TextArea"))
-        {
-            radBtnText.setSelected(true);
-            txtAudioFileLocation.setDisable(true);
-        }
-        else
-        {
-            radBtnAudio.setSelected(true);
-            txtAudioFileLocation.setDisable(false);
-        }
-        
-        //If the audio path is empty give the default path for where to save the audio files
-        if(audioPath.equals(""))
-        {
-            String username = StageManager.getCurrentUser().getUsername();
-            String currentDirectory = System.getProperty("user.dir");
-            txtAudioFileLocation.setText(String.format("%s\\AudioFiles\\%s\\", currentDirectory, username));
-        }
-        else
-            txtAudioFileLocation.setText(audioPath);
-        
-        //Create radio button listeners for UsesNao and UsesAudio
-        createRadioButtonListeners();
+        /*Platform.runLater(() ->{
+            LanguageManager.setFormText("Settings", mainAnchorPane.getScene());
+        });*/
     }  
     
     @FXML public void btnSave_Action(ActionEvent event) 
@@ -175,21 +139,81 @@ public class SettingsContentController implements Initializable
             String port = txtFixedPort.getText();
             
             String url = String.format("tcp://%s:%s", ip, port);
-            int volume = (int) sliderVolume.getValue();
             String noteMethod = radBtnText.isSelected() ? "TextArea" : "Audio";
+            String language = (String)cmbBoxLanguage.getValue();
+            
+            if(!language.equals(SettingsManager.getLanguage()))
+                resetLanguage = true;
             
             if(noteMethod.equals("Audio"))
                 SettingsManager.setAudioFileLocation(txtAudioFileLocation.getText());
             
             SettingsManager.setUsesNaoRobot(usesNAO);
             SettingsManager.setRobotConnection(url);
-            SettingsManager.setRobotVolume(volume);
+            SettingsManager.setRobotVolume(50);
             SettingsManager.setNoteMethod(noteMethod);
+            SettingsManager.setLanguage(language);
             SettingsManager.saveCurrentSettings();
             
             String msg = "Success. Your settings have been saved.";
             StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.OK);
+            
+            if(resetLanguage)
+                resetFormLanguage(language);
         }
+    }
+    
+    private void setupSettingsOptions()
+    {
+        cmbBoxLanguage.getItems().addAll("English", "Italian");
+        cmbBoxLanguage.getSelectionModel().select(SettingsManager.getLanguage());
+        cmbBoxLanguage.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
+        
+        boolean usesNAO = SettingsManager.getUsesNaoRobot();
+        String robotURL = SettingsManager.getRobotConnection();
+        //int volume = SettingsManager.getRobotVolume();
+        String noteMethod = SettingsManager.getNoteMethod();
+        String audioPath = SettingsManager.getAudioFileLocation();
+        
+        //Get the robot connection from the SettingsManager
+        //Remove the 'tcp://' from the start and split on ':' to get Ip and Fixed Port
+        robotURL = robotURL.substring(6);
+        String[] urlSplit = robotURL.split(":");
+        
+        txtIPAddress.setText(urlSplit[0]);
+        txtFixedPort.setText(urlSplit[1]);
+        setConnectedImage(RobotManager.getRobotConnected());
+        //sliderVolume.setValue(volume);
+        
+        if(!usesNAO)
+        {
+            radBtnNaoNo.setSelected(true);
+            setNAOControls(true);
+        }
+        
+        if(noteMethod.equals("TextArea"))
+        {
+            radBtnText.setSelected(true);
+            txtAudioFileLocation.setDisable(true);
+        }
+        else
+        {
+            radBtnAudio.setSelected(true);
+            txtAudioFileLocation.setDisable(false);
+        }
+        
+        //If the audio path is empty give the default path for where to save the audio files
+        if(audioPath.equals(""))
+        {
+            String username = StageManager.getCurrentUser().getUsername();
+            String currentDirectory = System.getProperty("user.dir");
+            txtAudioFileLocation.setText(String.format("%s\\AudioFiles\\%s\\", currentDirectory, username));
+        }
+        else
+            txtAudioFileLocation.setText(audioPath);
+        
+        //Create radio button listeners for UsesNao and UsesAudio
+        createRadioButtonListeners();
     }
     
     private void setConnectedImage(boolean connected)
@@ -219,7 +243,7 @@ public class SettingsContentController implements Initializable
         lblConnectStatus.setDisable(disable);
         imgViewStatusIcon.setVisible(!disable);
         btnTestConnection.setDisable(disable);
-        sliderVolume.setDisable(disable);
+        //sliderVolume.setDisable(disable);
     }
     
     private void createRadioButtonListeners()
@@ -249,6 +273,15 @@ public class SettingsContentController implements Initializable
                         setNAOControls(true);
                 } 
             });
+    }
+    
+    private void resetFormLanguage(String language)
+    {
+        LanguageManager.setLanguage(language);
+        LanguageManager.loadFormText();
+        
+        LanguageManager.setFormText("Main", StageManager.getRootScene());
+        LanguageManager.setFormText("Settings", StageManager.getRootScene());
     }
     
     private boolean validateDetails(String ip, String port)

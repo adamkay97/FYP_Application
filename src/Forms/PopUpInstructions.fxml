@@ -12,7 +12,7 @@
    <children>
       <Pane layoutX="1.0" layoutY="-1.0" prefHeight="108.0" prefWidth="587.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblPopupHeader" layoutX="36.0" layoutY="39.0" text="Instructions" textFill="WHITE" wrapText="true">
+            <Label id="1" fx:id="lblPopupHeader" layoutX="36.0" layoutY="39.0" text="Instructions" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="28.0" />
                </font>
@@ -35,7 +35,7 @@
       </Pane>
       <Pane fx:id="pnlOkBtn" layoutX="286.0" layoutY="614.0" prefHeight="72.0" prefWidth="128.0">
          <children>
-            <Button fx:id="btnOk" layoutX="15.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnOk_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Okay" textFill="WHITE">
+            <Button id="2" fx:id="btnOk" layoutX="15.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnOk_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Okay" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>

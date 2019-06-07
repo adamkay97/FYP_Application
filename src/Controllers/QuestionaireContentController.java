@@ -10,6 +10,7 @@ import Managers.StageManager;
 import ControlControllers.QuestionTextAnswerControlController;
 import ControlControllers.RobotActionControlController;
 import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -85,8 +86,15 @@ public class QuestionaireContentController implements Initializable
             if(usesNAORobot)
                 setRobotControl();
             else
-               setQuestionAnswerControl(); 
+               setQuestionAnswerControl();
             
+            //Set form text language
+            LanguageManager.setFormText("StageOne", StageManager.getRootScene());          
+            if(usesTextArea)
+                LanguageManager.setFormText("StageOneText", StageManager.getRootScene());
+            else
+                LanguageManager.setFormText("StageOneAudio", StageManager.getRootScene());
+
             setQuestionText(qIndex);
         }
         catch(IOException ex)

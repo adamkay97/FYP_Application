@@ -4,8 +4,7 @@ import Managers.DatabaseManager;
 import Managers.StageManager;
 import Classes.FormTextLoader;
 import Enums.ButtonTypeEnum;
-import Managers.RobotManager;
-import Managers.SettingsManager;
+import Managers.LanguageManager;
 import com.jfoenix.controls.JFXCheckBox;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,6 +12,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -32,18 +32,17 @@ public class InstructionsContentController implements Initializable
         
         if(dbManager.connect())
         {
-            instrInfo = dbManager.loadInformationData(1, "INSTRUCTIONS");
+            instrInfo = dbManager.loadInformationData("INSTRUCTIONS");
             dbManager.disconnect();
         }
         textLoader.setTextVboxInformation(instrInfo);
         
-        //Once all of the text has been added to the VBox add a check box at the bottom
-        //that must be selected before the user can proceed to ensure they have read the instructions.
-        readInstructions = new JFXCheckBox("I have read and understood the instructions.");
-        readInstructions.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 21));
-        readInstructions.setTextFill(Color.GREEN);
-        readInstructions.setCheckedColor(Color.GREEN);
-        vboxInstructionsContent.getChildren().add(readInstructions);
+        addReadCheckbox();
+        
+        //As Instructions form loaded with Main form only call language manager
+        //if form is loaded through button press.
+        if(!StageManager.getOnLoad())
+            LanguageManager.setFormText("Instructions", StageManager.getRootScene());
     }    
     
     @FXML private void btnContinue_Action(ActionEvent event)
@@ -72,5 +71,17 @@ public class InstructionsContentController implements Initializable
         
         //Sets the underlined side menu button to be the info page
         StageManager.getMainFormController().setSelectedMenuButton("Info");
+    }
+    
+    private void addReadCheckbox()
+    {
+        //Once all of the text has been added to the VBox add a check box at the bottom
+        //that must be selected before the user can proceed to ensure they have read the instructions.
+        readInstructions = new JFXCheckBox();
+        readInstructions.setId("4");
+        readInstructions.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 21));
+        readInstructions.setTextFill(Color.GREEN);
+        readInstructions.setCheckedColor(Color.GREEN);
+        vboxInstructionsContent.getChildren().add(readInstructions);
     }
 }

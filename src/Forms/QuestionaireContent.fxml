@@ -12,23 +12,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="760.0" style="-fx-background-color: #FFFFFF; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.QuestionaireContentController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="663.0" prefWidth="760.0" style="-fx-background-color: #FFFFFF; -fx-border-width: 3;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.QuestionaireContentController">
    <children>
-      <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="523.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblQuestionHeader" layoutX="53.0" layoutY="80.0" text="Question 1:" textFill="WHITE" wrapText="true">
+            <Label id="2" fx:id="lblQuestionHeader" layoutX="53.0" layoutY="80.0" text="Question 1:" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
             </Label>
-            <Label layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
+            <Label id="1" layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <AnchorPane layoutX="46.0" layoutY="176.0" prefHeight="447.0" prefWidth="669.0" style="-fx-border-color: #696969; -fx-border-radius: 10; -fx-border-width: 4;" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="45.0">
+      <AnchorPane layoutX="46.0" layoutY="176.0" prefHeight="447.0" prefWidth="669.0" style="-fx-border-color: #696969; -fx-border-radius: 10; -fx-border-width: 4;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="176.0">
          <children>
             <Label fx:id="lblQuestionText" alignment="TOP_CENTER" layoutX="24.0" layoutY="23.0" prefHeight="140.0" prefWidth="622.0" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0">
                <font>

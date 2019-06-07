@@ -3,6 +3,7 @@ package FYP_Application;
 import Classes.User;
 import Managers.StageManager;
 import Managers.DatabaseManager;
+import Managers.LanguageManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -47,6 +48,8 @@ public class FYP_Application extends Application
                 {
                     StageManager.setCurrentUser(user);
                     db.loadApplicationSettings(userId);
+                    LanguageManager.loadFormText();
+                    
                     rememberedUser = true;
                 }
             }

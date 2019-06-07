@@ -5,6 +5,7 @@ import Managers.DatabaseManager;
 import Managers.AuthenticationManager;
 import Enums.ButtonTypeEnum;
 import Classes.*;
+import Managers.LanguageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.application.Platform;
 
 public class RegisterFormController implements Initializable 
 {
@@ -127,6 +129,9 @@ public class RegisterFormController implements Initializable
             }
         });
         
+        Platform.runLater(() -> {
+            LanguageManager.setFormText("Register", mainAnchorPane.getScene());
+        });
     }   
     
     @FXML private void btnSubmit_Action(ActionEvent event) 

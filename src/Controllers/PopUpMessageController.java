@@ -1,6 +1,8 @@
 package Controllers;
 
 import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
+import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.*;
@@ -22,7 +24,10 @@ public class PopUpMessageController implements Initializable
     @FXML public Button btnNo;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}    
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        LanguageManager.setFormText("Popup", StageManager.getRootScene());
+    }    
     
     public void setPopupContent(String headerText, String messageText, ButtonTypeEnum buttonType)
     {

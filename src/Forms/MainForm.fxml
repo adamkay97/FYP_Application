@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.net.*?>
 <?import javafx.scene.effect.*?>
 <?import com.jfoenix.svg.*?>
@@ -14,7 +15,7 @@
 
 <AnchorPane fx:id="mainAnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="708.0" prefWidth="1105.0" style="-fx-background-color: #FFFFFF; -fx-border-width: 3;" stylesheets="@../Styles/RootPaneStyles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainFormController">
    <children>
-      <AnchorPane fx:id="pnlMainContentAnchor" layoutX="345.0" layoutY="42.0" prefHeight="663.0" prefWidth="759.0" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="346.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
+      <AnchorPane fx:id="pnlMainContentAnchor" layoutX="345.0" layoutY="42.0" prefHeight="663.0" prefWidth="759.0" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
          <children>
             <StackPane fx:id="pnlMainContent" prefHeight="663.0" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
@@ -23,30 +24,16 @@
          <children>
             <Pane fx:id="pnlMenuContent" prefHeight="658.0" prefWidth="345.0">
                <children>
-                  <VBox prefHeight="702.0" prefWidth="345.0" style="-fx-background-color: #0081AF;">
+                  <VBox fx:id="vboxMenu" alignment="CENTER" prefHeight="702.0" prefWidth="345.0" style="-fx-background-color: #0081AF;">
                      <children>
-                        <Pane fx:id="pnlTop" prefHeight="99.0" prefWidth="345.0">
+                        <Pane fx:id="pnlTitle" prefHeight="134.0" prefWidth="345.0">
                            <children>
-                              <ImageView fx:id="imgNaoIcon" fitHeight="94.0" fitWidth="143.0" layoutX="104.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Icons/naoRobot.PNG" />
-                                 </image>
-                              </ImageView>
-                              <JFXHamburger fx:id="btnMenuCollapse" layoutX="301.0" layoutY="14.0" stylesheets="@../Styles/HamburgerStyles.css">
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                              </JFXHamburger>
-                           </children>
-                        </Pane>
-                        <Pane fx:id="pnlTitle" prefHeight="134.0" prefWidth="323.0">
-                           <children>
-                              <Label layoutX="12.0" layoutY="23.0" text="Digital M-CHAT-R/F" textFill="WHITE" wrapText="true">
+                              <Label id="M1" layoutX="12.0" layoutY="23.0" text="Digital M-CHAT-R/F" textFill="WHITE" wrapText="true">
                                  <font>
                                     <Font name="Berlin Sans FB" size="38.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="63.0" layoutY="80.0" text="with NAO Robotics" textFill="WHITE" wrapText="true">
+                              <Label id="M2" layoutX="63.0" layoutY="80.0" text="with NAO Robotics" textFill="WHITE" wrapText="true">
                                  <font>
                                     <Font name="Berlin Sans FB" size="28.0" />
                                  </font>
@@ -55,7 +42,7 @@
                         </Pane>
                         <Pane fx:id="pnlMenuButtons" prefHeight="355.0" prefWidth="345.0">
                            <children>
-                              <JFXButton fx:id="btnMenuStart" layoutX="59.0" layoutY="14.0" onAction="#btnMenuStart_Action" prefHeight="31.0" prefWidth="227.0" text="Start" textFill="WHITE" underline="true">
+                              <JFXButton id="M3" fx:id="btnMenuStart" layoutX="59.0" layoutY="14.0" onAction="#btnMenuStart_Action" prefHeight="31.0" prefWidth="227.0" text="Start" textFill="WHITE" underline="true">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
@@ -63,7 +50,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuInfo" layoutX="59.0" layoutY="84.0" onAction="#btnMenuInfo_Action" prefHeight="31.0" prefWidth="227.0" text="Information" textFill="WHITE">
+                              <JFXButton id="M4" fx:id="btnMenuInfo" layoutX="59.0" layoutY="84.0" onAction="#btnMenuInfo_Action" prefHeight="31.0" prefWidth="227.0" text="Information" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
@@ -71,7 +58,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuSettings" layoutX="59.0" layoutY="223.0" onAction="#btnMenuSettings_Action" prefHeight="31.0" prefWidth="227.0" text="Settings" textFill="WHITE">
+                              <JFXButton id="M6" fx:id="btnMenuSettings" layoutX="59.0" layoutY="223.0" onAction="#btnMenuSettings_Action" prefHeight="31.0" prefWidth="227.0" text="Settings" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
@@ -79,7 +66,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuQuit" layoutX="59.0" layoutY="293.0" onAction="#btnMenuQuit_Action" prefHeight="31.0" prefWidth="227.0" text="Quit" textFill="WHITE">
+                              <JFXButton id="M7" fx:id="btnMenuQuit" layoutX="59.0" layoutY="293.0" onAction="#btnMenuQuit_Action" prefHeight="31.0" prefWidth="227.0" text="Quit" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
@@ -87,7 +74,7 @@
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </JFXButton>
-                              <JFXButton fx:id="btnMenuReview" layoutX="59.0" layoutY="156.0" onAction="#btnMenuReview_Action" prefHeight="31.0" prefWidth="227.0" text="Review" textFill="WHITE">
+                              <JFXButton id="M5" fx:id="btnMenuReview" layoutX="59.0" layoutY="156.0" onAction="#btnMenuReview_Action" prefHeight="31.0" prefWidth="227.0" text="Review" textFill="WHITE">
                                  <font>
                                     <Font name="Berlin Sans FB" size="30.0" />
                                  </font>
@@ -99,6 +86,20 @@
                         </Pane>
                      </children>
                   </VBox>
+                  <Pane fx:id="pnlTop" prefHeight="99.0" prefWidth="345.0">
+                     <children>
+                        <ImageView fx:id="imgNaoIcon" fitHeight="94.0" fitWidth="143.0" layoutX="104.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../Icons/naoRobot.PNG" />
+                           </image>
+                        </ImageView>
+                        <JFXHamburger fx:id="btnMenuCollapse" layoutX="301.0" layoutY="14.0" stylesheets="@../Styles/HamburgerStyles.css">
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </JFXHamburger>
+                     </children>
+                  </Pane>
                </children>
             </Pane>
          </children></JFXDrawer>

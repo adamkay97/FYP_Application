@@ -17,12 +17,12 @@
       </Label>
       <Pane layoutX="463.0" prefHeight="53.0" prefWidth="167.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <JFXRadioButton fx:id="radBtnYes" layoutX="14.0" layoutY="16.0" style="-jfx-selected-color: #00FF00;" text="Yes">
+            <JFXRadioButton id="YN1" fx:id="radBtnYes" layoutX="14.0" layoutY="16.0" style="-jfx-selected-color: #00FF00;" text="Yes">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>
             </JFXRadioButton>
-            <JFXRadioButton fx:id="radBtnNo" layoutX="98.0" layoutY="16.0" style="-jfx-selected-color: #00FF00;" text="No">
+            <JFXRadioButton id="YN2" fx:id="radBtnNo" layoutX="98.0" layoutY="16.0" style="-jfx-selected-color: #00FF00;" text="No">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>

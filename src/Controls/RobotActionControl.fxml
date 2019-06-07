@@ -22,7 +22,7 @@
             </ImageView>
          </graphic>
       </Button>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="41.0" prefHeight="25.0" prefWidth="301.0" text="Click to start Robot Behaviour:" textAlignment="CENTER" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="156.0">
+      <Label id="1" alignment="CENTER" contentDisplay="CENTER" layoutX="156.0" layoutY="41.0" prefHeight="25.0" prefWidth="301.0" text="Click to start Robot Behaviour:" textAlignment="CENTER" AnchorPane.leftAnchor="156.0" AnchorPane.rightAnchor="156.0">
          <font>
             <Font name="Berlin Sans FB" size="22.0" />
          </font>

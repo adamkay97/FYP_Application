@@ -2,17 +2,21 @@ package Controllers;
 
 import Managers.DatabaseManager;
 import Classes.FormTextLoader;
+import Managers.LanguageManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 public class InformationContentController implements Initializable 
 {
+    @FXML AnchorPane rootPane;
     @FXML VBox vboxMainInfoContent;
     
     @Override
@@ -24,10 +28,12 @@ public class InformationContentController implements Initializable
         
         if(dbManager.connect())
         {
-            mainInfo = dbManager.loadInformationData(1, "MAIN");
+            mainInfo = dbManager.loadInformationData("MAIN");
             dbManager.disconnect();
         }
         textLoader.setTextVboxInformation(mainInfo);
+        
+        LanguageManager.setFormText("Information", StageManager.getRootScene());
     }    
     
     @FXML public void btnMCHAT_Action(ActionEvent event)

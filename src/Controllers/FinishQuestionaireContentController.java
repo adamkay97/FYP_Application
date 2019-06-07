@@ -2,6 +2,7 @@ package Controllers;
 
 import Enums.ButtonTypeEnum;
 import Managers.DatabaseManager;
+import Managers.LanguageManager;
 import Managers.QuestionaireManager;
 import Managers.RobotManager;
 import Managers.SettingsManager;
@@ -13,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 
 public class FinishQuestionaireContentController implements Initializable 
 {
@@ -28,48 +28,9 @@ public class FinishQuestionaireContentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        int atRiskQuestions = QuestionaireManager.getQuestionaireScore();
-        String atRiskText;
-        
-        if(!QuestionaireManager.getFollowUpCompleted())
-        {
-            if(SettingsManager.getUsesNaoRobot())
-            {
-                //Run end behaviour in seperate thread so the rest of the application isn't held up
-                Thread robotThread = new Thread(() -> {
-                    RobotManager.runStartEnd(false);
-                });
-                robotThread.start();
-            }
-            
-            lblScore.setText(Integer.toString(atRiskQuestions) + " / 20");
-
-            atRiskText = QuestionaireManager.getResultInfo(1);
-            lblRiskText.setText(atRiskText);
-
-            if(atRiskQuestions < 3 || atRiskQuestions > 7)
-            {
-                btnContinue.setText("Done");
-                followUp = false;
-            }
-            else
-                followUp = true;
-        }
-        else
-        {
-            lblHeader.setText("M-CHAT-R/F Diagnosis");
-            lblScoreText.setText("You have now completed the second part of the Diagnosis.\n" +
-                                "The score below represents the amount of follow up questions answered that had a Fail result.");
-            btnContinue.setText("Done");
-            
-            int failedQuestions = QuestionaireManager.getFailedQuestions();
-            lblScore.setText(Integer.toString(failedQuestions) + " / " + Integer.toString(atRiskQuestions));
-            
-            atRiskText = QuestionaireManager.getResultInfo(2);
-            lblRiskText.setText(atRiskText);         
-            
-            followUp = false;  
-        }
+        //Setup form depending on which stage ending it is being used for
+        setupFinishedStage();
+        LanguageManager.setFormText("FinishQuestionaire", StageManager.getRootScene());
     }    
     
     public void btnContinue_Action(ActionEvent event)
@@ -113,21 +74,59 @@ public class FinishQuestionaireContentController implements Initializable
         }
     }
     
-//    public boolean saveResult()
-//    {
-//        String msg = "Do you wish to save the result of this Diagnosis for review purposes?" ;
-//        boolean saveResult = StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.YESNO);
-//
-//        if(saveResult)
-//        {
-//            StageManager.loadForm(StageManager.LOGIN, new Stage());
-//            
-//            if(StageManager.getCurrentUser() != null)
-//                return true;
-//            else
-//                return false;
-//        }
-//        else
-//            return false;
-//    }
+    private void setupFinishedStage()
+    {
+        int atRiskQuestions = QuestionaireManager.getQuestionaireScore();
+        String atRiskText;
+        
+        //Set default IDs for elements with changeable text 
+        lblHeader.setId("1.1");
+        lblScoreText.setId("3.1");
+        btnContinue.setId("5.1");
+        
+        if(!QuestionaireManager.getFollowUpCompleted())
+        {
+            if(SettingsManager.getUsesNaoRobot())
+            {
+                //Run end behaviour in seperate thread so the rest of the application isn't held up
+                Thread robotThread = new Thread(() -> {
+                    RobotManager.runStartEnd(false);
+                });
+                robotThread.start();
+            }
+            
+            lblScore.setText(Integer.toString(atRiskQuestions) + " / 20");
+
+            atRiskText = QuestionaireManager.getResultInfo(1);
+            lblRiskText.setText(atRiskText);
+
+            if(atRiskQuestions < 3 || atRiskQuestions > 7)
+            {
+                //btnContinue.setText("Done");
+                btnContinue.setId("5.2");
+                followUp = false;
+            }
+            else
+                followUp = true;
+        }
+        else
+        {
+            //lblHeader.setText("M-CHAT-R/F Diagnosis");
+            //lblScoreText.setText("You have now completed the second part of the Diagnosis.\n" +
+            //                    "The score below represents the amount of follow up questions answered that had a Fail result.");
+            //btnContinue.setText("Done");
+            
+            lblHeader.setId("1.2");
+            lblScoreText.setId("3.2");
+            btnContinue.setId("5.2");
+            
+            int failedQuestions = QuestionaireManager.getFailedQuestions();
+            lblScore.setText(Integer.toString(failedQuestions) + " / " + Integer.toString(atRiskQuestions));
+            
+            atRiskText = QuestionaireManager.getResultInfo(2);
+            lblRiskText.setText(atRiskText);         
+            
+            followUp = false;  
+        }
+    }
 }

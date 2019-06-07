@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controllers;
 
 import Classes.User;
 import Managers.AuthenticationManager;
 import Managers.DatabaseManager;
 import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
 import Managers.RobotManager;
 import Managers.SettingsManager;
 import Managers.StageManager;
@@ -18,6 +14,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXPasswordField;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -52,6 +49,10 @@ public class LoginFormController implements Initializable
                 }
             }
         }
+        
+        Platform.runLater(() -> {
+            LanguageManager.setFormText("Login", mainAnchorPane.getScene());
+        });
     } 
     
     @FXML private void btnLogin_Action(ActionEvent event)

@@ -9,6 +9,7 @@ import ControlControllers.YesNoControlController;
 import Classes.*;
 import Enums.FlowBranchEnum;
 import Enums.QuestionTypeEnum;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -43,8 +44,7 @@ public class FollowUpContentController implements Initializable
         //Initialize followUpList with the FollowUpFlow of each flagged questions
         for (int i : flaggedQuestions)
             followUpList.add(QuestionaireManager.getFollowUpFlow(i));
-
-            
+        
         setupFollowUpQuestion();
     }
     
@@ -98,7 +98,7 @@ public class FollowUpContentController implements Initializable
         //on which branch the previous question returned
         currentFollowUp.traverseTreeLevel(branch);
         
-        //If the 
+        //If the current node is a Result complete the question and move on 
         if(currentFollowUp.getCurrentNodeType() == QuestionTypeEnum.Result)
         {
             if(currentFollowUp.getCurrentNodeText().equals("PASS"))
@@ -126,8 +126,9 @@ public class FollowUpContentController implements Initializable
     
     private void createNextControl()
     {        
-        FXMLLoader loader = null;
+        FXMLLoader loader;
         Parent root = null;
+        String controlType = "";
         
         try
         {
@@ -142,6 +143,7 @@ public class FollowUpContentController implements Initializable
                     ExampleControlController exampleControl = loader.<ExampleControlController>getController();
                     exampleControl.setFollowUpController(this);
                     exampleControl.setQuestionText(currentFollowUp.getCurrentNodeText());
+                    controlType = "StageTwoExample";
                     break;
                     
                 case YesNo :
@@ -151,6 +153,7 @@ public class FollowUpContentController implements Initializable
                     YesNoControlController yesNoControl = loader.<YesNoControlController>getController();
                     yesNoControl.setFollowUpController(this);
                     yesNoControl.setQuestionText(currentFollowUp.getCurrentNodeText());
+                    controlType = "StageTwoYesNo";
                     break;
                     
                 case PassFail : 
@@ -160,6 +163,7 @@ public class FollowUpContentController implements Initializable
                     PassFailControlController passFailControl = loader.<PassFailControlController>getController();
                     passFailControl.setFollowUpController(this);
                     passFailControl.setQuestionText(currentFollowUp.getCurrentNodeText(), checkListAnswers);
+                    controlType = "StageTwoPassFail";
                     break;
                     
                 case Checklist :
@@ -169,12 +173,15 @@ public class FollowUpContentController implements Initializable
                     ChecklistControlController checklistControl = loader.<ChecklistControlController>getController();
                     checklistControl.setFollowUpController(this);
                     checklistControl.setupChecklist(currentFollowUp.getCurrentNodeText());
+                    controlType = "StageTwoChecklist";
                     break;
                     
                 default :
                     break;
             }
             stackPaneFollowUp.getChildren().setAll(root);
+            
+            LanguageManager.setFormText(controlType, StageManager.getRootScene());
         }
         catch (IOException ex) 
         {

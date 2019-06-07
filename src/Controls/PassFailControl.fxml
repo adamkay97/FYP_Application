@@ -27,7 +27,7 @@
             <Font name="Berlin Sans FB" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="btnContinue" layoutX="259.0" layoutY="426.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="259.0">
+      <Button id="1" fx:id="btnContinue" layoutX="259.0" layoutY="426.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="259.0">
          <font>
             <Font name="Arial" size="24.0" />
          </font>

@@ -2,6 +2,7 @@ package Controllers;
 
 import Managers.DatabaseManager;
 import Classes.FormTextLoader;
+import Managers.LanguageManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,14 +24,12 @@ public class NAOInfoContentController implements Initializable
                
         if(dbManager.connect())
         {
-            ArrayList<String> mchatInfo = new ArrayList<>();
-            mchatInfo = dbManager.loadInformationData(1, "NAO");
+            ArrayList<String> mchatInfo = dbManager.loadInformationData("NAO");
             dbManager.disconnect();
             
             textLoader.setAllVboxInformation(mchatInfo);
         }
-        
-        
+        LanguageManager.setFormText("NAOInfo", StageManager.getRootScene());
     }    
     
     public void btnBack_Action(ActionEvent event)

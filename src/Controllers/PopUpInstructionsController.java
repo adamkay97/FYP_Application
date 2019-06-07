@@ -1,6 +1,7 @@
 package Controllers;
 
-import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
+import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,7 +20,10 @@ public class PopUpInstructionsController implements Initializable
     @FXML private Label lblMessage;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}    
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        LanguageManager.setFormText("PopupInstructions", StageManager.getRootScene());
+    }    
     
     public void setInstructionsPopupContent(String messageText, int qIndex)
     {

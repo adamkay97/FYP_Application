@@ -13,22 +13,22 @@
          <children>
             <Pane prefHeight="88.0" prefWidth="615.0">
                <children>
-                  <Button fx:id="btnRecordAudio" layoutX="18.0" mnemonicParsing="false" onAction="#btnRecordAudio_Action" prefHeight="47.0" prefWidth="169.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Record Audio" textFill="WHITE">
+                  <Button id="C1" fx:id="btnRecordAudio" layoutX="18.0" mnemonicParsing="false" onAction="#btnRecordAudio_Action" prefHeight="47.0" prefWidth="169.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Record Audio" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnStop" disable="true" layoutX="197.0" mnemonicParsing="false" onAction="#btnStop_Action" prefHeight="47.0" prefWidth="124.0" stylesheets="@../Styles/RedBtnStyles.css" text="Stop" textFill="WHITE">
+                  <Button id="C2" fx:id="btnStop" disable="true" layoutX="197.0" mnemonicParsing="false" onAction="#btnStop_Action" prefHeight="47.0" prefWidth="124.0" stylesheets="@../Styles/RedBtnStyles.css" text="Stop" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnPlayback" disable="true" layoutX="357.0" mnemonicParsing="false" onAction="#btnPlayback_Action" prefHeight="47.0" prefWidth="124.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Playback" textFill="WHITE">
+                  <Button id="C3" fx:id="btnPlayback" disable="true" layoutX="357.0" mnemonicParsing="false" onAction="#btnPlayback_Action" prefHeight="47.0" prefWidth="124.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Playback" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnReset" disable="true" layoutX="496.0" mnemonicParsing="false" onAction="#btnReset_Action" prefHeight="47.0" prefWidth="99.0" stylesheets="@../Styles/RedBtnStyles.css" text="Reset" textFill="WHITE">
+                  <Button id="C4" fx:id="btnReset" disable="true" layoutX="496.0" mnemonicParsing="false" onAction="#btnReset_Action" prefHeight="47.0" prefWidth="99.0" stylesheets="@../Styles/RedBtnStyles.css" text="Reset" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -37,12 +37,12 @@
             </Pane>
             <Pane prefHeight="73.0" prefWidth="462.0">
                <children>
-                  <Button fx:id="btnYes" layoutX="89.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+                  <Button id="C5" fx:id="btnYes" layoutX="89.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnYes_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnNo" layoutX="274.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="35.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+                  <Button id="C6" fx:id="btnNo" layoutX="274.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnNo_Action" prefHeight="35.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>

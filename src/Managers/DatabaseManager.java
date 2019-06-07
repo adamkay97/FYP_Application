@@ -4,6 +4,7 @@ import Classes.Child;
 import Classes.DiagnosisResult;
 import Classes.FollowUpFlow;
 import Classes.FollowUpPart;
+import Classes.FormText;
 import Classes.Question;
 import Classes.ReviewData;
 import Classes.User;
@@ -44,6 +45,7 @@ public class DatabaseManager
     public void loadQuestionList()
     {
         HashMap<Integer, Question> questionMap = new HashMap<>();
+        String language = LanguageManager.getLanguage();
         
         String query = "SELECT * FROM QuestionList";
         
@@ -55,8 +57,8 @@ public class DatabaseManager
             while(results.next())
             {
                 int id = results.getInt("QuestionID");
-                String text = results.getString("QuestionText");
-                String instruction = results.getString("QuestionInstruction");
+                String text = results.getString("QuestionText-"+language);
+                String instruction = results.getString("QuestionInstruction-"+language);
                 Question q = new Question(id, text, instruction);
                 
                 questionMap.put(id, q);
@@ -99,7 +101,7 @@ public class DatabaseManager
                 int id = results.getInt("QuestionID");
                 int flowLevel = results.getInt("FlowLevel");
                 String branch = results.getString("FlowBranch");
-                String text = results.getString("FlowText");
+                String text = results.getString("FlowText-"+LanguageManager.getLanguage());
                 String type = results.getString("QuestionType");
                 
                 FollowUpPart followPart = new FollowUpPart(id, flowLevel, branch, text, type);
@@ -141,6 +143,42 @@ public class DatabaseManager
              System.out.println("Error when reading the user from the db - " + ex.getMessage());
         }
         return null;
+    }
+    
+    public HashMap<String, ArrayList<FormText>> loadFormText(String language)
+    {
+        HashMap<String, ArrayList<FormText>> allFormText = new HashMap<>();
+        ArrayList<String> forms = getFormNames();
+        
+        for(String formName : forms)
+        {
+            ArrayList<FormText> formText = new ArrayList<>();
+            String query = "SELECT * FROM FormText WHERE Form = ?";
+        
+            try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+            {    
+                pstmt.setString(1, formName);
+                ResultSet results = pstmt.executeQuery();
+                
+                while(results.next())
+                {
+                    String form = results.getString("Form");
+                    String elementId = results.getString("ElementID");
+                    String type = results.getString("TextType");
+                    String text = results.getString(language);
+                    FormText fText = new FormText(form, elementId, type, text);
+
+                    formText.add(fText);
+                }
+                allFormText.put(formName, formText);
+            }
+            catch(SQLException ex)
+            {
+                System.out.println("Error when reading the Form Text from the db - " + ex.getMessage());
+                return null;
+            }
+        }
+        return allFormText;
     }
     
     public HashMap<String, User> loadUsers()
@@ -214,22 +252,22 @@ public class DatabaseManager
         return null;
     }
     
-    public ArrayList<String> loadInformationData(int languageId, String pageName)
+    public ArrayList<String> loadInformationData(String pageName)
     {
         ArrayList<String> mchatInfo = new ArrayList<>();
         
-        String query = "SELECT * FROM RichTextData WHERE LanguageID = ? AND PageName = ?";
+        String query = "SELECT * FROM RichTextData WHERE PageName = ?";
+        String language = LanguageManager.getLanguage();
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {    
-            pstmt.setInt(1, languageId);
-            pstmt.setString(2, pageName);
+            pstmt.setString(1, pageName);
             ResultSet results = pstmt.executeQuery();
             
             while(results.next())
             {
-                String infoHeader = results.getString("InfoHeading");
-                String infoText = results.getString("InfoText");
+                String infoHeader = results.getString("InfoHeading-"+language);
+                String infoText = results.getString("InfoText-"+language);
                 mchatInfo.add(infoHeader + "%" + infoText);
             }
             return mchatInfo;
@@ -279,7 +317,6 @@ public class DatabaseManager
     
     public void loadApplicationSettings(int userId)
     {
-        
         String query = "SELECT * FROM ApplicationSettings WHERE UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
@@ -288,14 +325,16 @@ public class DatabaseManager
             ResultSet results = pstmt.executeQuery();
             
             while(results.next())
+                
             {
                 String usesNao = results.getString("UsesNaoRobot");
                 String robotURL = results.getString("RobotConnectionURL");
                 int robotVolume = results.getInt("RobotVolume");
                 String noteMethod = results.getString("NoteMethod");
                 String audioPath = results.getString("AudioFileLocation");
+                String language = results.getString("Language");
                 
-                SettingsManager.initialiseSettings(usesNao, robotURL, robotVolume, noteMethod, audioPath);
+                SettingsManager.initialiseSettings(usesNao, robotURL, robotVolume, language, noteMethod, audioPath);
             }
         }
         catch(SQLException ex)
@@ -474,10 +513,11 @@ public class DatabaseManager
         }
     }
     
-    public void updateUserSettings(int userId, String usesNao, String url, int volume, String noteMethod, String audioPath)
+    public void updateUserSettings(int userId, String usesNao, String url, int volume, 
+            String language, String noteMethod, String audioPath)
     {
         String query = "UPDATE ApplicationSettings SET UsesNaoRobot = ?, RobotConnectionURL = ?, RobotVolume = ?, "
-                     + "NoteMethod = ?, AudioFileLocation = ? "
+                     + "NoteMethod = ?, AudioFileLocation = ?, Language = ? "
                      + "WHERE UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
@@ -487,7 +527,8 @@ public class DatabaseManager
             pstmt.setInt(3, volume);
             pstmt.setString(4, noteMethod);
             pstmt.setString(5, audioPath);
-            pstmt.setInt(6, userId);
+            pstmt.setString(6, language);
+            pstmt.setInt(7, userId);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -527,6 +568,7 @@ public class DatabaseManager
     public String getResultInfo(int riskId, int stage)
     {
         String query = "SELECT * FROM ScoringRisk WHERE ScoringRiskID = ?";
+        String language = LanguageManager.getLanguage();
         String resultText = "";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
@@ -537,9 +579,9 @@ public class DatabaseManager
             while(results.next())
             {
                 if(stage == 1)
-                    resultText = results.getString("RiskLevel") + "\n";
+                    resultText = results.getString("RiskLevel-"+language) + "\n";
                 
-                resultText += results.getString("RiskText");
+                resultText += results.getString("RiskText-"+language);
             }
         }
         catch(SQLException ex)
@@ -640,6 +682,28 @@ public class DatabaseManager
             System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
         }
         return id;
+    }
+    
+    private ArrayList<String> getFormNames()
+    {
+        String query = "SELECT DISTINCT Form FROM FormText";
+        ArrayList<String> formNames = new ArrayList<>();
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+            {
+                String formName = results.getString("Form");
+                formNames.add(formName);
+            }
+            return formNames;
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the Form Names in FormText from the db - " + ex.getMessage());
+        }
+        return null;
     }
     
     public void disconnect()

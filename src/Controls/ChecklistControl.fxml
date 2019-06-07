@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.ChecklistControlController">
+<AnchorPane id="AnchorPane" fx:id="rootPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.ChecklistControlController">
    <children>
       <Label fx:id="lblChecklistText" layoutX="15.0" layoutY="20.0" prefHeight="44.0" prefWidth="622.0" text="ChecklistText" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <font>
@@ -27,7 +27,7 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="btnContinue" layoutX="257.0" layoutY="424.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="259.0">
+      <Button id="1" fx:id="btnContinue" layoutX="257.0" layoutY="424.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="259.0">
          <font>
             <Font name="Arial" size="24.0" />
          </font>

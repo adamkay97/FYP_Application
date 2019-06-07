@@ -1,12 +1,10 @@
 package ControlControllers;
 
-import Managers.RobotManager;
-import Managers.StageManager;
 import Controllers.QuestionaireContentController;
-import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
+import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +14,10 @@ public class RobotActionControlController implements Initializable
     private QuestionaireContentController questionaireContentController;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}    
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        LanguageManager.setFormText("RobotControl", StageManager.getRootScene());
+    }    
     
     @FXML public void btnPlay_Action(ActionEvent event) 
     {

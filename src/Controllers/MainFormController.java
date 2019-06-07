@@ -3,11 +3,13 @@ package Controllers;
 import Managers.QuestionaireManager;
 import Managers.StageManager;
 import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
 import Managers.SettingsManager;
 import com.jfoenix.controls.*;
 import com.jfoenix.transitions.hamburger.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,6 +30,7 @@ public class MainFormController implements Initializable
     @FXML private AnchorPane mainAnchorPane;
     @FXML private AnchorPane pnlMainContentAnchor;
     @FXML private StackPane pnlMainContent;
+    @FXML private VBox vboxMenu;
     @FXML private Pane pnlMenuContent;
     @FXML private Pane pnlTitle;
     @FXML private Pane pnlMenuButtons;
@@ -42,9 +45,15 @@ public class MainFormController implements Initializable
     @FXML private JFXDrawer menuDrawer;
     
     private final int MENU_SIZE = 288;
+    private HamburgerBackArrowBasicTransition collapseTransition;
+    
+    private double DEFAULTX;
+    private double DEFAULTY;
+    private double DEFAULTHEIGHT;
+    private double DEFAULTWIDTH;
+    
     private String currentPage;
     private boolean maximized = false;
-    private HamburgerBackArrowBasicTransition collapseTransition;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -56,6 +65,22 @@ public class MainFormController implements Initializable
         StageManager.setMainFormController(this);
         StageManager.loadContentScene(StageManager.INSTRUCTIONS);
         currentPage = "Start";
+        
+        //Run in seperate thread after form has been loaded in order to get access
+        //to elements that are not available within 'intitialize'.
+        Platform.runLater(() ->{
+            LanguageManager.setFormText("Main", StageManager.getRootScene());
+            LanguageManager.setFormText("Instructions", StageManager.getRootScene());
+            
+            StageManager.setOnLoad(false);
+            
+            Stage mainStage = (Stage)mainAnchorPane.getScene().getWindow();
+            
+            DEFAULTX = mainStage.getX();
+            DEFAULTY = mainStage.getY();
+            DEFAULTHEIGHT = mainStage.getHeight();
+            DEFAULTWIDTH = mainStage.getWidth();
+        });
     } 
     
     //FXML Actions
@@ -106,20 +131,25 @@ public class MainFormController implements Initializable
     
     @FXML public void btnMaxRes_Action(ActionEvent event)
     {
+        Stage mainStage = (Stage)mainAnchorPane.getScene().getWindow();
+        
         if(!maximized)
         {
             maxResIcon.getStyleClass().clear();
             maxResIcon.getStyleClass().add("restore");
             
-            Stage currentStage = (Stage)mainAnchorPane.getScene().getWindow();
-            
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
 
-            currentStage.setX(bounds.getMinX());
-            currentStage.setY(bounds.getMinY());
-            currentStage.setWidth(bounds.getWidth());
-            currentStage.setHeight(bounds.getHeight());
+            mainStage.setX(bounds.getMinX());
+            mainStage.setY(bounds.getMinY());
+            mainStage.setWidth(bounds.getWidth());
+            mainStage.setHeight(bounds.getHeight());
+            
+            double size = bounds.getWidth() - pnlMenuContent.getWidth();
+            pnlMainContentAnchor.setPrefWidth(size);
+            pnlMenuContent.setPrefHeight(bounds.getHeight()-6);
+            vboxMenu.setPrefHeight(bounds.getHeight()-6);
             
             maximized = true;
         }
@@ -127,6 +157,16 @@ public class MainFormController implements Initializable
         {
             maxResIcon.getStyleClass().clear();
             maxResIcon.getStyleClass().add("maximize");
+            
+            mainStage.setX(DEFAULTX);
+            mainStage.setY(DEFAULTY);
+            mainStage.setWidth(DEFAULTWIDTH);
+            mainStage.setHeight(DEFAULTHEIGHT);
+            
+            double size = DEFAULTWIDTH - pnlMenuContent.getWidth();
+            pnlMainContentAnchor.setPrefWidth(size);
+            pnlMenuContent.setPrefHeight(DEFAULTHEIGHT-6);
+            vboxMenu.setPrefHeight(DEFAULTHEIGHT-6);
             maximized = false;
         }
     }
