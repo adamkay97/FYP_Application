@@ -1,6 +1,7 @@
 package Managers;
 
 import Classes.FormText;
+import Classes.PopupText;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
@@ -16,7 +17,9 @@ import javafx.scene.control.TextArea;
 public class LanguageManager 
 {
     private static String language;
+    private static ArrayList<String> languageList;
     private static HashMap<String, ArrayList<FormText>> allFormText;
+    private static HashMap<Integer, PopupText> allPopupText;
     
     public static void loadFormText()
     {
@@ -25,6 +28,7 @@ public class LanguageManager
         if(dbManager.connect())
         {
             allFormText = dbManager.loadFormText(language);
+            allPopupText = dbManager.loadPopupText(language);
             dbManager.disconnect();
         }
     }
@@ -95,6 +99,34 @@ public class LanguageManager
         }
     }
     
+    public static void setLabelText(String formName, Label label)
+    {
+        ArrayList<FormText> textList = allFormText.get(formName);
+        
+        //Loop through text list for form to find individual label text
+        for(FormText text : textList)
+            if(text.getElementId().equals(label.getId()))
+                label.setText(text.getText());
+    }
+    
+    public static HashMap<String, String> getReviewText() 
+    {
+        //Get the text required for the Question Review that aren't elements within 
+        //the text area.
+        HashMap<String, String> textMap = new HashMap<>();
+        ArrayList<FormText> reviewText = allFormText.get("ReviewText");
+        
+        for(FormText text : reviewText)
+            textMap.put(text.getElementId(), text.getText());
+        
+        return textMap;
+    }
+    
+    public static PopupText getPopupText(int id) { return allPopupText.get(id); }
+    
     public static String getLanguage() { return language; }
     public static void setLanguage(String lang) { language = lang; }
+    
+    public static ArrayList<String> getLanguageList() { return languageList; }
+    public static void setLanguageList(ArrayList<String> list) { languageList = list; }
 }

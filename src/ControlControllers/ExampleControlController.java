@@ -1,8 +1,10 @@
 package ControlControllers;
 
+import Classes.PopupText;
 import Managers.StageManager;
 import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
+import Managers.LanguageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -31,8 +33,8 @@ public class ExampleControlController implements Initializable
         }
         else
         {
-            String errMsg = "Please make sure you have provided an example before proceeding.";
-            StageManager.loadPopupMessage("Warning", errMsg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(20);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
     }
     

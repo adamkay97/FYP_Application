@@ -60,8 +60,8 @@ public class RegisterFormController implements Initializable
                         v1 = true;
                     else
                     {
-                        StageManager.loadPopupMessage("Warning", "A user with this username already exists, "
-                            + "please use a different username to proceed.", ButtonTypeEnum.OK);
+                        PopupText popup = LanguageManager.getPopupText(3);
+                        StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
                         v1 = false;
                     }
                 }
@@ -173,14 +173,15 @@ public class RegisterFormController implements Initializable
         String lastName = txtLastName.getText();
         
         User newUser = new User(username, hashPassword, firstName, lastName);
+        PopupText popup;
         
         //Call the DatabaseManager to write the new user to the database
         if(dbManager.connect())
         {
             if(dbManager.writeUserToDatabase(newUser))
             {
-                StageManager.loadPopupMessage("Success", "You have successfully created a new account, "
-                    + "please use your details to login.", ButtonTypeEnum.OK);
+                popup = LanguageManager.getPopupText(4);
+                StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
                 
                 newUser.setUserId(dbManager.getLastInsertedRowID("Users"));
                 
@@ -188,15 +189,16 @@ public class RegisterFormController implements Initializable
                 dbManager.createUserSettings(newUser.getUserId());
             }
             else
-                StageManager.loadPopupMessage("Error", "There was an issue with saving your information, "
-                    + "please try again. If this error persists please contact support.", ButtonTypeEnum.OK);
-            
+            {
+                popup = LanguageManager.getPopupText(5);
+                StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
+            }
             dbManager.disconnect();
         }
         else
         {
-            StageManager.loadPopupMessage("Error", "There was an issue connecting to th database, "
-                    + "please try again. If this error persists please contact support.", ButtonTypeEnum.OK);
+            popup = LanguageManager.getPopupText(6);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
     }
     

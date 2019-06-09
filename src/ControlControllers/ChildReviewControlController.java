@@ -3,17 +3,15 @@ package ControlControllers;
 import Classes.Child;
 import Managers.StageManager;
 import Controllers.IndividualReviewContentController;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -139,7 +137,7 @@ public class ChildReviewControlController implements Initializable
         {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(StageManager.INDIREVIEW));
             Parent root = (Parent)loader.load();
-
+            
             IndividualReviewContentController individualReviewContent = loader.<IndividualReviewContentController>getController();
             individualReviewContent.setupIndividualReviewContent(currentChild);
             
@@ -147,6 +145,7 @@ public class ChildReviewControlController implements Initializable
             //and question review text
             StageManager.setCurrentChildReviewParent(root);
             StageManager.loadContentSceneParent(root);
+            LanguageManager.setFormText("IndividualReview", StageManager.getRootScene());
         } 
         catch (IOException ex) 
         {

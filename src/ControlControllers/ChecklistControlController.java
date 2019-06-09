@@ -1,5 +1,6 @@
 package ControlControllers;
 
+import Classes.PopupText;
 import Managers.StageManager;
 import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
@@ -59,8 +60,8 @@ public class ChecklistControlController implements Initializable
         }
         else
         {
-            String errMsg = "Please make sure you have answered all of the Yes/No questions before proceeding.";
-            StageManager.loadPopupMessage("Warning", errMsg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(19);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
     }
     

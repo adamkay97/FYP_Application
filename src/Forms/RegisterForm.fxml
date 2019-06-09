@@ -13,27 +13,27 @@
    <children>
       <Pane layoutX="117.0" layoutY="260.0" prefHeight="278.0" prefWidth="439.0" style="-fx-border-color: #696969; -fx-border-width: 5px; -fx-border-radius: 15px;">
          <children>
-            <JFXTextField id="4" fx:id="txtUsername" focusColor="DODGERBLUE" layoutX="81.0" layoutY="17.0" prefHeight="41.0" prefWidth="277.0" promptText=" Username" unFocusColor="DIMGRAY">
+            <JFXTextField id="RG4" fx:id="txtUsername" focusColor="DODGERBLUE" layoutX="81.0" layoutY="17.0" prefHeight="41.0" prefWidth="277.0" promptText=" Username" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField id="5" fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="81.0" layoutY="67.0" prefHeight="41.0" prefWidth="277.0" promptText=" Password" unFocusColor="DIMGRAY">
+            <JFXPasswordField id="RG5" fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="81.0" layoutY="67.0" prefHeight="41.0" prefWidth="277.0" promptText=" Password" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXPasswordField>
-            <JFXPasswordField id="6" fx:id="txtConfirmPassword" focusColor="DODGERBLUE" layoutX="81.0" layoutY="114.0" prefHeight="41.0" prefWidth="277.0" promptText=" Confirm Password" unFocusColor="DIMGRAY">
+            <JFXPasswordField id="RG6" fx:id="txtConfirmPassword" focusColor="DODGERBLUE" layoutX="81.0" layoutY="114.0" prefHeight="41.0" prefWidth="277.0" promptText=" Confirm Password" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXPasswordField>
-            <JFXTextField id="7" fx:id="txtFirstName" focusColor="DODGERBLUE" layoutX="81.0" layoutY="160.0" prefHeight="41.0" prefWidth="277.0" promptText=" First Name" unFocusColor="DIMGRAY">
+            <JFXTextField id="RG7" fx:id="txtFirstName" focusColor="DODGERBLUE" layoutX="81.0" layoutY="160.0" prefHeight="41.0" prefWidth="277.0" promptText=" First Name" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXTextField>
-            <JFXTextField id="8" fx:id="txtLastName" focusColor="DODGERBLUE" layoutX="81.0" layoutY="209.0" prefHeight="41.0" prefWidth="277.0" promptText=" Last Name" unFocusColor="DIMGRAY">
+            <JFXTextField id="RG8" fx:id="txtLastName" focusColor="DODGERBLUE" layoutX="81.0" layoutY="209.0" prefHeight="41.0" prefWidth="277.0" promptText=" Last Name" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
@@ -42,7 +42,7 @@
       </Pane>
       <Pane layoutX="6.0" layoutY="6.0" prefHeight="110.0" prefWidth="666.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="528.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="1" layoutX="274.0" layoutY="33.0" text="Register" textFill="WHITE" wrapText="true">
+            <Label id="RG1" layoutX="274.0" layoutY="33.0" text="Register" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
@@ -61,17 +61,17 @@
       </Pane>
       <Pane layoutX="211.0" layoutY="544.0" prefHeight="83.0" prefWidth="250.0">
          <children>
-            <Button id="9" fx:id="btnSubmit" layoutX="38.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnSubmit_Action" prefHeight="61.0" prefWidth="174.0" stylesheets="@../Styles/BigBtnStyles.css" text="Submit" />
+            <Button id="RG9" fx:id="btnSubmit" layoutX="38.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnSubmit_Action" prefHeight="61.0" prefWidth="174.0" stylesheets="@../Styles/BigBtnStyles.css" text="Submit" />
          </children>
       </Pane>
       <Pane layoutX="35.0" layoutY="121.0" prefHeight="121.0" prefWidth="604.0">
          <children>
-            <Label id="2" layoutX="61.0" prefHeight="61.0" prefWidth="482.0" text="Please register your details. This information will only be used for your own purpose and nothing else." textAlignment="CENTER" wrapText="true">
+            <Label id="RG2" layoutX="61.0" prefHeight="61.0" prefWidth="482.0" text="Please register your details. This information will only be used for your own purpose and nothing else." textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>
             </Label>
-            <Label id="3" layoutY="61.0" prefHeight="61.0" prefWidth="604.0" text="Usernames and Passwords must be 6-15 characters with at least one number in the Password. Special characters are not allowed." textAlignment="CENTER" wrapText="true">
+            <Label id="RG3" layoutY="61.0" prefHeight="61.0" prefWidth="604.0" text="Usernames and Passwords must be 6-15 characters with at least one number in the Password. Special characters are not allowed." textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>

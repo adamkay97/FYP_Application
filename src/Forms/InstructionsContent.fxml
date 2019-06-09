@@ -13,12 +13,12 @@
    <children>
       <AnchorPane layoutX="40.0" layoutY="552.0" prefHeight="104.0" prefWidth="689.0" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="31.0">
          <children>
-            <Button id="3" fx:id="btnContinue" layoutX="372.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="15.0">
+            <Button id="I3" fx:id="btnContinue" layoutX="372.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="65.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Berlin Sans FB" size="26.0" />
                </font>
             </Button>
-            <Button id="2" fx:id="btnInformation" layoutX="131.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnInformation_Action" prefHeight="68.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Information" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="15.0">
+            <Button id="I2" fx:id="btnInformation" layoutX="131.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnInformation_Action" prefHeight="68.0" prefWidth="187.0" stylesheets="@../Styles/BigBtnStyles.css" text="Information" textFill="WHITE" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Berlin Sans FB" size="26.0" />
                </font>
@@ -39,7 +39,7 @@
       </AnchorPane>
       <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="1" fx:id="lblHeader" layoutX="29.0" layoutY="50.0" text="Instructions" textFill="WHITE" wrapText="true">
+            <Label id="I1" fx:id="lblHeader" layoutX="29.0" layoutY="50.0" text="Instructions" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>

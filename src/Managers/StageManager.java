@@ -47,7 +47,7 @@ public class StageManager
     private static boolean popupAnswer;
     
     //Used for when Main Form is first loaded
-    private static boolean onLoad = true;
+    //private static boolean onLoad = true;
     
     //Scene for when a childs diagnosis data is being reviewed, for easy access between forms
     private static Parent currentChildReviewParent;
@@ -254,8 +254,8 @@ public class StageManager
         return StageManager.mainFormController;
     }
     
-    public static void setOnLoad(boolean loaded) { onLoad = loaded; }
-    public static boolean getOnLoad() { return onLoad; }
+    //public static void setOnLoad(boolean loaded) { onLoad = loaded; }
+    //public static boolean getOnLoad() { return onLoad; }
     
     public static void setInProgress(boolean start) { inProgress = start; }
     public static boolean getInProgress() { return inProgress; }

@@ -1,5 +1,6 @@
 package Controllers;
 
+import Classes.PopupText;
 import Managers.QuestionaireManager;
 import Managers.StageManager;
 import Enums.ButtonTypeEnum;
@@ -72,7 +73,7 @@ public class MainFormController implements Initializable
             LanguageManager.setFormText("Main", StageManager.getRootScene());
             LanguageManager.setFormText("Instructions", StageManager.getRootScene());
             
-            StageManager.setOnLoad(false);
+            //StageManager.setOnLoad(false);
             
             Stage mainStage = (Stage)mainAnchorPane.getScene().getWindow();
             
@@ -89,6 +90,7 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
+            LanguageManager.setFormText("Instructions", StageManager.getRootScene());
             setSelectedMenuButton("Start");
         }
     }
@@ -98,6 +100,7 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.MAININFO);
+            LanguageManager.setFormText("Information", StageManager.getRootScene());
             setSelectedMenuButton("Info");
         }
     }
@@ -107,6 +110,7 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.REVIEW);
+            LanguageManager.setFormText("Review", StageManager.getRootScene());
             setSelectedMenuButton("Review");
         }
     }
@@ -116,6 +120,7 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.SETTINGS);
+            LanguageManager.setFormText("Settings", StageManager.getRootScene());
             setSelectedMenuButton("Settings");
         }
     }
@@ -308,8 +313,8 @@ public class MainFormController implements Initializable
         if(StageManager.getInProgress())
         {
             //If it is ask for confirmation to leave as progress is not saved
-            String msg = "Are you sure you want to leave the diagnosis? Your progress will not be saved." ;
-            allow = StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.YESNO);
+            PopupText popup = LanguageManager.getPopupText(7);
+            allow = StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.YESNO);
             
             //If they select yes to leave, reset Question maps on manager.
             if(allow)

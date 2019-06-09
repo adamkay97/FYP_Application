@@ -1,6 +1,7 @@
 package Controllers;
 
 import Classes.Child;
+import Classes.PopupText;
 import Classes.ReviewData;
 import Enums.ButtonTypeEnum;
 import Managers.LanguageManager;
@@ -10,6 +11,7 @@ import com.jfoenix.controls.JFXButton;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -34,10 +36,13 @@ public class QuestionReviewContentController implements Initializable
     private ReviewData reviewData;
     private Child currentChild;
     
+    private HashMap<String, String> reviewText;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
         LanguageManager.setFormText("QuestionReviewControl", StageManager.getRootScene());
+        reviewText = LanguageManager.getReviewText();
     }
     
     public void btnBack_Action(ActionEvent event) throws IOException
@@ -59,12 +64,12 @@ public class QuestionReviewContentController implements Initializable
         vboxInfoContent.setSpacing(20);
         
         String notes = reviewData.getQuestionNotes().equals("") ? 
-                        "No notes given." : reviewData.getQuestionNotes();
+                        reviewText.get("RT1") : reviewData.getQuestionNotes();
         
-        displayReviewData("Question Answer:", reviewData.getQuestionAnswer(), false);
-        displayReviewData("Notes:", notes, false);
-        displayReviewData("Follow Up Result:", reviewData.getFollowUpResult(), false);
-        displayReviewData("Follow Up Questions/Answers:", reviewData.getFollowUpText(), true);
+        displayReviewData(reviewText.get("RT2"), reviewData.getQuestionAnswer(), false);
+        displayReviewData(reviewText.get("RT3"), notes, false);
+        displayReviewData(reviewText.get("RT4"), reviewData.getFollowUpResult(), false);
+        displayReviewData(reviewText.get("RT5"), reviewData.getFollowUpText(), true);
     }
     
     /**
@@ -95,7 +100,7 @@ public class QuestionReviewContentController implements Initializable
                 if(text.split(";").length > 1)
                 {
                     String[] checklistText = text.split(";");
-                    Text checkHeader = new Text("Example Checklist Answers:\n");
+                    Text checkHeader = new Text(reviewText.get("RT6")+"\n");
                     checkHeader.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 19));
                     checkHeader.setUnderline(true);
                     tf.getChildren().add(checkHeader);
@@ -136,10 +141,10 @@ public class QuestionReviewContentController implements Initializable
         else
         {
             //If its not part of the follow up check if a audio button is required
-            if(headerText.equals("Notes:") && data.equals("Audio"))
+            if(headerText.equals(reviewText.get("RT3")) && data.equals("Audio"))
             {
                 //If it is create the button and add an event handler to play the audio file
-                JFXButton playButton = new JFXButton("Play Audio");
+                JFXButton playButton = new JFXButton(reviewText.get("RT7"));
                 playButton.getStylesheets().add("Styles/GreenBtnStyles.css");
                 playButton.setTextFill(Color.WHITE);
                 
@@ -182,8 +187,8 @@ public class QuestionReviewContentController implements Initializable
         }
         else
         {
-            String msg = "There was no audio recorded for this question.";
-            StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(22);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
     }
 }

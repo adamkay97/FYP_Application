@@ -4,6 +4,7 @@ import Classes.Child;
 import Classes.ReviewData;
 import Managers.StageManager;
 import Controllers.QuestionReviewContentController;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,7 +27,10 @@ public class QuestionReviewControlController implements Initializable
     private ReviewData reviewData;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}    
+    public void initialize(URL url, ResourceBundle rb) 
+    {
+        LanguageManager.setFormText("QuestionReview", StageManager.getRootScene());
+    }    
     
     @FXML public void btnView_Action(ActionEvent event) 
     {
@@ -52,7 +56,7 @@ public class QuestionReviewControlController implements Initializable
         String answer = data.getQuestionAnswer();
         
         lblQuestionNumber.setText(Integer.toString(qId));
-        lblQuestionAnswer.setText("Question Answer: " + answer);
+        lblQuestionAnswer.setText(lblQuestionAnswer.getText() + answer);
         
         String risk;
         
@@ -63,7 +67,7 @@ public class QuestionReviewControlController implements Initializable
         else
             risk = "Negative";
         
-        lblASDRisk.setText("ASD Screening: " + risk);
+        lblASDRisk.setText(lblASDRisk.getText() + risk);
         
         reviewData = data;
         currentChild = child;

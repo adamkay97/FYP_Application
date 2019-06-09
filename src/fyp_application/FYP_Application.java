@@ -56,6 +56,7 @@ public class FYP_Application extends Application
             
             db.loadQuestionList();
             db.loadFollowUpList();
+            db.loadLanguageList();
             db.disconnect();
         }
     }  

@@ -1,5 +1,6 @@
 package Controllers;
 
+import Classes.PopupText;
 import Managers.RobotManager;
 import Managers.SettingsManager;
 import Managers.LanguageManager;
@@ -49,11 +50,6 @@ public class SettingsContentController implements Initializable
     public void initialize(URL url, ResourceBundle rb) 
     {
         setupSettingsOptions();
-        LanguageManager.setFormText("Settings", StageManager.getRootScene());
-        
-        /*Platform.runLater(() ->{
-            LanguageManager.setFormText("Settings", mainAnchorPane.getScene());
-        });*/
     }  
     
     @FXML public void btnSave_Action(ActionEvent event) 
@@ -78,17 +74,16 @@ public class SettingsContentController implements Initializable
         }
         else
         {
-            String msg = "Incorrect format. Please check you have entered the correct IP address and Port numbers.";
-            StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(23);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
             mainAnchorPane.setCursor(javafx.scene.Cursor.DEFAULT);
         }   
     }
     
     @FXML public void btnConnectionHelp_Action(ActionEvent event) 
     {
-        String msg = "To find out the Robots URL address, press the middle button on its chest. This will also tell you if "
-                    + "the robot has connected to the network yet (this may take some time).";
-        StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.OK);
+        PopupText popup = LanguageManager.getPopupText(24);
+        StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
     }
     
     private void attemptConnection(String ip, String port)
@@ -102,16 +97,15 @@ public class SettingsContentController implements Initializable
 
         if(connected)
         {
-            String msg = "Successfully connected to NAO.";
-            StageManager.loadPopupMessage("Success", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(25);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
         else
         {
             setConnectedImage(false);
 
-            String msg = "Could not connect to NAO. Please verify the IP address, "
-                    + "Port Number and make sure NAO is connected to your network";
-            StageManager.loadPopupMessage("Error", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(26);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }  
     }
     
@@ -124,10 +118,9 @@ public class SettingsContentController implements Initializable
         {
             //If the robot is not connected Pop up a message checking the user 
             //still wants to save these ip and port settings
-            String msg = "The Robot does not seem to be connected. Have you tested the "
-                    + "connection and still wish to save these details?";
+            PopupText popup = LanguageManager.getPopupText(27);
             
-            if(!StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.YESNO))
+            if(!StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.YESNO))
                 save = false;
         }
         
@@ -155,8 +148,8 @@ public class SettingsContentController implements Initializable
             SettingsManager.setLanguage(language);
             SettingsManager.saveCurrentSettings();
             
-            String msg = "Success. Your settings have been saved.";
-            StageManager.loadPopupMessage("Information", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(28);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
             
             if(resetLanguage)
                 resetFormLanguage(language);
@@ -165,7 +158,7 @@ public class SettingsContentController implements Initializable
     
     private void setupSettingsOptions()
     {
-        cmbBoxLanguage.getItems().addAll("English", "Italian");
+        cmbBoxLanguage.getItems().addAll(LanguageManager.getLanguageList());
         cmbBoxLanguage.getSelectionModel().select(SettingsManager.getLanguage());
         cmbBoxLanguage.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
         
@@ -226,14 +219,15 @@ public class SettingsContentController implements Initializable
         {
             connectIcon = new Image("Icons/connected.png");
             imgViewStatusIcon.setImage(connectIcon);
-            lblConnectStatus.setText("Connected");
+            lblConnectStatus.setId("S9.1");
         }
         else
         {
             connectIcon = new Image("Icons/disconnected.png");
             imgViewStatusIcon.setImage(connectIcon);
-            lblConnectStatus.setText("Disconnected");
+            lblConnectStatus.setId("S9.2");
         }
+        LanguageManager.setLabelText("Settings", lblConnectStatus);
     }
     
     private void setNAOControls(boolean disable)

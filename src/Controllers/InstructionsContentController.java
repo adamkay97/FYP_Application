@@ -3,8 +3,11 @@ package Controllers;
 import Managers.DatabaseManager;
 import Managers.StageManager;
 import Classes.FormTextLoader;
+import Classes.PopupText;
 import Enums.ButtonTypeEnum;
 import Managers.LanguageManager;
+import Managers.RobotManager;
+import Managers.SettingsManager;
 import com.jfoenix.controls.JFXCheckBox;
 import java.net.URL;
 import java.util.ArrayList;
@@ -12,7 +15,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -38,30 +40,27 @@ public class InstructionsContentController implements Initializable
         textLoader.setTextVboxInformation(instrInfo);
         
         addReadCheckbox();
-        
-        //As Instructions form loaded with Main form only call language manager
-        //if form is loaded through button press.
-        if(!StageManager.getOnLoad())
-            LanguageManager.setFormText("Instructions", StageManager.getRootScene());
     }    
     
     @FXML private void btnContinue_Action(ActionEvent event)
     {
         if(readInstructions.isSelected())
         {
-            if(true)//RobotManager.getRobotConnected() || !SettingsManager.getUsesNaoRobot())
+            if(RobotManager.getRobotConnected() || !SettingsManager.getUsesNaoRobot())
+            {
                 StageManager.loadContentScene(StageManager.DETAILS);
+                LanguageManager.setFormText("ChildInfo", StageManager.getRootScene());
+            }
             else
             {
-                String msg = "There is currently no connection to the Robot. "
-                        + "Please navigate to the settings page to setup the connection.";
-                StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+                PopupText popup = LanguageManager.getPopupText(9);
+                StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
             }
         }
         else
         {
-            String msg = "Please make sure you have read through all of the instructions before proceeding.";
-            StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(10);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
     }
     

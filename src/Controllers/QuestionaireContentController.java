@@ -1,5 +1,6 @@
 package Controllers;
 
+import Classes.PopupText;
 import Classes.Question;
 import ControlControllers.QuestionAudioAnswerControlController;
 import Enums.QuestionAnswer;
@@ -31,6 +32,7 @@ public class QuestionaireContentController implements Initializable
     
     private Parent robotActionControl;
     private Parent questionAnswerControl;
+    private String answerControlName;
     
     private boolean usesNAORobot;
     private String partIndex;
@@ -72,11 +74,13 @@ public class QuestionaireContentController implements Initializable
             {
                 QuestionTextAnswerControlController questionControl = loader.<QuestionTextAnswerControlController>getController();
                 questionControl.setupQuestionaireController(this);
+                answerControlName = "StageOneText";
             }
             else
             {
                 QuestionAudioAnswerControlController questionControl = loader.<QuestionAudioAnswerControlController>getController();
                 questionControl.setupQuestionaireController(this);
+                answerControlName = "StageOneAudio";
             }
                 
             questionAnswerControl = root;
@@ -87,13 +91,6 @@ public class QuestionaireContentController implements Initializable
                 setRobotControl();
             else
                setQuestionAnswerControl();
-            
-            //Set form text language
-            LanguageManager.setFormText("StageOne", StageManager.getRootScene());          
-            if(usesTextArea)
-                LanguageManager.setFormText("StageOneText", StageManager.getRootScene());
-            else
-                LanguageManager.setFormText("StageOneAudio", StageManager.getRootScene());
 
             setQuestionText(qIndex);
         }
@@ -129,8 +126,8 @@ public class QuestionaireContentController implements Initializable
                 //play button to be pressed again
                 if(partIndex.equals("Part1"))
                 {
-                    StageManager.loadPopupMessage("Information", "Please place the fake biscuit in NAO's "
-                            + "open hand now.", ButtonTypeEnum.OK);
+                    PopupText popup = LanguageManager.getPopupText(14);
+                    StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
                     partIndex = "Part2";
                 }
                 else
@@ -148,8 +145,8 @@ public class QuestionaireContentController implements Initializable
         }
         else
         {
-            String msg = "There appears to be no viable connection to NAO. Do you wish to reset the connection?";
-            boolean reconnect = StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.YESNO);
+            PopupText popup = LanguageManager.getPopupText(15);
+            boolean reconnect = StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.YESNO);
             
             if(reconnect)
                 RobotManager.connectToRobot(SettingsManager.getRobotConnection());
@@ -220,18 +217,21 @@ public class QuestionaireContentController implements Initializable
                 RobotManager.runStartEnd(false);
             
             StageManager.loadContentScene(StageManager.FINISH);
+            LanguageManager.setFormText("FinishQuestionaire", StageManager.getRootScene());
         }
     }
     
     private void setRobotControl()
     {
         stkpnQuestionControl.getChildren().setAll(robotActionControl);
+        LanguageManager.setFormText("RobotControl", StageManager.getRootScene());
         btnReplay.setVisible(false);
     }
     
     private void setQuestionAnswerControl()
     {
         stkpnQuestionControl.getChildren().setAll(questionAnswerControl);
+        LanguageManager.setFormText(answerControlName, StageManager.getRootScene());
         
         //If robot is being used make the replay button visible
         if(usesNAORobot)
@@ -266,9 +266,8 @@ public class QuestionaireContentController implements Initializable
         //If notes arent valid display popup message to screen
         if(!valid)
         {
-            String msg = "Please add notes for why you have selected this answer. "
-                   + "If you have nothing further to say please input 'N/A'.";
-            StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(16);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
         
         return valid;
@@ -302,8 +301,8 @@ public class QuestionaireContentController implements Initializable
         //If notes arent valid display popup message to screen
         if(!valid)
         {
-            String msg = "Please record audio explainng why you have selected this answer.";
-            StageManager.loadPopupMessage("Warning", msg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(17);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
         
         return valid;
@@ -327,7 +326,8 @@ public class QuestionaireContentController implements Initializable
                 //Q6 do not require a picture instruction so just output the instruction to a normal popup
                 //Load in seperate thread after other form threads have finished
                 Platform.runLater(() -> {
-                    StageManager.loadPopupMessage("Instruction", question.getQuestionInstructions(), ButtonTypeEnum.OK);
+                    PopupText popup = LanguageManager.getPopupText(18);
+                    StageManager.loadPopupMessage(popup.getHeader(), question.getQuestionInstructions(), ButtonTypeEnum.OK);
                 });
             }
             else

@@ -1,5 +1,6 @@
 package Controllers;
 
+import Classes.PopupText;
 import Classes.User;
 import Managers.AuthenticationManager;
 import Managers.DatabaseManager;
@@ -89,8 +90,10 @@ public class LoginFormController implements Initializable
     {
         //Check that username and password fields arent empty
         if(txtUsername.getText().equals("") || txtPassword.getText().equals(""))
-            StageManager.loadPopupMessage("Warning", "Please enter your username and password. "
-                    + "If you don't have an account please use the register page.", ButtonTypeEnum.OK);
+        {
+            PopupText popup = LanguageManager.getPopupText(8);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
+        }
         else
             attemptLogin();
     }

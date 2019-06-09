@@ -14,7 +14,7 @@
    <children>
       <Pane layoutX="59.0" layoutY="113.0" prefHeight="192.0" prefWidth="358.0" style="-fx-border-color: #fff; -fx-border-width: 5px; -fx-border-radius: 15px;">
          <children>
-            <JFXTextField id="2" fx:id="txtUsername" focusColor="DODGERBLUE" layoutX="75.0" layoutY="14.0" prefHeight="41.0" prefWidth="254.0" promptText=" Username" unFocusColor="DIMGRAY">
+            <JFXTextField id="L2" fx:id="txtUsername" focusColor="DODGERBLUE" layoutX="75.0" layoutY="14.0" prefHeight="41.0" prefWidth="254.0" promptText=" Username" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
@@ -29,12 +29,12 @@
                   <Image url="@../Icons/passwordIcon.png" />
                </image>
             </ImageView>
-            <JFXPasswordField id="3" fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="75.0" layoutY="82.0" prefHeight="41.0" prefWidth="254.0" promptText=" Password" unFocusColor="DIMGRAY">
+            <JFXPasswordField id="L3" fx:id="txtPassword" focusColor="DODGERBLUE" layoutX="75.0" layoutY="82.0" prefHeight="41.0" prefWidth="254.0" promptText=" Password" unFocusColor="DIMGRAY">
                <font>
                   <Font name="Berlin Sans FB" size="22.0" />
                </font>
             </JFXPasswordField>
-            <JFXCheckBox id="4" fx:id="chkRememberMe" checkedColor="LIMEGREEN" layoutX="110.0" layoutY="157.0" text="Remember Me" textFill="#4d4d4d">
+            <JFXCheckBox id="L4" fx:id="chkRememberMe" checkedColor="LIMEGREEN" layoutX="110.0" layoutY="157.0" text="Remember Me" textFill="#4d4d4d">
                <font>
                   <Font name="Berlin Sans FB" size="18.0" />
                </font>
@@ -43,7 +43,7 @@
       </Pane>
       <Pane layoutX="6.0" layoutY="6.0" prefHeight="98.0" prefWidth="462.0" style="-fx-background-color: #1E90FF;" AnchorPane.bottomAnchor="300.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="1" layoutX="196.0" layoutY="30.0" text="Login" textFill="WHITE" wrapText="true">
+            <Label id="L1" layoutX="196.0" layoutY="30.0" text="Login" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
@@ -60,8 +60,8 @@
       </Pane>
       <Pane layoutX="78.0" layoutY="305.0" prefHeight="81.0" prefWidth="320.0">
          <children>
-            <Button id="5" fx:id="btnRegister" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnRegister_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Register" />
-            <Button id="6" fx:id="btnLogin" layoutX="169.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnLogin_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Login" />
+            <Button id="L5" fx:id="btnRegister" layoutX="17.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnRegister_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Register" />
+            <Button id="L6" fx:id="btnLogin" layoutX="169.0" layoutY="17.0" mnemonicParsing="false" onAction="#btnLogin_Action" prefHeight="47.0" prefWidth="134.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Login" />
          </children>
       </Pane>
    </children>

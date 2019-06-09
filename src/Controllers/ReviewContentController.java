@@ -60,7 +60,6 @@ public class ReviewContentController implements Initializable
                 setArrowButtonEvents();
             });
         }
-        LanguageManager.setFormText("Review", StageManager.getRootScene());
     }    
     
     /**

@@ -32,7 +32,6 @@ public class ChildDetailsContentController implements Initializable
     public void initialize(URL url, ResourceBundle rb) 
     {
         dbManager = new DatabaseManager();
-        LanguageManager.setFormText("ChildInfo", StageManager.getRootScene());
     }    
 
     @FXML public void btnStartQuestions_Action(ActionEvent event)
@@ -62,6 +61,7 @@ public class ChildDetailsContentController implements Initializable
                     }
                     
                     StageManager.loadContentScene(StageManager.QUESTIONAIRE);
+                    LanguageManager.setFormText("StageOne", StageManager.getRootScene());
                     StageManager.setInProgress(true);  
                         
                 }
@@ -69,10 +69,8 @@ public class ChildDetailsContentController implements Initializable
         }
         else
         {
-            String messageText = "One or more fields have been left empty/incorrect.\n"
-                    + "All the fields must be filled in correctly before you can proceed.";
-            
-            StageManager.loadPopupMessage("Error", messageText, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(11);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
 
     }
@@ -83,8 +81,8 @@ public class ChildDetailsContentController implements Initializable
         {
             if(!dbManager.writeChildToDatabase(child))
             {
-                StageManager.loadPopupMessage("Error", "There was an issue with saving your information, "
-                    + "please try again. If this error persists please contact support.", ButtonTypeEnum.OK);
+                PopupText popup = LanguageManager.getPopupText(12);
+                StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
                 return false;
             }
             dbManager.disconnect();
@@ -118,8 +116,8 @@ public class ChildDetailsContentController implements Initializable
         {
             if(dbManager.checkChildExists(child))
             {
-                StageManager.loadPopupMessage("Warning", "A child with these exact credentials has already been tested, "
-                            + "you can see the results on the review page.", ButtonTypeEnum.OK);
+                PopupText popup = LanguageManager.getPopupText(13);
+                StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
                 exists = true;
             }
             dbManager.disconnect();

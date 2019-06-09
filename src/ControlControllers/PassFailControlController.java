@@ -1,9 +1,11 @@
 package ControlControllers;
 
+import Classes.PopupText;
 import Managers.StageManager;
 import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
 import Enums.FlowBranchEnum;
+import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,8 +51,8 @@ public class PassFailControlController implements Initializable
         }
         else
         {
-            String errMsg = "Please make sure you have selected one of the options before proceeding.";
-            StageManager.loadPopupMessage("Warning", errMsg, ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(21);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
     }
     

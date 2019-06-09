@@ -1,5 +1,6 @@
 package Managers;
 
+import Classes.PopupText;
 import Classes.User;
 import Enums.ButtonTypeEnum;
 import java.security.NoSuchAlgorithmException;
@@ -43,14 +44,14 @@ public class AuthenticationManager
             }
             else
             {
-                StageManager.loadPopupMessage("Warning", "Password is incorrect for this user, "
-                    + "please try again.", ButtonTypeEnum.OK);
+                PopupText popup = LanguageManager.getPopupText(1);
+                StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
             }
         }
         else
         {
-            StageManager.loadPopupMessage("Warning", "A user with this username does not exist, "
-                    + "please enter a valid username.", ButtonTypeEnum.OK);
+            PopupText popup = LanguageManager.getPopupText(2);
+            StageManager.loadPopupMessage(popup.getHeader(), popup.getMessage(), ButtonTypeEnum.OK);
         }
         return authenticated;
     }

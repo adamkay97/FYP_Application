@@ -30,7 +30,6 @@ public class FinishQuestionaireContentController implements Initializable
     {
         //Setup form depending on which stage ending it is being used for
         setupFinishedStage();
-        LanguageManager.setFormText("FinishQuestionaire", StageManager.getRootScene());
     }    
     
     public void btnContinue_Action(ActionEvent event)
@@ -80,9 +79,9 @@ public class FinishQuestionaireContentController implements Initializable
         String atRiskText;
         
         //Set default IDs for elements with changeable text 
-        lblHeader.setId("1.1");
-        lblScoreText.setId("3.1");
-        btnContinue.setId("5.1");
+        lblHeader.setId("F1.1");
+        lblScoreText.setId("F3.1");
+        btnContinue.setId("F5.1");
         
         if(!QuestionaireManager.getFollowUpCompleted())
         {
@@ -102,23 +101,17 @@ public class FinishQuestionaireContentController implements Initializable
 
             if(atRiskQuestions < 3 || atRiskQuestions > 7)
             {
-                //btnContinue.setText("Done");
-                btnContinue.setId("5.2");
+                btnContinue.setId("F5.2");
                 followUp = false;
             }
             else
                 followUp = true;
         }
         else
-        {
-            //lblHeader.setText("M-CHAT-R/F Diagnosis");
-            //lblScoreText.setText("You have now completed the second part of the Diagnosis.\n" +
-            //                    "The score below represents the amount of follow up questions answered that had a Fail result.");
-            //btnContinue.setText("Done");
-            
-            lblHeader.setId("1.2");
-            lblScoreText.setId("3.2");
-            btnContinue.setId("5.2");
+        {            
+            lblHeader.setId("F1.2");
+            lblScoreText.setId("F3.2");
+            btnContinue.setId("F5.2");
             
             int failedQuestions = QuestionaireManager.getFailedQuestions();
             lblScore.setText(Integer.toString(failedQuestions) + " / " + Integer.toString(atRiskQuestions));

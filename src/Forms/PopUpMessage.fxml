@@ -29,7 +29,7 @@
       </Pane>
       <Pane fx:id="pnlOkBtn" layoutX="230.0" layoutY="275.0" prefHeight="72.0" prefWidth="128.0" visible="false">
          <children>
-            <Button id="1" fx:id="btnOk" layoutX="15.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnOk_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Okay" textFill="WHITE">
+            <Button id="P1" fx:id="btnOk" layoutX="15.0" layoutY="13.0" mnemonicParsing="false" onAction="#btnOk_Action" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Okay" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>
@@ -38,12 +38,12 @@
       </Pane>
       <Pane fx:id="pnlYesNoBtn" layoutX="158.0" layoutY="275.0" prefHeight="72.0" prefWidth="273.0" visible="false">
          <children>
-            <Button id="2" fx:id="btnYes" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
+            <Button id="P2" fx:id="btnYes" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Yes" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>
             </Button>
-            <Button id="3" fx:id="btnNo" layoutX="168.0" layoutY="13.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
+            <Button id="P3" fx:id="btnNo" layoutX="168.0" layoutY="13.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="99.0" stylesheets="@../Styles/SmallBtnStyles.css" text="No" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>

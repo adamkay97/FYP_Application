@@ -5,6 +5,7 @@ import Classes.DiagnosisResult;
 import Classes.FollowUpFlow;
 import Classes.FollowUpPart;
 import Classes.FormText;
+import Classes.PopupText;
 import Classes.Question;
 import Classes.ReviewData;
 import Classes.User;
@@ -118,6 +119,28 @@ public class DatabaseManager
         return null;
     }
     
+    public void loadLanguageList()
+    {
+        ArrayList<String> languageList = new ArrayList<>();
+        
+        String query = "SELECT * FROM Languages";
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+            {
+                String language = results.getString("Language");
+                languageList.add(language);
+            }
+            LanguageManager.setLanguageList(languageList);
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the Languages from the db - " + ex.getMessage());
+        }
+    }
+    
     public User loadUser(int userId)
     {
         String query = "SELECT * FROM Users WHERE UserID = ?";
@@ -179,6 +202,33 @@ public class DatabaseManager
             }
         }
         return allFormText;
+    }
+    
+    public HashMap<Integer, PopupText> loadPopupText(String language)
+    {
+        HashMap<Integer, PopupText> popupText = new HashMap<>();
+        
+        String query = "SELECT * FROM PopupText";
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+            {
+                int id = results.getInt("PopupTextID");
+                String header = results.getString("Header-"+language);
+                String message = results.getString("Message-"+language);
+                
+                PopupText popup = new PopupText(header, message);
+                popupText.put(id, popup);
+            }
+            return popupText;
+        }
+        catch(SQLException ex)
+        {
+             System.out.println("Error when reading the Popup Text from the db - " + ex.getMessage());
+        }
+        return null;
     }
     
     public HashMap<String, User> loadUsers()
@@ -282,11 +332,13 @@ public class DatabaseManager
     public ArrayList<ReviewData> loadReviewData(int childId, int userId)
     {
         ArrayList<ReviewData> reviewDataList = new ArrayList<>();
+        String language = LanguageManager.getLanguage();
         
-        String query = "SELECT dr.QuestionID, ql.QuestionText, dr.QuestionAnswer, dr.QuestionNotes, dr.FollowUpResult, dr.FollowUpAnswers "
-                    + "FROM DiagnosisReviewData dr "
-                    + "JOIN QuestionList ql ON dr.QuestionID = ql.QuestionID "
-                    + "WHERE dr.ChildID = ? AND dr.UserID = ?";
+        String query = "SELECT dr.QuestionID, ql.\"QuestionText-"+ language +"\", dr.QuestionAnswer, "
+                     + "dr.QuestionNotes, dr.FollowUpResult, dr.FollowUpAnswers "
+                     + "FROM DiagnosisReviewData dr "
+                     + "JOIN QuestionList ql ON dr.QuestionID = ql.QuestionID "
+                     + "WHERE dr.ChildID = ? AND dr.UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
         {    
@@ -297,7 +349,7 @@ public class DatabaseManager
             while(results.next())
             {
                 int qId = results.getInt("QuestionID");
-                String qText = results.getString("QuestionText");
+                String qText = results.getString("QuestionText-"+language);
                 String qAnswer = results.getString("QuestionAnswer");
                 String qNotes = results.getString("QuestionNotes");
                 String fResult = results.getString("FollowUpResult");

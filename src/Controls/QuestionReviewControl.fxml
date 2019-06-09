@@ -24,12 +24,12 @@
             </Pane>
             <VBox prefHeight="74.0" prefWidth="374.0">
                <children>
-                  <Label id="1" fx:id="lblQuestionAnswer" prefHeight="40.0" prefWidth="374.0" text="Question Answer: ">
+                  <Label id="QRC1" fx:id="lblQuestionAnswer" prefHeight="40.0" prefWidth="374.0" text="Question Answer: ">
                      <font>
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="2" fx:id="lblASDRisk" prefHeight="40.0" prefWidth="374.0" text="ASD Risk: ">
+                  <Label id="QRC2" fx:id="lblASDRisk" prefHeight="40.0" prefWidth="374.0" text="ASD Risk: ">
                      <font>
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>
@@ -38,7 +38,7 @@
             </VBox>
             <Pane prefHeight="74.0" prefWidth="132.0">
                <children>
-                  <Button id="3" fx:id="btnView" alignment="CENTER" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnView_Action" prefHeight="44.0" prefWidth="89.0" stylesheets="@../Styles/SmallBtnStyles.css" text="View" textFill="WHITE">
+                  <Button id="QRC3" fx:id="btnView" alignment="CENTER" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnView_Action" prefHeight="44.0" prefWidth="89.0" stylesheets="@../Styles/SmallBtnStyles.css" text="View" textFill="WHITE">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>

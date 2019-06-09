@@ -30,7 +30,7 @@ public class IndividualReviewContentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        LanguageManager.setFormText("IndividualReview", StageManager.getRootScene());
+        //LanguageManager.setFormText("IndividualReview", StageManager.getRootScene());
     }    
     
     public void setupIndividualReviewContent(Child child)
