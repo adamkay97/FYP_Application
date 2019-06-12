@@ -1,6 +1,8 @@
 package ControlControllers;
 
+import Managers.LanguageManager;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,7 +21,10 @@ public class OtherExampleControlController implements Initializable
     
     public void setExampleControl(String text) 
     { 
+        HashMap<String,String> formText = LanguageManager.getSpecifiedText("StageTwoOtherExample");
+        
         lblExampleText.setText(text); 
+        txtAreaOther.setPromptText(formText.get("O2"));
         
         //Add listener to text area, set the text to variable on checkListController
         txtAreaOther.textProperty().addListener((observ, oVal, nVal) -> 

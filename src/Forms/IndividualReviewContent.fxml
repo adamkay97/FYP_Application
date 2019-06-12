@@ -15,7 +15,7 @@
    <children>
       <AnchorPane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="IR1" fx:id="lblReviewHeader" layoutX="15.0" layoutY="15.0" text="Review: #child#" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+            <Label id="IR1" layoutX="15.0" layoutY="15.0" text="Review:" textFill="WHITE" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
@@ -24,22 +24,42 @@
                <children>
                   <Pane prefHeight="75.0" prefWidth="677.0">
                      <children>
-                        <Label id="IR2" fx:id="lblStage1Score" layoutX="14.0" layoutY="8.0" text="M-CHAT-R Score =  " textFill="WHITE" wrapText="true">
+                        <Label id="IR2" layoutX="14.0" layoutY="8.0" text="M-CHAT-R Score =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
                         </Label>
-                        <Label id="IR3" fx:id="lblStage1Result" layoutX="27.0" layoutY="39.0" text="M-CHAT-R Risk =  " textFill="WHITE" wrapText="true">
+                        <Label id="IR3" layoutX="27.0" layoutY="39.0" text="M-CHAT-R Risk =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
                         </Label>
-                        <Label id="IR4" fx:id="lblStage2Score" layoutX="370.0" layoutY="9.0" text="M-CHAT-R/F Score =  " textFill="WHITE" wrapText="true">
+                        <Label id="IR4" layoutX="370.0" layoutY="9.0" text="M-CHAT-R/F Score =  " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
                         </Label>
-                        <Label id="IR5" fx:id="lblStage2Result" layoutX="385.0" layoutY="40.0" text="Overall Screening =  " textFill="WHITE" wrapText="true">
+                        <Label id="IR5" layoutX="385.0" layoutY="40.0" text="Overall Screening =  " textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label id="IR2" fx:id="lblStage1Score" layoutX="212.0" layoutY="9.0" prefHeight="27.0" prefWidth="143.0" text=" " textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label id="IR2" fx:id="lblStage1Result" layoutX="212.0" layoutY="39.0" prefHeight="27.0" prefWidth="143.0" text=" " textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label id="IR2" fx:id="lblStage2Score" layoutX="587.0" layoutY="8.0" prefHeight="27.0" prefWidth="107.0" text=" " textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label id="IR2" fx:id="lblStage2Result" layoutX="587.0" layoutY="40.0" prefHeight="27.0" prefWidth="107.0" text=" " textFill="WHITE" wrapText="true">
                            <font>
                               <Font name="Berlin Sans FB" size="24.0" />
                            </font>
@@ -48,6 +68,11 @@
                   </Pane>
                </children>
             </VBox>
+            <Label id="IR1" fx:id="lblReviewHeader" layoutX="140.0" layoutY="15.0" text="#child#" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="36.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="29.0" layoutY="156.0" prefHeight="432.0" prefWidth="702.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="156.0">

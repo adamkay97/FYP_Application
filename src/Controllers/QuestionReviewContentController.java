@@ -41,8 +41,7 @@ public class QuestionReviewContentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        LanguageManager.setFormText("QuestionReviewControl", StageManager.getRootScene());
-        reviewText = LanguageManager.getReviewText();
+        reviewText = LanguageManager.getSpecifiedText("ReviewText");
     }
     
     public void btnBack_Action(ActionEvent event) throws IOException

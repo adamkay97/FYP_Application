@@ -9,6 +9,7 @@ import Managers.SettingsManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,9 +80,9 @@ public class FinishQuestionaireContentController implements Initializable
         String atRiskText;
         
         //Set default IDs for elements with changeable text 
-        lblHeader.setId("F1.1");
-        lblScoreText.setId("F3.1");
-        btnContinue.setId("F5.1");
+        lblHeader.setId("F11");
+        lblScoreText.setId("F31");
+        btnContinue.setId("F51");
         
         if(!QuestionaireManager.getFollowUpCompleted())
         {
@@ -101,7 +102,7 @@ public class FinishQuestionaireContentController implements Initializable
 
             if(atRiskQuestions < 3 || atRiskQuestions > 7)
             {
-                btnContinue.setId("F5.2");
+                btnContinue.setId("F52");
                 followUp = false;
             }
             else
@@ -109,9 +110,9 @@ public class FinishQuestionaireContentController implements Initializable
         }
         else
         {            
-            lblHeader.setId("F1.2");
-            lblScoreText.setId("F3.2");
-            btnContinue.setId("F5.2");
+            lblHeader.setId("F12");
+            lblScoreText.setId("F32");
+            btnContinue.setId("F52");
             
             int failedQuestions = QuestionaireManager.getFailedQuestions();
             lblScore.setText(Integer.toString(failedQuestions) + " / " + Integer.toString(atRiskQuestions));

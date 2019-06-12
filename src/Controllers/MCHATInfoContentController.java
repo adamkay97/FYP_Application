@@ -29,7 +29,6 @@ public class MCHATInfoContentController implements Initializable
             dbManager.disconnect();
         }
         textLoader.setAllVboxInformation(mchatInfo);
-        LanguageManager.setFormText("MCHATInfo", StageManager.getRootScene());
     }
     
     public void btnBack_Action(ActionEvent event)

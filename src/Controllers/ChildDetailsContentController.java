@@ -61,7 +61,6 @@ public class ChildDetailsContentController implements Initializable
                     }
                     
                     StageManager.loadContentScene(StageManager.QUESTIONAIRE);
-                    LanguageManager.setFormText("StageOne", StageManager.getRootScene());
                     StageManager.setInProgress(true);  
                         
                 }

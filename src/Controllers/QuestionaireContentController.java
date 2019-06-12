@@ -86,12 +86,15 @@ public class QuestionaireContentController implements Initializable
             questionAnswerControl = root;
             
             //If the robot is being used set the robot control
-            //Else set the question control
-            if(usesNAORobot)
-                setRobotControl();
-            else
-               setQuestionAnswerControl();
-
+            //Else set the question control. 
+            //Run after the form has loaded so elements text can be changed
+            Platform.runLater(() -> {
+                if(usesNAORobot)
+                    setRobotControl();
+                else
+                    setQuestionAnswerControl();
+            });
+            
             setQuestionText(qIndex);
         }
         catch(IOException ex)
@@ -217,7 +220,9 @@ public class QuestionaireContentController implements Initializable
                 RobotManager.runStartEnd(false);
             
             StageManager.loadContentScene(StageManager.FINISH);
-            LanguageManager.setFormText("FinishQuestionaire", StageManager.getRootScene());
+            //Platform.runLater(() -> {
+                //LanguageManager.setFormText("FinishQuestionaire", StageManager.getRootScene());
+            //});
         }
     }
     
@@ -316,7 +321,7 @@ public class QuestionaireContentController implements Initializable
     {
         Question question = QuestionaireManager.getQuestion(index);
         lblQuestionText.setText(question.getQuestionText());
-        lblQuestionHeader.setText("Question " + index + ":");
+        lblQuestionHeader.setText(index + ":");
         
         //If the intructions arent null and the robot is being used, load the instructions popup
         if(question.getQuestionInstructions() != null && usesNAORobot)

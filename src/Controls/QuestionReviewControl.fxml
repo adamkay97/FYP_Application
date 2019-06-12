@@ -24,12 +24,12 @@
             </Pane>
             <VBox prefHeight="74.0" prefWidth="374.0">
                <children>
-                  <Label id="QRC1" fx:id="lblQuestionAnswer" prefHeight="40.0" prefWidth="374.0" text="Question Answer: ">
+                  <Label id="QRC1" fx:id="lblQuestionAnswer" prefHeight="40.0" prefWidth="367.0" text="Question Answer: ">
                      <font>
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>
                   </Label>
-                  <Label id="QRC2" fx:id="lblASDRisk" prefHeight="40.0" prefWidth="374.0" text="ASD Risk: ">
+                  <Label id="QRC2" fx:id="lblASDRisk" prefHeight="40.0" prefWidth="367.0" text="ASD Risk: ">
                      <font>
                         <Font name="Berlin Sans FB" size="18.0" />
                      </font>

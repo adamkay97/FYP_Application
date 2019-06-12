@@ -24,10 +24,7 @@ public class PopUpMessageController implements Initializable
     @FXML public Button btnNo;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-        LanguageManager.setFormText("Popup", StageManager.getRootScene());
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     public void setPopupContent(String headerText, String messageText, ButtonTypeEnum buttonType)
     {

@@ -14,10 +14,7 @@ public class RobotActionControlController implements Initializable
     private QuestionaireContentController questionaireContentController;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-        LanguageManager.setFormText("RobotControl", StageManager.getRootScene());
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     @FXML public void btnPlay_Action(ActionEvent event) 
     {

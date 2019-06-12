@@ -73,7 +73,7 @@ public class MainFormController implements Initializable
             LanguageManager.setFormText("Main", StageManager.getRootScene());
             LanguageManager.setFormText("Instructions", StageManager.getRootScene());
             
-            //StageManager.setOnLoad(false);
+            StageManager.setOnLoad(false);
             
             Stage mainStage = (Stage)mainAnchorPane.getScene().getWindow();
             
@@ -90,7 +90,6 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
-            LanguageManager.setFormText("Instructions", StageManager.getRootScene());
             setSelectedMenuButton("Start");
         }
     }
@@ -100,7 +99,6 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.MAININFO);
-            LanguageManager.setFormText("Information", StageManager.getRootScene());
             setSelectedMenuButton("Info");
         }
     }
@@ -110,7 +108,6 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.REVIEW);
-            LanguageManager.setFormText("Review", StageManager.getRootScene());
             setSelectedMenuButton("Review");
         }
     }
@@ -120,7 +117,6 @@ public class MainFormController implements Initializable
         if(allowFormChange())
         {
             StageManager.loadContentScene(StageManager.SETTINGS);
-            LanguageManager.setFormText("Settings", StageManager.getRootScene());
             setSelectedMenuButton("Settings");
         }
     }

@@ -4,6 +4,7 @@ import Classes.FormText;
 import Classes.PopupText;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class LanguageManager
     
     public static void setFormText(String formName, Scene currentScene)
     {
+        if(formName.equals(""))
+            return;
+        
         ArrayList<FormText> textList = allFormText.get(formName);
 
         for(FormText formText : textList)
@@ -72,7 +76,18 @@ public class LanguageManager
                     textField.setText(formText.getText());
                 continue;
             }
+            
+            if(node instanceof JFXPasswordField)
+            {
+                JFXPasswordField passwordField = (JFXPasswordField)node;
 
+                if(formText.getTextType().equals("Prompt"))
+                    passwordField.setPromptText(formText.getText());
+                else
+                    passwordField.setText(formText.getText());
+                continue;
+            }
+            
             if(node instanceof JFXRadioButton)
             {
                 JFXRadioButton radButton = (JFXRadioButton)node;
@@ -109,12 +124,12 @@ public class LanguageManager
                 label.setText(text.getText());
     }
     
-    public static HashMap<String, String> getReviewText() 
+    public static HashMap<String, String> getSpecifiedText(String textName) 
     {
         //Get the text required for the Question Review that aren't elements within 
         //the text area.
         HashMap<String, String> textMap = new HashMap<>();
-        ArrayList<FormText> reviewText = allFormText.get("ReviewText");
+        ArrayList<FormText> reviewText = allFormText.get(textName);
         
         for(FormText text : reviewText)
             textMap.put(text.getElementId(), text.getText());

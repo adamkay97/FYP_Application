@@ -181,7 +181,11 @@ public class FollowUpContentController implements Initializable
             }
             stackPaneFollowUp.getChildren().setAll(root);
             
-            LanguageManager.setFormText(controlType, StageManager.getRootScene());
+            final String control = controlType;
+            Platform.runLater(() -> {
+                LanguageManager.setFormText(control, StageManager.getRootScene());
+            });
+            
         }
         catch (IOException ex) 
         {

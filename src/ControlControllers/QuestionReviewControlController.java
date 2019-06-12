@@ -7,6 +7,7 @@ import Controllers.QuestionReviewContentController;
 import Managers.LanguageManager;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,10 +28,7 @@ public class QuestionReviewControlController implements Initializable
     private ReviewData reviewData;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-        LanguageManager.setFormText("QuestionReview", StageManager.getRootScene());
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     @FXML public void btnView_Action(ActionEvent event) 
     {
@@ -43,6 +41,7 @@ public class QuestionReviewControlController implements Initializable
             questionContent.setupQuestionReviewContent(reviewData, currentChild);
             
             StageManager.loadContentSceneParent(root);
+            LanguageManager.setFormText("QuestionReview", StageManager.getRootScene());
         } 
         catch (IOException ex) 
         {
@@ -52,11 +51,13 @@ public class QuestionReviewControlController implements Initializable
     
     public void setUpReviewControl(ReviewData data, Child child)
     {
+        HashMap<String, String> controlText = LanguageManager.getSpecifiedText("QuestionReviewControl");
+        
         int qId = data.getQuestionNumber();
         String answer = data.getQuestionAnswer();
         
         lblQuestionNumber.setText(Integer.toString(qId));
-        lblQuestionAnswer.setText(lblQuestionAnswer.getText() + answer);
+        lblQuestionAnswer.setText(controlText.get("QRC1") + answer);
         
         String risk;
         
@@ -67,7 +68,8 @@ public class QuestionReviewControlController implements Initializable
         else
             risk = "Negative";
         
-        lblASDRisk.setText(lblASDRisk.getText() + risk);
+        lblASDRisk.setText(controlText.get("QRC2") +risk);
+        btnView.setText(controlText.get("QRC3"));
         
         reviewData = data;
         currentChild = child;

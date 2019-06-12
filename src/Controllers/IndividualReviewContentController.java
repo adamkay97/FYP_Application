@@ -28,10 +28,7 @@ public class IndividualReviewContentController implements Initializable
     @FXML private VBox vboxReviewControls;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
-        //LanguageManager.setFormText("IndividualReview", StageManager.getRootScene());
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     public void setupIndividualReviewContent(Child child)
     {
@@ -41,11 +38,11 @@ public class IndividualReviewContentController implements Initializable
         //Get and set the labels at the top of the form to be the diagnosis result values from
         //the child object
         String header = lblReviewHeader.getText().replace("#child#", child.getChildName());
-        String s1Score = String.format(lblStage1Score.getText() + "%d / 20", child.getDiagnosisResult().getStageOneScore());
-        String s1Risk = lblStage1Result.getText() + child.getDiagnosisResult().getStageOneRisk();
-        String s2Score = String.format(lblStage2Score.getText() + "%d / %d", child.getDiagnosisResult().getStageTwoScore(), 
-                                                                                child.getDiagnosisResult().getStageOneScore());
-        String screening = lblStage2Result.getText() + child.getDiagnosisResult().getOverallScreening();
+        String s1Score = String.format("%d / 20", child.getDiagnosisResult().getStageOneScore());
+        String s1Risk = child.getDiagnosisResult().getStageOneRisk();
+        String s2Score = String.format("%d / %d", child.getDiagnosisResult().getStageTwoScore(), 
+                                                        child.getDiagnosisResult().getStageOneScore());
+        String screening = child.getDiagnosisResult().getOverallScreening();
         
         lblReviewHeader.setText(header);
         lblStage1Score.setText(s1Score);

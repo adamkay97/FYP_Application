@@ -16,12 +16,17 @@
    <children>
       <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="SO2" fx:id="lblQuestionHeader" layoutX="53.0" layoutY="80.0" text="Question 1:" textFill="WHITE" wrapText="true">
+            <Label id="SO2" layoutX="53.0" layoutY="80.0" text="Question" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
             </Label>
             <Label id="SO1" layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="32.0" />
+               </font>
+            </Label>
+            <Label id="SO2" fx:id="lblQuestionHeader" layoutX="177.0" layoutY="80.0" prefHeight="36.0" prefWidth="62.0" text="1:" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>

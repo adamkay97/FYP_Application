@@ -20,10 +20,7 @@ public class PopUpInstructionsController implements Initializable
     @FXML private Label lblMessage;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) 
-    {
-        LanguageManager.setFormText("PopupInstructions", StageManager.getRootScene());
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}    
     
     public void setInstructionsPopupContent(String messageText, int qIndex)
     {

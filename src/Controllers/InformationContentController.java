@@ -36,7 +36,6 @@ public class InformationContentController implements Initializable
     @FXML public void btnMCHAT_Action(ActionEvent event)
     {
         StageManager.loadContentScene(StageManager.MCHATINFO);
-        LanguageManager.setFormText("MCHATInfo", StageManager.getRootScene());
         
         //Closes the menu drawer on the main form when the information btn is clicked
         StageManager.getMainFormController().closeMenuDrawer();
@@ -45,7 +44,6 @@ public class InformationContentController implements Initializable
     @FXML public void btnNAO_Action(ActionEvent event)
     {
         StageManager.loadContentScene(StageManager.NAOINFO);
-        LanguageManager.setFormText("MCHATInfo", StageManager.getRootScene());
         
         //Closes the menu drawer on the main form when the information btn is clicked
         StageManager.getMainFormController().closeMenuDrawer();

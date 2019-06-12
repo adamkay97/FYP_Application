@@ -16,7 +16,7 @@
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
             </Label>
-            <Label id="F1" fx:id="lblHeader" layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
+            <Label id="F11" fx:id="lblHeader" layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
@@ -29,7 +29,7 @@
                <children>
                   <AnchorPane prefHeight="101.0" prefWidth="652.0">
                      <children>
-                        <Label id="F3" fx:id="lblScoreText" alignment="TOP_CENTER" layoutX="15.0" layoutY="6.0" prefHeight="90.0" prefWidth="622.0" text="You have now completed the first part of the Diagnosis.&#10;The score below represents the amount of questions answered that indicated a risk of ASD in your child." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
+                        <Label id="F31" fx:id="lblScoreText" alignment="TOP_CENTER" layoutX="15.0" layoutY="6.0" prefHeight="90.0" prefWidth="622.0" text="You have now completed the first part of the Diagnosis.&#10;The score below represents the amount of questions answered that indicated a risk of ASD in your child." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0">
                            <font>
                               <Font name="Berlin Sans FB" size="22.0" />
                            </font>

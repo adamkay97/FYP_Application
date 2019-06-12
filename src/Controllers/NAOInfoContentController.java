@@ -29,7 +29,6 @@ public class NAOInfoContentController implements Initializable
             
             textLoader.setAllVboxInformation(mchatInfo);
         }
-        LanguageManager.setFormText("NAOInfo", StageManager.getRootScene());
     }    
     
     public void btnBack_Action(ActionEvent event)

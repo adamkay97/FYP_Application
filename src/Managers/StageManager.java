@@ -47,7 +47,7 @@ public class StageManager
     private static boolean popupAnswer;
     
     //Used for when Main Form is first loaded
-    //private static boolean onLoad = true;
+    private static boolean onLoad = true;
     
     //Scene for when a childs diagnosis data is being reviewed, for easy access between forms
     private static Parent currentChildReviewParent;
@@ -66,6 +66,9 @@ public class StageManager
             mainFormController.setAllScene(
                 FXMLLoader.load(StageManager.class.getResource(fxmlPath)
             ));
+            
+            if(!onLoad)
+                LanguageManager.setFormText(getFormName(fxmlPath), rootScene);
         }
         catch(IOException ex) 
         {
@@ -134,6 +137,8 @@ public class StageManager
                 });
             }
             
+            LanguageManager.setFormText("Popup", popup);
+            
             //Set pop up style to Undecorated, set Modality to freeze rest of application until popup is closed
             popupStage.initStyle(StageStyle.UNDECORATED);
             popupStage.initModality(Modality.APPLICATION_MODAL);
@@ -164,6 +169,8 @@ public class StageManager
             Scene popup = new Scene(root);
             PopUpInstructionsController popupController = loader.<PopUpInstructionsController>getController();
             popupController.setInstructionsPopupContent(messageText, qIndex);
+            
+            LanguageManager.setFormText("PopupInstructions", popup);
             
             Stage popupStage = new Stage();
             setFormMoveHandlers(root, popupStage);
@@ -236,6 +243,45 @@ public class StageManager
             stage.setY(event.getScreenY() - offsetY);
         });
     }
+    
+    private static String getFormName(String fxmlPath)
+    {
+        String formName = "";
+        
+        switch (fxmlPath)
+        {
+            case INSTRUCTIONS:
+                formName = "Instructions";
+                break;
+            case DETAILS:
+                formName = "ChildInfo";
+                break;
+            case QUESTIONAIRE:
+                formName = "StageOne";
+                break;
+            case FINISH:
+                formName = "FinishQuestionaire";
+                break;
+            case MAININFO:
+                formName = "Information";
+                break;
+            case MCHATINFO:
+                formName = "MCHATInfo";
+                break;
+            case NAOINFO:
+                formName = "NAOInfo";
+                break;
+            case SETTINGS:
+                formName = "Settings";
+                break;
+            case REVIEW:
+                formName = "Review";
+                break;
+                
+        }
+        
+        return formName;
+    }
         
     /**
      * Sets the mainFormController variable on the StageManager
@@ -254,8 +300,8 @@ public class StageManager
         return StageManager.mainFormController;
     }
     
-    //public static void setOnLoad(boolean loaded) { onLoad = loaded; }
-    //public static boolean getOnLoad() { return onLoad; }
+    public static void setOnLoad(boolean loaded) { onLoad = loaded; }
+    public static boolean getOnLoad() { return onLoad; }
     
     public static void setInProgress(boolean start) { inProgress = start; }
     public static boolean getInProgress() { return inProgress; }

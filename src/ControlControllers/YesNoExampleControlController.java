@@ -1,7 +1,9 @@
 package ControlControllers;
 
+import Managers.LanguageManager;
 import com.jfoenix.controls.JFXRadioButton;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -29,12 +31,16 @@ public class YesNoExampleControlController implements Initializable
     
     public void setExampleControl(String text, String pF, ToggleGroup group)
     {
+        HashMap<String,String> formText = LanguageManager.getSpecifiedText("StageTwoYesNoExample");
+        
         yesNoGroup = group;
         
         lblExampleText.setText(text);
         radBtnYes.setToggleGroup(yesNoGroup);
         radBtnNo.setToggleGroup(yesNoGroup);
         
+        radBtnYes.setText(formText.get("YN1"));
+        radBtnNo.setText(formText.get("YN2"));
         radBtnYes.setUserData(text + " = Yes");
         radBtnNo.setUserData(text + " = No");
         passFail = pF;

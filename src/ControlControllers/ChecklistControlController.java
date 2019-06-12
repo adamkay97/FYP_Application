@@ -230,12 +230,12 @@ public class ChecklistControlController implements Initializable
         {
             FXMLLoader loader;
             Parent root;
-            
+
             //For each example create a new control
             for(String example : examples)
             {
                 //Check to see if example is for providing an "other" text input 
-                if(!example.contains("(describe)"))
+                if(!example.contains("***"))
                 {
                     ToggleGroup yesNoGroup = new ToggleGroup();
                     
@@ -249,8 +249,6 @@ public class ChecklistControlController implements Initializable
                     
                     //Add toggleGroup to list for review purposes
                     radBtnList.add(yesNoGroup);
-                    
-                    LanguageManager.setFormText("StageTwoYesNoExample", StageManager.getRootScene());
                 }
                 else
                 {
@@ -259,11 +257,9 @@ public class ChecklistControlController implements Initializable
                     root = (Parent)loader.load();
 
                     OtherExampleControlController otherControl = loader.<OtherExampleControlController>getController();
-                    otherControl.setExampleControl(example);
+                    otherControl.setExampleControl(example.replace("***",""));
                     otherControl.setCheckListController(this);
                     usesOther = true;
-                    
-                    LanguageManager.setFormText("StageTwoOtherExample", StageManager.getRootScene());
                 }
                 vboxCheckExamples.getChildren().add(root);
             }
