@@ -13,25 +13,29 @@
    <children>
       <AnchorPane layoutX="31.0" layoutY="161.0" prefHeight="466.0" prefWidth="699.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="161.0">
          <children>
-            <VBox fx:id="vboxMainInfoContent" layoutX="12.0" layoutY="14.0" prefHeight="327.0" prefWidth="682.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <VBox fx:id="vboxMainInfoContent" alignment="CENTER" layoutX="12.0" layoutY="14.0" prefHeight="327.0" prefWidth="682.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </padding>
             </VBox>
-            <AnchorPane layoutX="10.0" layoutY="350.0" prefHeight="76.0" prefWidth="677.0" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+            <VBox alignment="CENTER" fillWidth="false" layoutX="56.0" layoutY="341.0" prefHeight="101.0" prefWidth="588.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
                <children>
-                  <Button id="IF3" fx:id="btnNAO" layoutX="374.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnNAO_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/GreenBtnStyles.css" text="NAO Robot" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="5.0">
-                     <font>
-                        <Font name="Arial" size="24.0" />
-                     </font>
-                  </Button>
-                  <Button id="IF2" fx:id="btnMCHAT" layoutX="111.0" layoutY="5.0" mnemonicParsing="false" onAction="#btnMCHAT_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/GreenBtnStyles.css" text="M-CHAT-R/F" textFill="WHITE" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="110.0" AnchorPane.topAnchor="5.0">
-                     <font>
-                        <Font name="Arial" size="24.0" />
-                     </font>
-                  </Button>
+                  <Pane prefHeight="101.0" prefWidth="542.0">
+                     <children>
+                        <Button id="IF3" fx:id="btnNAO" layoutX="315.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnNAO_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/GreenBtnStyles.css" text="NAO Robot" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button id="IF2" fx:id="btnMCHAT" layoutX="33.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnMCHAT_Action" prefHeight="74.0" prefWidth="195.0" stylesheets="@../Styles/GreenBtnStyles.css" text="M-CHAT-R/F" textFill="WHITE">
+                           <font>
+                              <Font name="Arial" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </Pane>
                </children>
-            </AnchorPane>
+            </VBox>
          </children>
       </AnchorPane>
       <Pane prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

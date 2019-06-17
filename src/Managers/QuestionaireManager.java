@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 public class QuestionaireManager 
 {
+    private static ArrayList<String> questionSets;
     private static HashMap<Integer, Question> questionMap;
     private static HashMap<Integer, FollowUpFlow> followUpMap;
     private static Child currentChild;
@@ -207,7 +208,7 @@ public class QuestionaireManager
         if(dbManager.connect())
         {
             //Reset the question/followUp maps
-            dbManager.loadQuestionList();
+            dbManager.loadQuestionList(SettingsManager.getQuestionSet());
             dbManager.loadFollowUpList();
             
             //If the diagnosis was in progress also remove the current child from the db
@@ -247,11 +248,13 @@ public class QuestionaireManager
     public static void setFailedQuestions(int failed) { failedQuestions = failed; }
     public static void setCurrentChild(Child child) { currentChild = child; }
     public static void setFollowUpMap(HashMap<Integer, FollowUpFlow> followup) { followUpMap = followup; }
+    public static void setQuestionSets(ArrayList<String> qSets) { questionSets = qSets; }
     
+    public static HashMap<Integer, Question> getQuestionMap() { return questionMap; }
     public static Question getCurrentQuestion() { return currentQuestion; }
     public static Child getCurrentChild() { return currentChild; }
     public static boolean getFollowUpCompleted() { return followUpCompleted; }
     public static int getFailedQuestions() { return failedQuestions; }
     public static ArrayList<Integer> getFlaggedQuestions() { return flaggedQuestions; }
-    
+    public static ArrayList<String> getQuestionSets() { return questionSets; }
 }

@@ -74,7 +74,7 @@ public class InstructionsContentController implements Initializable
         //Once all of the text has been added to the VBox add a check box at the bottom
         //that must be selected before the user can proceed to ensure they have read the instructions.
         readInstructions = new JFXCheckBox();
-        readInstructions.setId("4");
+        readInstructions.setId("I4");
         readInstructions.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 21));
         readInstructions.setTextFill(Color.GREEN);
         readInstructions.setCheckedColor(Color.GREEN);

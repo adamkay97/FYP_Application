@@ -43,26 +43,28 @@ public class DatabaseManager
         }
     }
     
-    public void loadQuestionList()
+    public void loadQuestionList(String diagnosisName)
     {
         HashMap<Integer, Question> questionMap = new HashMap<>();
         String language = LanguageManager.getLanguage();
         
-        String query = "SELECT * FROM QuestionList";
+        String query = "SELECT * FROM QuestionList WHERE DiagnosisName = ?";
         
         //Loads all the questions in to the questionMap so it can be used 
-        //in the questionaire form
-        try(Statement stmt = conn.createStatement(); 
-                ResultSet results = stmt.executeQuery(query)) 
+        //in the questionaire form for the specific diagnosis.
+        try(PreparedStatement pstmt = conn.prepareStatement(query))
         {    
+            pstmt.setString(1, diagnosisName);
+            ResultSet results = pstmt.executeQuery();
+            
             while(results.next())
             {
-                int id = results.getInt("QuestionID");
+                int qNumber = results.getInt("QuestionNumber");
                 String text = results.getString("QuestionText-"+language);
                 String instruction = results.getString("QuestionInstruction-"+language);
-                Question q = new Question(id, text, instruction);
+                Question q = new Question(qNumber, text, instruction);
                 
-                questionMap.put(id, q);
+                questionMap.put(qNumber, q);
             }
             QuestionaireManager.setQuestionMap(questionMap);
         }
@@ -74,14 +76,18 @@ public class DatabaseManager
     
     public void loadFollowUpList()
     {
-        HashMap<Integer, FollowUpFlow> followUpList = new HashMap<>();
-        
-        for (int i = 1; i <= 20; i++) 
+        //Only load Follow Up questions if the current question set is for the MCHATR/F
+        if (SettingsManager.getQuestionSet().equals("M-CHAT-R/F")) 
         {
-            FollowUpFlow question = loadFollowUpQuestion(i);
-            followUpList.put(i, question);
+            HashMap<Integer, FollowUpFlow> followUpList = new HashMap<>();
+        
+            for (int i = 1; i <= 20; i++) 
+            {
+                FollowUpFlow question = loadFollowUpQuestion(i);
+                followUpList.put(i, question);
+            }
+            QuestionaireManager.setFollowUpMap(followUpList);
         }
-        QuestionaireManager.setFollowUpMap(followUpList);
     }
     
     private FollowUpFlow loadFollowUpQuestion(int questionId)
@@ -117,6 +123,28 @@ public class DatabaseManager
             System.out.println("Error when reading follow up questions from the db - " + ex.getMessage());
         }
         return null;
+    }
+    
+    public void loadQuestionSetList()
+    {
+        ArrayList<String> questionSetList = new ArrayList<>();
+        
+        String query = "SELECT DISTINCT DiagnosisName FROM QuestionList";
+        
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query)) 
+        {    
+            while(results.next())
+            {
+                String name = results.getString("DiagnosisName");
+                questionSetList.add(name);
+            }
+            QuestionaireManager.setQuestionSets(questionSetList);
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the Question Sets from the db - " + ex.getMessage());
+        }
     }
     
     public void loadLanguageList()
@@ -385,8 +413,10 @@ public class DatabaseManager
                 String noteMethod = results.getString("NoteMethod");
                 String audioPath = results.getString("AudioFileLocation");
                 String language = results.getString("Language");
+                String questionSet = results.getString("QuestionSet"); 
                 
-                SettingsManager.initialiseSettings(usesNao, robotURL, robotVolume, language, noteMethod, audioPath);
+                SettingsManager.initialiseSettings(usesNao, robotURL, robotVolume, questionSet, 
+                                                    language, noteMethod, audioPath);
             }
         }
         catch(SQLException ex)
@@ -566,10 +596,10 @@ public class DatabaseManager
     }
     
     public void updateUserSettings(int userId, String usesNao, String url, int volume, 
-            String language, String noteMethod, String audioPath)
+            String questionSet, String language, String noteMethod, String audioPath)
     {
         String query = "UPDATE ApplicationSettings SET UsesNaoRobot = ?, RobotConnectionURL = ?, RobotVolume = ?, "
-                     + "NoteMethod = ?, AudioFileLocation = ?, Language = ? "
+                     + "NoteMethod = ?, AudioFileLocation = ?, Language = ?, QuestionSet = ? "
                      + "WHERE UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
@@ -580,7 +610,8 @@ public class DatabaseManager
             pstmt.setString(4, noteMethod);
             pstmt.setString(5, audioPath);
             pstmt.setString(6, language);
-            pstmt.setInt(7, userId);
+            pstmt.setString(7, questionSet);
+            pstmt.setInt(8, userId);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)

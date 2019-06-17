@@ -118,6 +118,12 @@ public class MainFormController implements Initializable
         {
             StageManager.loadContentScene(StageManager.SETTINGS);
             setSelectedMenuButton("Settings");
+            
+            //Run after the form has been loaded in seperate thread as running from within
+            //same thread in 'loadContentScene' doesn't work.
+            Platform.runLater(() -> {
+                LanguageManager.setFormText("Settings", StageManager.getRootScene());
+            });
         }
     }
     
@@ -127,48 +133,6 @@ public class MainFormController implements Initializable
         {
             quitMainForm();
             StageManager.loadForm(StageManager.LOGIN, new Stage());
-        }
-    }
-    
-    @FXML public void btnMaxRes_Action(ActionEvent event)
-    {
-        Stage mainStage = (Stage)mainAnchorPane.getScene().getWindow();
-        
-        if(!maximized)
-        {
-            maxResIcon.getStyleClass().clear();
-            maxResIcon.getStyleClass().add("restore");
-            
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-
-            mainStage.setX(bounds.getMinX());
-            mainStage.setY(bounds.getMinY());
-            mainStage.setWidth(bounds.getWidth());
-            mainStage.setHeight(bounds.getHeight());
-            
-            double size = bounds.getWidth() - pnlMenuContent.getWidth();
-            pnlMainContentAnchor.setPrefWidth(size);
-            pnlMenuContent.setPrefHeight(bounds.getHeight()-6);
-            vboxMenu.setPrefHeight(bounds.getHeight()-6);
-            
-            maximized = true;
-        }
-        else
-        {
-            maxResIcon.getStyleClass().clear();
-            maxResIcon.getStyleClass().add("maximize");
-            
-            mainStage.setX(DEFAULTX);
-            mainStage.setY(DEFAULTY);
-            mainStage.setWidth(DEFAULTWIDTH);
-            mainStage.setHeight(DEFAULTHEIGHT);
-            
-            double size = DEFAULTWIDTH - pnlMenuContent.getWidth();
-            pnlMainContentAnchor.setPrefWidth(size);
-            pnlMenuContent.setPrefHeight(DEFAULTHEIGHT-6);
-            vboxMenu.setPrefHeight(DEFAULTHEIGHT-6);
-            maximized = false;
         }
     }
     
@@ -185,7 +149,7 @@ public class MainFormController implements Initializable
     }
     
     @FXML public void btnMinimize_Click(ActionEvent event) { minimizeMainForm(); }
-    
+    @FXML public void btnMaxRes_Action(ActionEvent event) { maximizeMainForm(); }
     
     /**
      * Replaces all of the current scenes in the Main
@@ -334,6 +298,48 @@ public class MainFormController implements Initializable
     {
         Stage currentStage = (Stage)btnMinimize.getScene().getWindow();
         currentStage.setIconified(true);
+    }
+    
+    private void maximizeMainForm()
+    {
+        Stage mainStage = (Stage)mainAnchorPane.getScene().getWindow();
+        
+        if(!maximized)
+        {
+            maxResIcon.getStyleClass().clear();
+            maxResIcon.getStyleClass().add("restore");
+            
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+
+            mainStage.setX(bounds.getMinX());
+            mainStage.setY(bounds.getMinY());
+            mainStage.setWidth(bounds.getWidth());
+            mainStage.setHeight(bounds.getHeight());
+            
+            double size = bounds.getWidth() - pnlMenuContent.getWidth();
+            pnlMainContentAnchor.setPrefWidth(size);
+            pnlMenuContent.setPrefHeight(bounds.getHeight()-6);
+            vboxMenu.setPrefHeight(bounds.getHeight()-6);
+            
+            maximized = true;
+        }
+        else
+        {
+            maxResIcon.getStyleClass().clear();
+            maxResIcon.getStyleClass().add("maximize");
+            
+            mainStage.setX(DEFAULTX);
+            mainStage.setY(DEFAULTY);
+            mainStage.setWidth(DEFAULTWIDTH);
+            mainStage.setHeight(DEFAULTHEIGHT);
+            
+            double size = DEFAULTWIDTH - pnlMenuContent.getWidth();
+            pnlMainContentAnchor.setPrefWidth(size);
+            pnlMenuContent.setPrefHeight(DEFAULTHEIGHT-6);
+            vboxMenu.setPrefHeight(DEFAULTHEIGHT-6);
+            maximized = false;
+        }
     }
    
     private void quitMainForm() 

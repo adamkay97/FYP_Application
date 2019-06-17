@@ -6,6 +6,8 @@ import Managers.SettingsManager;
 import Managers.LanguageManager;
 import Managers.StageManager;
 import Enums.ButtonTypeEnum;
+import Managers.DatabaseManager;
+import Managers.QuestionaireManager;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
@@ -18,15 +20,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 
 public class SettingsContentController implements Initializable 
 {
     @FXML private AnchorPane mainAnchorPane;
+    @FXML private ScrollPane scrlPnSettings;
+    @FXML private VBox vboxSettings;
     
     @FXML private ToggleGroup useNaoGroup;
     @FXML private JFXRadioButton radBtnNaoYes;
@@ -38,6 +44,7 @@ public class SettingsContentController implements Initializable
     @FXML private ImageView imgViewStatusIcon;
     @FXML private Button btnTestConnection;
     
+    @FXML private JFXComboBox cmbBoxQuestionSet;
     @FXML private JFXComboBox cmbBoxLanguage;
     @FXML private ToggleGroup noteMethodGroup;
     @FXML private JFXRadioButton radBtnText;
@@ -158,13 +165,20 @@ public class SettingsContentController implements Initializable
     
     private void setupSettingsOptions()
     {
+        //Bind vbox dimensions to scroll pane for maximise scene
+        vboxSettings.prefWidthProperty().bind(scrlPnSettings.widthProperty());
+        
+        //Set contents and styles of combo boxes
         cmbBoxLanguage.getItems().addAll(LanguageManager.getLanguageList());
         cmbBoxLanguage.getSelectionModel().select(SettingsManager.getLanguage());
         cmbBoxLanguage.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
         
+        cmbBoxQuestionSet.getItems().addAll(QuestionaireManager.getQuestionSets());
+        cmbBoxQuestionSet.getSelectionModel().select(SettingsManager.getQuestionSet());
+        cmbBoxQuestionSet.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
+        
         boolean usesNAO = SettingsManager.getUsesNaoRobot();
         String robotURL = SettingsManager.getRobotConnection();
-        //int volume = SettingsManager.getRobotVolume();
         String noteMethod = SettingsManager.getNoteMethod();
         String audioPath = SettingsManager.getAudioFileLocation();
         
@@ -237,7 +251,6 @@ public class SettingsContentController implements Initializable
         lblConnectStatus.setDisable(disable);
         imgViewStatusIcon.setVisible(!disable);
         btnTestConnection.setDisable(disable);
-        //sliderVolume.setDisable(disable);
     }
     
     private void createRadioButtonListeners()
@@ -271,11 +284,20 @@ public class SettingsContentController implements Initializable
     
     private void resetFormLanguage(String language)
     {
+        //Reset language, load form text and reset current scenes
         LanguageManager.setLanguage(language);
         LanguageManager.loadFormText();
         
         LanguageManager.setFormText("Main", StageManager.getRootScene());
         LanguageManager.setFormText("Settings", StageManager.getRootScene());
+        
+        //Reload the question lists with the new language
+        DatabaseManager dbManager = new DatabaseManager();
+        if(dbManager.connect())
+        {
+            dbManager.loadQuestionList(SettingsManager.getQuestionSet());
+            dbManager.loadFollowUpList();
+        }
     }
     
     private boolean validateDetails(String ip, String port)

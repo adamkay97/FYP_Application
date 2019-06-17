@@ -220,9 +220,6 @@ public class QuestionaireContentController implements Initializable
                 RobotManager.runStartEnd(false);
             
             StageManager.loadContentScene(StageManager.FINISH);
-            //Platform.runLater(() -> {
-                //LanguageManager.setFormText("FinishQuestionaire", StageManager.getRootScene());
-            //});
         }
     }
     
@@ -323,8 +320,8 @@ public class QuestionaireContentController implements Initializable
         lblQuestionText.setText(question.getQuestionText());
         lblQuestionHeader.setText(index + ":");
         
-        //If the intructions arent null and the robot is being used, load the instructions popup
-        if(question.getQuestionInstructions() != null && usesNAORobot)
+        //If the intructions arent empty and the robot is being used, load the instructions popup
+        if(!question.getQuestionInstructions().equals("") && usesNAORobot)
         {
             if(qIndex == 6)
             {

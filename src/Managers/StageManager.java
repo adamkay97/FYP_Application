@@ -19,6 +19,7 @@ public class StageManager
     public static final String REVIEW = "/Forms/ReviewContent.fxml";
     public static final String INDIREVIEW = "/Forms/IndividualReviewContent.fxml";
     public static final String SETTINGS = "/Forms/SettingsContent.fxml";
+    public static final String EDITQUESTIONS = "/Forms/EditQuestionsContent.fxml";
     public static final String MAININFO = "/Forms/InformationContent.fxml";
     public static final String MCHATINFO = "/Forms/MCHATInfoContent.fxml";
     public static final String NAOINFO = "/Forms/NAOInfoContent.fxml";
@@ -271,9 +272,9 @@ public class StageManager
             case NAOINFO:
                 formName = "NAOInfo";
                 break;
-            case SETTINGS:
-                formName = "Settings";
-                break;
+            //case SETTINGS:
+                //formName = "Settings";
+                //break;
             case REVIEW:
                 formName = "Review";
                 break;

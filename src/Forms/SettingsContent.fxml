@@ -23,116 +23,126 @@
       </Pane>
       <StackPane layoutX="30.0" layoutY="148.0" prefHeight="448.0" prefWidth="700.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="67.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="148.0">
          <children>
-            <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="370.0" prefWidth="690.0">
-               <children>
-                  <Pane prefHeight="231.0" prefWidth="645.0">
+            <ScrollPane fx:id="scrlPnSettings" hbarPolicy="NEVER" prefHeight="438.0" prefWidth="674.0" stylesheets="@../Styles/ScrollPaneStyles.css">
+               <content>
+                  <VBox fx:id="vboxSettings" alignment="CENTER" fillWidth="false" prefHeight="482.0" prefWidth="690.0">
                      <children>
-                        <Label id="S2" layoutX="14.0" layoutY="14.0" text="NAO Connection" underline="true">
-                           <font>
-                              <Font name="Berlin Sans FB" size="22.0" />
-                           </font>
-                        </Label>
-                        <Label id="S6" layoutX="51.0" layoutY="99.0" text="NAO IP Address:">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </Label>
-                        <Label id="S7" layoutX="51.0" layoutY="137.0" text="NAO Fixed Port:">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="txtIPAddress" focusColor="DODGERBLUE" layoutX="219.0" layoutY="81.0" prefHeight="31.0" prefWidth="227.0" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </JFXTextField>
-                        <JFXTextField fx:id="txtFixedPort" focusColor="DODGERBLUE" layoutX="219.0" layoutY="119.0" prefHeight="31.0" prefWidth="227.0" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </JFXTextField>
-                        <Label id="S9" fx:id="lblConnectStatus" alignment="CENTER" layoutX="488.0" layoutY="167.0" prefHeight="21.0" prefWidth="112.0" text="Connected" textAlignment="CENTER">
-                           <font>
-                              <Font name="Berlin Sans FB" size="18.0" />
-                           </font>
-                        </Label>
-                        <ImageView fx:id="imgViewStatusIcon" fitHeight="94.0" fitWidth="102.0" layoutX="493.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true" />
-                        <Button id="S8" fx:id="btnTestConnection" layoutX="228.0" layoutY="170.0" mnemonicParsing="false" onAction="#btnTestConnection_Action" prefHeight="36.0" prefWidth="210.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Test Connection" textFill="WHITE">
-                           <font>
-                              <Font name="Arial" size="24.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="btnConnectionHelp" layoutX="615.0" layoutY="3.0" mnemonicParsing="false" onAction="#btnConnectionHelp_Action" prefHeight="0.0" prefWidth="19.0" stylesheets="@../Styles/SmallBtnStyles.css" text="?" textFill="WHITE">
-                           <font>
-                              <Font name="Arial" size="24.0" />
-                           </font>
-                        </Button>
-                        <Label id="S3" layoutX="14.0" layoutY="55.0" text="Use NAO Interaction:">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </Label>
-                        <JFXRadioButton id="S5" fx:id="radBtnNaoNo" layoutX="305.0" layoutY="50.0" style="-jfx-selected-color: #00FF00;" text="No">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="useNaoGroup" />
-                           </toggleGroup>
-                        </JFXRadioButton>
-                        <JFXRadioButton id="S4" fx:id="radBtnNaoYes" layoutX="219.0" layoutY="50.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Yes" toggleGroup="$useNaoGroup">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </JFXRadioButton>
+                        <Pane prefHeight="250.0" prefWidth="645.0">
+                           <children>
+                              <Label id="S2" layoutX="14.0" layoutY="22.0" text="NAO Connection" underline="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label id="S6" layoutX="51.0" layoutY="109.0" text="NAO IP Address:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label id="S7" layoutX="51.0" layoutY="155.0" text="NAO Fixed Port:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtIPAddress" focusColor="DODGERBLUE" layoutX="219.0" layoutY="91.0" prefHeight="31.0" prefWidth="227.0" unFocusColor="BLACK">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <JFXTextField fx:id="txtFixedPort" focusColor="DODGERBLUE" layoutX="219.0" layoutY="137.0" prefHeight="31.0" prefWidth="227.0" unFocusColor="BLACK">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label id="S9" fx:id="lblConnectStatus" alignment="CENTER" layoutX="488.0" layoutY="175.0" prefHeight="21.0" prefWidth="112.0" text="Connected" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="18.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fx:id="imgViewStatusIcon" fitHeight="94.0" fitWidth="102.0" layoutX="493.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button id="S8" fx:id="btnTestConnection" layoutX="228.0" layoutY="187.0" mnemonicParsing="false" onAction="#btnTestConnection_Action" prefHeight="36.0" prefWidth="210.0" stylesheets="@../Styles/GreenBtnStyles.css" text="Test Connection" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnConnectionHelp" layoutX="615.0" layoutY="11.0" mnemonicParsing="false" onAction="#btnConnectionHelp_Action" prefHeight="0.0" prefWidth="19.0" stylesheets="@../Styles/SmallBtnStyles.css" text="?" textFill="WHITE">
+                                 <font>
+                                    <Font name="Arial" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Label id="S3" layoutX="14.0" layoutY="63.0" text="Use NAO Interaction:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXRadioButton id="S5" fx:id="radBtnNaoNo" layoutX="305.0" layoutY="58.0" style="-jfx-selected-color: #00FF00;" text="No">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="useNaoGroup" />
+                                 </toggleGroup>
+                              </JFXRadioButton>
+                              <JFXRadioButton id="S4" fx:id="radBtnNaoYes" layoutX="219.0" layoutY="58.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Yes" toggleGroup="$useNaoGroup">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </JFXRadioButton>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="230.0" prefWidth="645.0">
+                           <children>
+                              <Label id="S10" layoutX="14.0" layoutY="11.0" text="Questionaire Settings" underline="true">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label id="S12" layoutX="60.0" layoutY="144.0" text="Note Taking Method:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXRadioButton id="S13" fx:id="radBtnText" layoutX="301.0" layoutY="144.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Text Area">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="noteMethodGroup" />
+                                 </toggleGroup>
+                              </JFXRadioButton>
+                              <JFXRadioButton id="S14" fx:id="radBtnAudio" layoutX="438.0" layoutY="144.0" style="-jfx-selected-color: #00FF00;" text="Audio Recording" toggleGroup="$noteMethodGroup">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </JFXRadioButton>
+                              <Label id="S15" layoutX="27.0" layoutY="188.0" text="Audio File Save Location:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXTextField fx:id="txtAudioFileLocation" focusColor="DODGERBLUE" layoutX="298.0" layoutY="181.0" prefHeight="36.0" prefWidth="311.0" unFocusColor="BLACK">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </JFXTextField>
+                              <Label id="S11" layoutX="148.0" layoutY="99.0" text="Language:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="cmbBoxLanguage" focusColor="DODGERBLUE" layoutX="300.0" layoutY="94.0" prefHeight="31.0" prefWidth="250.0" />
+                              <Label id="S17" layoutX="128.0" layoutY="54.0" text="Question Set:">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="20.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="cmbBoxQuestionSet" focusColor="DODGERBLUE" layoutX="300.0" layoutY="50.0" prefHeight="31.0" prefWidth="250.0" />
+                           </children>
+                        </Pane>
                      </children>
-                  </Pane>
-                  <Pane prefHeight="177.0" prefWidth="645.0">
-                     <children>
-                        <Label id="S10" layoutX="14.0" layoutY="18.0" text="Questionaire Settings" underline="true">
-                           <font>
-                              <Font name="Berlin Sans FB" size="22.0" />
-                           </font>
-                        </Label>
-                        <Label id="S12" layoutX="60.0" layoutY="89.0" text="Note Taking Method:">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </Label>
-                        <JFXRadioButton id="S13" fx:id="radBtnText" layoutX="300.0" layoutY="89.0" selected="true" style="-jfx-selected-color: #00FF00;" text="Text Area">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                           <toggleGroup>
-                              <ToggleGroup fx:id="noteMethodGroup" />
-                           </toggleGroup>
-                        </JFXRadioButton>
-                        <JFXRadioButton id="S14" fx:id="radBtnAudio" layoutX="437.0" layoutY="89.0" style="-jfx-selected-color: #00FF00;" text="Audio Recording" toggleGroup="$noteMethodGroup">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </JFXRadioButton>
-                        <Label id="S15" layoutX="27.0" layoutY="124.0" text="Audio File Save Location:">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </Label>
-                        <JFXTextField fx:id="txtAudioFileLocation" focusColor="DODGERBLUE" layoutX="298.0" layoutY="117.0" prefHeight="36.0" prefWidth="311.0" unFocusColor="BLACK">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </JFXTextField>
-                        <Label id="S11" layoutX="148.0" layoutY="54.0" text="Language:">
-                           <font>
-                              <Font name="Berlin Sans FB" size="20.0" />
-                           </font>
-                        </Label>
-                        <JFXComboBox fx:id="cmbBoxLanguage" focusColor="DODGERBLUE" layoutX="300.0" layoutY="42.0" prefHeight="31.0" prefWidth="249.0" />
-                     </children>
-                  </Pane>
-               </children>
-            </VBox>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </children>
       </StackPane>
       <VBox alignment="CENTER" fillWidth="false" layoutX="122.0" layoutY="598.0" prefHeight="56.0" prefWidth="516.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="122.0" AnchorPane.rightAnchor="122.0">
