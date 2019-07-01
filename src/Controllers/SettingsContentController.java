@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -44,8 +45,10 @@ public class SettingsContentController implements Initializable
     @FXML private ImageView imgViewStatusIcon;
     @FXML private Button btnTestConnection;
     
-    @FXML private JFXComboBox cmbBoxQuestionSet;
     @FXML private JFXComboBox cmbBoxLanguage;
+    
+    @FXML private JFXComboBox cmbBoxQuestionSet;
+    @FXML private JFXComboBox cmbBoxSetLanguage;
     @FXML private ToggleGroup noteMethodGroup;
     @FXML private JFXRadioButton radBtnText;
     @FXML private JFXRadioButton radBtnAudio;
@@ -142,6 +145,9 @@ public class SettingsContentController implements Initializable
             String noteMethod = radBtnText.isSelected() ? "TextArea" : "Audio";
             String language = (String)cmbBoxLanguage.getValue();
             
+            String questionSet = (String)cmbBoxQuestionSet.getValue();
+            String setLanguage = (String)cmbBoxSetLanguage.getValue();
+            
             if(!language.equals(SettingsManager.getLanguage()))
                 resetLanguage = true;
             
@@ -150,9 +156,11 @@ public class SettingsContentController implements Initializable
             
             SettingsManager.setUsesNaoRobot(usesNAO);
             SettingsManager.setRobotConnection(url);
-            SettingsManager.setRobotVolume(50);
+            SettingsManager.setQuestionSet(questionSet);
+            SettingsManager.setSetLanguage(setLanguage);
             SettingsManager.setNoteMethod(noteMethod);
             SettingsManager.setLanguage(language);
+            
             SettingsManager.saveCurrentSettings();
             
             PopupText popup = LanguageManager.getPopupText(28);
@@ -176,6 +184,10 @@ public class SettingsContentController implements Initializable
         cmbBoxQuestionSet.getItems().addAll(QuestionaireManager.getQuestionSets());
         cmbBoxQuestionSet.getSelectionModel().select(SettingsManager.getQuestionSet());
         cmbBoxQuestionSet.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
+        
+        cmbBoxSetLanguage.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
+        updateSetLanguageBox(SettingsManager.getQuestionSet());
+        cmbBoxSetLanguage.getSelectionModel().select(SettingsManager.getSetLanguage());
         
         boolean usesNAO = SettingsManager.getUsesNaoRobot();
         String robotURL = SettingsManager.getRobotConnection();
@@ -219,8 +231,8 @@ public class SettingsContentController implements Initializable
         else
             txtAudioFileLocation.setText(audioPath);
         
-        //Create radio button listeners for UsesNao and UsesAudio
-        createRadioButtonListeners();
+        //Create input listeners for UsesNao, UsesAudio and Question Set ComboBox 
+        createFormInputListeners();
     }
     
     private void setConnectedImage(boolean connected)
@@ -253,7 +265,7 @@ public class SettingsContentController implements Initializable
         btnTestConnection.setDisable(disable);
     }
     
-    private void createRadioButtonListeners()
+    private void createFormInputListeners()
     {
         //Add listener to NoteToggleGroup to enable/disable the file path text field 
         noteMethodGroup.selectedToggleProperty().addListener(
@@ -280,6 +292,26 @@ public class SettingsContentController implements Initializable
                         setNAOControls(true);
                 } 
             });
+        
+        
+        //If combobox value changed reset the question set language items.
+        cmbBoxQuestionSet.valueProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue ov, String oldSet, String newSet) 
+            {
+                if(newSet != null)
+                    updateSetLanguageBox(newSet);
+            }    
+        });
+    }
+    
+    private void updateSetLanguageBox(String setName)
+    {
+        DatabaseManager dbManager = new DatabaseManager();
+        if(dbManager.connect())
+        {
+            cmbBoxSetLanguage.getItems().setAll(dbManager.getQuestionSetLanguages(setName));
+            dbManager.disconnect();
+        }
     }
     
     private void resetFormLanguage(String language)

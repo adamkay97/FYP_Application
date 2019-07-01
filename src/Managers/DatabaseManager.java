@@ -46,20 +46,18 @@ public class DatabaseManager
     public void loadQuestionList(String diagnosisName)
     {
         HashMap<Integer, Question> questionMap = new HashMap<>();
-        String language = LanguageManager.getLanguage();
+        String language = SettingsManager.getSetLanguage();
         
-        String query = "SELECT * FROM QuestionList WHERE DiagnosisName = ?";
+        String query = String.format("SELECT * FROM `%s`", diagnosisName);
         
         //Loads all the questions in to the questionMap so it can be used 
         //in the questionaire form for the specific diagnosis.
-        try(PreparedStatement pstmt = conn.prepareStatement(query))
-        {    
-            pstmt.setString(1, diagnosisName);
-            ResultSet results = pstmt.executeQuery();
-            
+        try(Statement stmt = conn.createStatement(); 
+                ResultSet results = stmt.executeQuery(query))
+        {   
             while(results.next())
             {
-                int qNumber = results.getInt("QuestionNumber");
+                int qNumber = results.getInt("QuestionID");
                 String text = results.getString("QuestionText-"+language);
                 String instruction = results.getString("QuestionInstruction-"+language);
                 Question q = new Question(qNumber, text, instruction);
@@ -129,14 +127,14 @@ public class DatabaseManager
     {
         ArrayList<String> questionSetList = new ArrayList<>();
         
-        String query = "SELECT DISTINCT DiagnosisName FROM QuestionList";
+        String query = "SELECT * FROM QuestionSets";
         
         try(Statement stmt = conn.createStatement(); 
                 ResultSet results = stmt.executeQuery(query)) 
         {    
             while(results.next())
             {
-                String name = results.getString("DiagnosisName");
+                String name = results.getString("SetName");
                 questionSetList.add(name);
             }
             QuestionaireManager.setQuestionSets(questionSetList);
@@ -361,11 +359,12 @@ public class DatabaseManager
     {
         ArrayList<ReviewData> reviewDataList = new ArrayList<>();
         String language = LanguageManager.getLanguage();
+        String qSet = SettingsManager.getQuestionSet();
         
-        String query = "SELECT dr.QuestionID, ql.\"QuestionText-"+ language +"\", dr.QuestionAnswer, "
+        String query = "SELECT dr.QuestionID, ql.`QuestionText-"+ language +"`, dr.QuestionAnswer, "
                      + "dr.QuestionNotes, dr.FollowUpResult, dr.FollowUpAnswers "
                      + "FROM DiagnosisReviewData dr "
-                     + "JOIN QuestionList ql ON dr.QuestionID = ql.QuestionID "
+                     + "JOIN `" + qSet + "` ql ON dr.QuestionID = ql.QuestionID "
                      + "WHERE dr.ChildID = ? AND dr.UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query)) 
@@ -412,11 +411,12 @@ public class DatabaseManager
                 int robotVolume = results.getInt("RobotVolume");
                 String noteMethod = results.getString("NoteMethod");
                 String audioPath = results.getString("AudioFileLocation");
-                String language = results.getString("Language");
+                String language = results.getString("FormLanguage");
                 String questionSet = results.getString("QuestionSet"); 
+                String setLanguage = results.getString("QuestionSetLanguage");
                 
                 SettingsManager.initialiseSettings(usesNao, robotURL, robotVolume, questionSet, 
-                                                    language, noteMethod, audioPath);
+                                                    setLanguage, language, noteMethod, audioPath);
             }
         }
         catch(SQLException ex)
@@ -596,10 +596,10 @@ public class DatabaseManager
     }
     
     public void updateUserSettings(int userId, String usesNao, String url, int volume, 
-            String questionSet, String language, String noteMethod, String audioPath)
+            String questionSet, String setLanguage, String language, String noteMethod, String audioPath)
     {
         String query = "UPDATE ApplicationSettings SET UsesNaoRobot = ?, RobotConnectionURL = ?, RobotVolume = ?, "
-                     + "NoteMethod = ?, AudioFileLocation = ?, Language = ?, QuestionSet = ? "
+                     + "NoteMethod = ?, AudioFileLocation = ?, FormLanguage = ?, QuestionSet = ?, QuestionSetLanguage = ? "
                      + "WHERE UserID = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
@@ -611,7 +611,8 @@ public class DatabaseManager
             pstmt.setString(5, audioPath);
             pstmt.setString(6, language);
             pstmt.setString(7, questionSet);
-            pstmt.setInt(8, userId);
+            pstmt.setString(8, setLanguage);
+            pstmt.setInt(9, userId);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -646,6 +647,33 @@ public class DatabaseManager
             System.out.println("Error when getting the diagnosis result information from the db - " + ex.getMessage());
         }
         return result;
+    }
+    
+    public ArrayList<String> getQuestionSetLanguages(String setName)
+    {
+         ArrayList<String> setLanguages = new ArrayList<>();
+        
+        String query = "SELECT s.SetName, l.Language FROM QuestionSetLanguages sl " +
+                       "JOIN QuestionSets s on sl.QuestionSetID = s.QuestionSetID " +
+                       "JOIN QuestionLanguages l on sl.QuestionLanguageID = l.QuestionLanguageID " +
+                       "WHERE s.SetName = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setString(1, setName);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                String language = results.getString("Language");
+                setLanguages.add(language);
+            }
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when getting question set languages from the db - " + ex.getMessage());
+        }
+        return setLanguages;
     }
     
     public String getResultInfo(int riskId, int stage)

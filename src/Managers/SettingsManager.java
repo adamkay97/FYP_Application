@@ -8,6 +8,7 @@ public class SettingsManager
     private static String robotConnectionURL;
     private static int robotVolume;
     private static String questionSet;
+    private static String questionSetLanguage;
     private static String language;
     private static String noteMethod;
     private static String audioFileLocation;
@@ -18,17 +19,19 @@ public class SettingsManager
      * @param url URL of the robot for connection
      * @param volume Volume of the robot
      * @param qSet The current set of questions to be used for diagnosis
+     * @param qSetLang The language for the set of questions to be used for diagnosis
      * @param lang Language of the application
      * @param method The way notes are taken 
      * @param audioPath The path for which the audio files will be saved 
      */
     public static void initialiseSettings(String usesNao, String url, int volume, 
-        String qSet, String lang, String method, String audioPath)
+        String qSet, String qSetLang, String lang, String method, String audioPath)
     {
         usesNaoInteraction = usesNao.equals("YES");
         robotConnectionURL = url;
         robotVolume = volume;
         questionSet = qSet;
+        questionSetLanguage = qSetLang;
         language = lang;
         noteMethod = method;
         audioFileLocation = audioPath;
@@ -49,7 +52,7 @@ public class SettingsManager
             int userId = StageManager.getCurrentUser().getUserId();
             String usesNao = usesNaoInteraction ? "YES" : "NO";
             dbManager.updateUserSettings(userId, usesNao, robotConnectionURL, robotVolume, 
-                                            questionSet, language, noteMethod, audioFileLocation);
+                                            questionSet, questionSetLanguage, language, noteMethod, audioFileLocation);
             LanguageManager.setLanguage(language);
             
             dbManager.disconnect();
@@ -82,6 +85,7 @@ public class SettingsManager
     public static String getRobotConnection() { return robotConnectionURL; }
     public static int getRobotVolume() { return robotVolume; }
     public static String getQuestionSet() { return questionSet; }
+    public static String getSetLanguage() { return questionSetLanguage; }
     public static String getLanguage() { return language; }
     public static String getNoteMethod() { return noteMethod; }
     public static String getAudioFileLocation() { return audioFileLocation; }
@@ -90,6 +94,7 @@ public class SettingsManager
     public static void setRobotConnection(String url) { robotConnectionURL = url; }
     public static void setRobotVolume(int volume) { robotVolume = volume; }
     public static void setQuestionSet(String qSet) { questionSet = qSet; }
+    public static void setSetLanguage(String lang) { questionSetLanguage = lang; }
     public static void setLanguage(String lang) { language = lang; }
     public static void setNoteMethod(String method) { noteMethod = method; }
     public static void setAudioFileLocation(String path) { audioFileLocation = path; }

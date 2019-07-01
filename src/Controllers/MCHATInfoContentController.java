@@ -2,7 +2,7 @@ package Controllers;
 
 import Managers.DatabaseManager;
 import Classes.FormTextLoader;
-import Managers.LanguageManager;
+import Managers.SettingsManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class MCHATInfoContentController implements Initializable
         
         if(dbManager.connect())
         {
-            mchatInfo = dbManager.loadInformationData("MCHAT");
+            mchatInfo = dbManager.loadInformationData(SettingsManager.getQuestionSet());
             dbManager.disconnect();
         }
         textLoader.setAllVboxInformation(mchatInfo);
