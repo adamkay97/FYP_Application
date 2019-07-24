@@ -22,12 +22,12 @@ import java.util.List;
 public class DatabaseManager 
 {
     //private final String DBCONNSTRING = "/Database/FYP_Database.db";
-    private final String DBCONNSTRING = "C:/Users/Adam/Documents/Degree/Third Year/Final Project/Application/FYP_Database.db";
+    //private final String DBCONNSTRING = "C:/Users/Adam/Documents/Degree/Third Year/Final Project/Application/FYP_Database.db";
     private Connection conn;
     
     public boolean connect() 
     {
-        //String DBCONNSTRING = SettingsManager.getDBConnString();
+        String DBCONNSTRING = SettingsManager.getDBConnString();
         
         //Connects to SQLite database stored in the root of the application
         conn = null;
