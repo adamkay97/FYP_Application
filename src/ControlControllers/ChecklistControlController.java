@@ -10,19 +10,19 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 public class ChecklistControlController implements Initializable 
 {
-    @FXML private AnchorPane rootPane;
+    @FXML private VBox vboxHolder;
+    @FXML private StackPane stkPaneHolder;
     @FXML private Label lblChecklistText;
     @FXML private VBox vboxCheckExamples;
     
@@ -43,6 +43,8 @@ public class ChecklistControlController implements Initializable
         
         passFailList = new ArrayList<>();
         radBtnList = new ArrayList<>();
+        
+        stkPaneHolder.prefHeightProperty().bind(vboxHolder.heightProperty());
     }    
     
     @FXML void btnContinue_Action(ActionEvent event) 

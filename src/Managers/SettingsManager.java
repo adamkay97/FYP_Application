@@ -13,6 +13,8 @@ public class SettingsManager
     private static String noteMethod;
     private static String audioFileLocation;
     
+    private static String DBConnString;
+    
     /**
      * Initialise the SettingsManagers static variables when loading them from the database
      * @param usesNao Whether the interaction with the robot is actually wanted
@@ -98,4 +100,7 @@ public class SettingsManager
     public static void setLanguage(String lang) { language = lang; }
     public static void setNoteMethod(String method) { noteMethod = method; }
     public static void setAudioFileLocation(String path) { audioFileLocation = path; }
+    
+    public static String getDBConnString() { return DBConnString; }
+    public static void setDBConnString(String conn) { DBConnString = conn; }
 }

@@ -27,6 +27,8 @@ public class DatabaseManager
     
     public boolean connect() 
     {
+        //String DBCONNSTRING = SettingsManager.getDBConnString();
+        
         //Connects to SQLite database stored in the root of the application
         conn = null;
         try 
@@ -404,7 +406,6 @@ public class DatabaseManager
             ResultSet results = pstmt.executeQuery();
             
             while(results.next())
-                
             {
                 String usesNao = results.getString("UsesNaoRobot");
                 String robotURL = results.getString("RobotConnectionURL");

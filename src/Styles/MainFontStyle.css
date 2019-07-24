@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Berlin Sans FB';
+    src: url('..\Fonts\BerlinSansFB.ttf');
+}
+
+.text {
+    -fx-font-family: "Berlin Sans FB";
+}

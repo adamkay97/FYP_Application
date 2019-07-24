@@ -9,20 +9,28 @@
 
 <AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="650.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ControlControllers.ExampleControlController">
    <children>
-      <Label fx:id="lblQuestionText" layoutX="25.0" layoutY="14.0" prefHeight="93.0" prefWidth="610.0" text="QuestionText" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="14.0">
-         <font>
-            <Font name="Berlin Sans FB" size="22.0" />
-         </font>
-      </Label>
-      <Button id="STE2" fx:id="btnContinue" layoutX="257.0" layoutY="366.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="55.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="250.0">
-         <font>
-            <Font name="Arial" size="24.0" />
-         </font>
-      </Button>
-      <TextArea id="STE1" fx:id="txtExample" layoutX="25.0" layoutY="153.0" prefHeight="161.0" prefWidth="609.0" promptText="Example here..." wrapText="true" AnchorPane.leftAnchor="25.0" AnchorPane.rightAnchor="25.0">
-         <font>
-            <Font name="Berlin Sans FB" size="20.0" />
-         </font>
-      </TextArea>
+      <VBox alignment="CENTER" fillWidth="false" prefHeight="485.0" prefWidth="632.0" spacing="20.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <Label fx:id="lblQuestionText" prefHeight="93.0" prefWidth="578.0" text="QuestionText" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="22.0" />
+               </font>
+            </Label>
+            <TextArea id="STE1" fx:id="txtExample" prefHeight="199.0" prefWidth="581.0" promptText="Example here..." wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font>
+            </TextArea>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="93.0" prefWidth="266.0">
+               <children>
+                  <Button id="STE2" fx:id="btnContinue" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="55.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE">
+                     <font>
+                        <Font name="Arial" size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

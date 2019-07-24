@@ -15,22 +15,34 @@
             <Font name="Berlin Sans FB" size="22.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" layoutX="31.0" layoutY="59.0" pannable="true" prefHeight="356.0" prefWidth="600.0" stylesheets="@../Styles/ScrollPaneStyles.css" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="31.0" AnchorPane.rightAnchor="29.0">
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-         <content>
-            <AnchorPane prefHeight="343.0" prefWidth="568.0">
+      <VBox fx:id="vboxHolder" alignment="CENTER" layoutX="28.0" layoutY="59.0" prefHeight="356.0" prefWidth="600.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="28.0" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="59.0">
+         <children>
+            <StackPane fx:id="stkPaneHolder" prefHeight="356.0" prefWidth="600.0">
                <children>
-                  <VBox fx:id="vboxCheckExamples" alignment="CENTER" maxWidth="640.0" prefHeight="344.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <ScrollPane fx:id="scrlPaneInstr" fitToWidth="true" hbarPolicy="NEVER" pannable="true" prefHeight="356.0" prefWidth="600.0" stylesheets="@../Styles/ScrollPaneStyles.css">
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                     <content>
+                        <AnchorPane prefHeight="343.0" prefWidth="568.0">
+                           <children>
+                              <VBox fx:id="vboxCheckExamples" alignment="CENTER" maxWidth="640.0" prefHeight="344.0" prefWidth="578.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
                </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-      <Button id="STC1" fx:id="btnContinue" layoutX="257.0" layoutY="424.0" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="259.0">
-         <font>
-            <Font name="Arial" size="24.0" />
-         </font>
-      </Button>
+            </StackPane>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" fillWidth="false" layoutX="125.0" layoutY="419.0" prefHeight="67.0" prefWidth="400.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0">
+         <children>
+            <Button id="STC1" fx:id="btnContinue" mnemonicParsing="false" onAction="#btnContinue_Action" prefHeight="51.0" prefWidth="137.0" stylesheets="@../Styles/SmallBtnStyles.css" text="Continue" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

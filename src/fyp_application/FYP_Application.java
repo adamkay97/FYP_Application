@@ -5,6 +5,10 @@ import Managers.StageManager;
 import Managers.DatabaseManager;
 import Managers.LanguageManager;
 import Managers.SettingsManager;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -19,6 +23,8 @@ public class FYP_Application extends Application
     @Override
     public void start(Stage stage) throws Exception 
     {
+        setLocalisedDBPath();
+        
         rememberedUser = false;
         LoadFromDatabase();
         
@@ -27,6 +33,28 @@ public class FYP_Application extends Application
         else
             StageManager.loadForm(StageManager.LOGIN, stage);
         
+        
+    }
+    
+    private void setLocalisedDBPath()
+    {
+        try
+        {
+            //Get directory of current FYP class
+            Path path = Paths.get(new File(FYP_Application.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getPath());
+            
+            //Go up two directories
+            path = path.getParent().getParent();
+            
+            //Append the Database location to the path
+            String dbPath = path.resolve("Database/DiagnosisData.db").toString();
+            
+            SettingsManager.setDBConnString(dbPath);
+        } 
+        catch (URISyntaxException ex) 
+        {
+            System.out.println("Failed when getting localised DatabasePath");
+        }
     }
     
     private void LoadFromDatabase()
@@ -50,18 +78,31 @@ public class FYP_Application extends Application
                 {
                     StageManager.setCurrentUser(user);
                     db.loadApplicationSettings(userId);
-                    LanguageManager.loadFormText();
                     
                     questionSet = SettingsManager.getQuestionSet();
                     rememberedUser = true;
                 }
             }
+            else
+                setDefaultSettings();
             
+            LanguageManager.loadFormText();
             db.loadQuestionList(questionSet);
             db.loadFollowUpList();
             db.loadLanguageList();
             db.loadQuestionSetList();
             db.disconnect();
         }
-    }  
+    }
+    
+    /**
+     * If there is no user remembered set the settings to 
+     * the default values.
+     */
+    private void setDefaultSettings()
+    {
+        LanguageManager.setLanguage("English");
+        SettingsManager.setQuestionSet("M-CHAT-R/F");
+        SettingsManager.setSetLanguage("English");
+    }
 }

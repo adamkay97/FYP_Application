@@ -11,7 +11,9 @@ import Managers.SettingsManager;
 import com.jfoenix.controls.JFXCheckBox;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +41,7 @@ public class InstructionsContentController implements Initializable
         }
         textLoader.setTextVboxInformation(instrInfo);
         
-        addReadCheckbox();
+        Platform.runLater(() -> {addReadCheckbox();});
     }    
     
     @FXML private void btnContinue_Action(ActionEvent event)
@@ -71,13 +73,16 @@ public class InstructionsContentController implements Initializable
     
     private void addReadCheckbox()
     {
+        HashMap<String, String> formText = LanguageManager.getSpecifiedText("Instructions");
+        
         //Once all of the text has been added to the VBox add a check box at the bottom
         //that must be selected before the user can proceed to ensure they have read the instructions.
         readInstructions = new JFXCheckBox();
-        readInstructions.setId("I4");
         readInstructions.setFont(Font.font("Berlin Sans FB", FontWeight.NORMAL, 21));
         readInstructions.setTextFill(Color.GREEN);
         readInstructions.setCheckedColor(Color.GREEN);
+        readInstructions.setText(formText.get("I4"));
+        
         vboxInstructionsContent.getChildren().add(readInstructions);
     }
 }
