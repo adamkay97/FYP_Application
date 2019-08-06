@@ -169,7 +169,7 @@ public class QuestionReviewContentController implements Initializable
     {
         //Use the child object passed from the individual review page to create the child folder and add that
         //to the saved audio file location on the SettingsManager
-        String childFolder = String.format("%d-%s", currentChild.getChildId(), currentChild.getChildName());
+        String childFolder = String.format("\\%d-%s", currentChild.getChildId(), currentChild.getChildName());
         String audioPath = SettingsManager.getAudioFileLocation() + childFolder;
         File audioFile = new File(String.format("%s\\Question%d.wav", audioPath, reviewData.getQuestionNumber()));
         

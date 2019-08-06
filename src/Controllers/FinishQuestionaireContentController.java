@@ -1,15 +1,11 @@
 package Controllers;
 
-import Enums.ButtonTypeEnum;
-import Managers.DatabaseManager;
-import Managers.LanguageManager;
 import Managers.QuestionaireManager;
 import Managers.RobotManager;
 import Managers.SettingsManager;
 import Managers.StageManager;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +32,6 @@ public class FinishQuestionaireContentController implements Initializable
     public void btnContinue_Action(ActionEvent event)
     {
        Thread finishQuestionaire;
-       boolean save = false;
         
         if(!QuestionaireManager.getFollowUpCompleted())
         {
@@ -47,6 +42,8 @@ public class FinishQuestionaireContentController implements Initializable
             }
             else
             {   
+                StageManager.setInProgress(false);
+                
                 //Run saving of questionaire score in seperate thread so doesnt hold up the
                 //rest of the application
                 finishQuestionaire = new Thread(() -> {
@@ -56,11 +53,12 @@ public class FinishQuestionaireContentController implements Initializable
                 finishQuestionaire.start();
                 
                 StageManager.loadContentScene(StageManager.INSTRUCTIONS);
-                StageManager.setInProgress(false);
             }
         }
         else
         {
+            StageManager.setInProgress(false);
+            
             //Run saving of second stage results in a seperate thread 
             //to stop the form loading from being held up
             finishQuestionaire = new Thread(() -> {
@@ -70,7 +68,7 @@ public class FinishQuestionaireContentController implements Initializable
             finishQuestionaire.start();
             
             StageManager.loadContentScene(StageManager.INSTRUCTIONS);
-            StageManager.setInProgress(false);
+            
         }
     }
     
@@ -79,8 +77,9 @@ public class FinishQuestionaireContentController implements Initializable
         int atRiskQuestions = QuestionaireManager.getQuestionaireScore();
         String atRiskText;
         
+        lblHeader.setText(SettingsManager.getQuestionSet());
+        
         //Set default IDs for elements with changeable text 
-        lblHeader.setId("F11");
         lblScoreText.setId("F31");
         btnContinue.setId("F51");
         
@@ -95,22 +94,30 @@ public class FinishQuestionaireContentController implements Initializable
                 robotThread.start();
             }
             
-            lblScore.setText(Integer.toString(atRiskQuestions) + " / 20");
+            String riskQs = Integer.toString(atRiskQuestions);
+            String numOfQs = Integer.toString(QuestionaireManager.getCurrentQuestionSet().getNumberOfQuestions());
+            lblScore.setText(riskQs + " / " + numOfQs);
 
             atRiskText = QuestionaireManager.getResultInfo(1);
             lblRiskText.setText(atRiskText);
-
-            if(atRiskQuestions < 3 || atRiskQuestions > 7)
+            
+            if(SettingsManager.getQuestionSet().equals("M-CHAT-R/F"))
             {
-                btnContinue.setId("F52");
-                followUp = false;
+                if(atRiskQuestions < 3 || atRiskQuestions > 7)
+                {
+                    btnContinue.setId("F52");
+                    followUp = false;
+                }
+                else
+                    followUp = true;
             }
             else
-                followUp = true;
+                followUp = false;
+            
         }
         else
         {            
-            lblHeader.setId("F12");
+            //lblHeader.setId("F12");
             lblScoreText.setId("F32");
             btnContinue.setId("F52");
             

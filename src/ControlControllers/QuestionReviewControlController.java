@@ -1,10 +1,13 @@
 package ControlControllers;
 
 import Classes.Child;
+import Classes.QuestionSet;
 import Classes.ReviewData;
 import Managers.StageManager;
 import Controllers.QuestionReviewContentController;
+import Enums.QuestionAnswer;
 import Managers.LanguageManager;
+import Managers.QuestionaireManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
@@ -53,6 +56,7 @@ public class QuestionReviewControlController implements Initializable
     {
         HashMap<String, String> controlText = LanguageManager.getSpecifiedText("QuestionReviewControl");
         
+        QuestionSet questionSet = QuestionaireManager.getSpecificQuestionSet(child.getDiagnosisResult().getQuestionSetName());
         int qId = data.getQuestionNumber();
         String answer = data.getQuestionAnswer();
         
@@ -60,10 +64,11 @@ public class QuestionReviewControlController implements Initializable
         lblQuestionAnswer.setText(controlText.get("QRC1") + answer);
         
         String risk;
+        QuestionAnswer atRiskResponse = questionSet.getQuestion(qId).getAtRiskResponse();
         
-        if((qId == 2 || qId == 5 || qId == 12) && answer.equals("Yes"))
+        if(atRiskResponse == QuestionAnswer.YES && answer.equals("Yes"))
             risk = "Positive";
-        else if((qId != 2 && qId != 5 && qId != 12) && answer.equals("No")) 
+        else if(atRiskResponse == QuestionAnswer.NO && answer.equals("No")) 
             risk = "Positive";
         else
             risk = "Negative";
@@ -74,5 +79,4 @@ public class QuestionReviewControlController implements Initializable
         reviewData = data;
         currentChild = child;
     }
-    
 }

@@ -54,8 +54,6 @@ public class SettingsContentController implements Initializable
     @FXML private JFXRadioButton radBtnAudio;
     @FXML private JFXTextField txtAudioFileLocation;
     
-    private boolean resetLanguage = false;
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
@@ -122,6 +120,9 @@ public class SettingsContentController implements Initializable
     private void saveSettingsProcess()
     {
         boolean save = true;
+        boolean resetLanguage = false;
+        boolean resetQuestionSet = false;
+        boolean resetSetLanguage = false;
         boolean usesNAO = radBtnNaoYes.isSelected();
         
         if(!RobotManager.getRobotConnected() && usesNAO)
@@ -148,8 +149,16 @@ public class SettingsContentController implements Initializable
             String questionSet = (String)cmbBoxQuestionSet.getValue();
             String setLanguage = (String)cmbBoxSetLanguage.getValue();
             
+            //Check if the new settings are different from the old so that 
+            //the static fields can be set to the new settings
             if(!language.equals(SettingsManager.getLanguage()))
                 resetLanguage = true;
+            
+            if(!questionSet.equals(SettingsManager.getQuestionSet()))
+                resetQuestionSet = true;
+            
+            if(!setLanguage.equals(SettingsManager.getSetLanguage()))
+                resetSetLanguage = true;
             
             if(noteMethod.equals("Audio"))
                 SettingsManager.setAudioFileLocation(txtAudioFileLocation.getText());
@@ -168,6 +177,9 @@ public class SettingsContentController implements Initializable
             
             if(resetLanguage)
                 resetFormLanguage(language);
+            
+            if(resetQuestionSet || resetSetLanguage)
+                resetQuestionSet(resetQuestionSet, resetSetLanguage, questionSet, setLanguage);
         }
     }
     
@@ -181,7 +193,7 @@ public class SettingsContentController implements Initializable
         cmbBoxLanguage.getSelectionModel().select(SettingsManager.getLanguage());
         cmbBoxLanguage.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
         
-        cmbBoxQuestionSet.getItems().addAll(QuestionaireManager.getQuestionSets());
+        cmbBoxQuestionSet.getItems().addAll(QuestionaireManager.getQuestionSetNames());
         cmbBoxQuestionSet.getSelectionModel().select(SettingsManager.getQuestionSet());
         cmbBoxQuestionSet.setStyle("-fx-font: 20px \"Berlin Sans FB\";");
         
@@ -306,12 +318,8 @@ public class SettingsContentController implements Initializable
     
     private void updateSetLanguageBox(String setName)
     {
-        DatabaseManager dbManager = new DatabaseManager();
-        if(dbManager.connect())
-        {
-            cmbBoxSetLanguage.getItems().setAll(dbManager.getQuestionSetLanguages(setName));
-            dbManager.disconnect();
-        }
+        cmbBoxSetLanguage.getItems().setAll(QuestionaireManager.getActiveSetLanguages(setName));
+        cmbBoxSetLanguage.getSelectionModel().select(0);
     }
     
     private void resetFormLanguage(String language)
@@ -322,13 +330,27 @@ public class SettingsContentController implements Initializable
         
         LanguageManager.setFormText("Main", StageManager.getRootScene());
         LanguageManager.setFormText("Settings", StageManager.getRootScene());
+    }
+    
+    private void resetQuestionSet(boolean resetSet, boolean resetLanguage, String setName, String setLanguage)
+    {
+        //If the set is changed set the current set and its language to the newly saved settings
+        if(resetSet)
+            QuestionaireManager.setCurrentQuestionSet(setName, setLanguage);
         
-        //Reload the question lists with the new language
-        DatabaseManager dbManager = new DatabaseManager();
-        if(dbManager.connect())
+        //If just the set language is changed reset the current sets language
+        if(resetLanguage && !resetSet)
+            QuestionaireManager.getCurrentQuestionSet().setCurrentLanguage(setLanguage);
+        
+        //Only reset follow up if the current set is the M-CHAT-R/F
+        if(setName.equals("M-CHAT-R/F"))
         {
-            dbManager.loadQuestionList(SettingsManager.getQuestionSet());
-            dbManager.loadFollowUpList();
+            DatabaseManager dbManager = new DatabaseManager();
+            if(dbManager.connect())
+            {
+                dbManager.loadFollowUpList();
+                dbManager.disconnect();
+            }
         }
     }
     

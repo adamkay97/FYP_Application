@@ -20,7 +20,7 @@
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
-            <VBox alignment="CENTER" fillWidth="false" layoutX="10.0" layoutY="56.0" prefHeight="75.0" prefWidth="740.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <VBox fx:id="vboxMainSet" alignment="CENTER" fillWidth="false" layoutX="10.0" layoutY="56.0" prefHeight="75.0" prefWidth="740.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
                <children>
                   <Pane prefHeight="75.0" prefWidth="677.0">
                      <children>
@@ -73,6 +73,24 @@
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>
             </Label>
+            <VBox fx:id="vboxOtherSet" alignment="CENTER" fillWidth="false" layoutX="10.0" layoutY="56.0" prefHeight="75.0" prefWidth="740.0" visible="false" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+               <children>
+                  <Pane prefHeight="75.0" prefWidth="677.0">
+                     <children>
+                        <Label id="IR2" fx:id="lblOtherScore" alignment="CENTER" layoutX="89.0" layoutY="9.0" prefHeight="27.0" prefWidth="500.0" text="#setName# Score =  #score#" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label id="IR3" fx:id="lblOtherRisk" alignment="CENTER" layoutX="89.0" layoutY="41.0" prefHeight="27.0" prefWidth="500.0" text="#setName# Risk =  #risk#" textFill="WHITE" wrapText="true">
+                           <font>
+                              <Font name="Berlin Sans FB" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="29.0" layoutY="156.0" prefHeight="432.0" prefWidth="702.0" style="-fx-border-color: #696969; -fx-border-radius: 10px; -fx-border-width: 5px;" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="29.0" AnchorPane.rightAnchor="29.0" AnchorPane.topAnchor="156.0">

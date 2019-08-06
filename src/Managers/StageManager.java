@@ -283,7 +283,7 @@ public class StageManager
         
         return formName;
     }
-        
+    
     /**
      * Sets the mainFormController variable on the StageManager
      * for use when setting the content pane nested in the main form

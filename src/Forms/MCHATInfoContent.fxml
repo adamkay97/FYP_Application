@@ -12,7 +12,12 @@
    <children>
       <Pane layoutX="10.0" layoutY="10.0" prefHeight="140.0" prefWidth="760.0" style="-fx-background-color: #1E90FF;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label id="MI1" layoutX="30.0" layoutY="60.0" text="Information - M-CHAT-R/F" textFill="WHITE" wrapText="true">
+            <Label id="MI1" layoutX="30.0" layoutY="60.0" text="Information - " textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Berlin Sans FB" size="36.0" />
+               </font>
+            </Label>
+            <Label id="MI1" fx:id="lblSetName" layoutX="238.0" layoutY="60.0" prefHeight="41.0" prefWidth="434.0" text="#setName" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="36.0" />
                </font>

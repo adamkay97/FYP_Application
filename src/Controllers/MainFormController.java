@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -44,6 +45,7 @@ public class MainFormController implements Initializable
     @FXML private JFXButton btnMenuSettings;
     @FXML private JFXHamburger btnMenuCollapse;
     @FXML private JFXDrawer menuDrawer;
+    @FXML private Label lblMainSetName;
     
     private final int MENU_SIZE = 288;
     private HamburgerBackArrowBasicTransition collapseTransition;

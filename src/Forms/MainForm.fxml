@@ -28,7 +28,7 @@
                      <children>
                         <Pane fx:id="pnlTitle" prefHeight="134.0" prefWidth="345.0">
                            <children>
-                              <Label id="M1" layoutX="12.0" layoutY="23.0" text="Digital M-CHAT-R/F" textFill="WHITE" wrapText="true">
+                              <Label id="M1" layoutX="12.0" layoutY="23.0" prefHeight="42.0" prefWidth="328.0" text="Digital M-CHAT-R/F" textFill="WHITE" wrapText="true">
                                  <font>
                                     <Font name="Berlin Sans FB" size="38.0" />
                                  </font>

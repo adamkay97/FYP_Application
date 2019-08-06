@@ -4,6 +4,7 @@ import Classes.User;
 import Managers.StageManager;
 import Managers.DatabaseManager;
 import Managers.LanguageManager;
+import Managers.QuestionaireManager;
 import Managers.SettingsManager;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -61,6 +62,7 @@ public class FYP_Application extends Application
     {
         DatabaseManager db = new DatabaseManager();
         String questionSet = "M-CHAT-R/F";
+        String setLanguage = "English";
         
         //Connect to the SQLite database and load the neccessary data into
         //static variables on the DatabaseManager class
@@ -80,6 +82,7 @@ public class FYP_Application extends Application
                     db.loadApplicationSettings(userId);
                     
                     questionSet = SettingsManager.getQuestionSet();
+                    setLanguage = SettingsManager.getSetLanguage();
                     rememberedUser = true;
                 }
             }
@@ -87,11 +90,13 @@ public class FYP_Application extends Application
                 setDefaultSettings();
             
             LanguageManager.loadFormText();
-            db.loadQuestionList(questionSet);
+            db.loadQuestionSetNames();
+            db.loadQuestionSetsMap();
             db.loadFollowUpList();
             db.loadLanguageList();
-            db.loadQuestionSetList();
             db.disconnect();
+            
+            QuestionaireManager.setCurrentQuestionSet(questionSet, setLanguage);
         }
     }
     

@@ -21,7 +21,7 @@
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>
             </Label>
-            <Label id="SO1" layoutX="22.0" layoutY="22.0" text="M-CHAT-R Diagnosis" textFill="WHITE" wrapText="true">
+            <Label id="SO1" fx:id="lblHeader" layoutX="22.0" layoutY="22.0" prefHeight="36.0" prefWidth="437.0" text="#setName" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Berlin Sans FB" size="32.0" />
                </font>

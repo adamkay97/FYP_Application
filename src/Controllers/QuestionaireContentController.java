@@ -25,6 +25,7 @@ import javafx.scene.layout.StackPane;
 
 public class QuestionaireContentController implements Initializable 
 {
+    @FXML private Label lblHeader;
     @FXML private Label lblQuestionText;
     @FXML private Label lblQuestionHeader;
     @FXML private StackPane stkpnQuestionControl;
@@ -34,6 +35,7 @@ public class QuestionaireContentController implements Initializable
     private Parent questionAnswerControl;
     private String answerControlName;
     
+    private String setLanguage;
     private boolean usesNAORobot;
     private String partIndex;
     private int qIndex;
@@ -41,9 +43,12 @@ public class QuestionaireContentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
+        lblHeader.setText(SettingsManager.getQuestionSet());
         usesNAORobot = SettingsManager.getUsesNaoRobot();
         qIndex = 1;
         partIndex = "Part1";
+        setLanguage = QuestionaireManager.getCurrentQuestionSet().getCurrentLanguage();
+        
         String questionControlPath;
         
         try
@@ -110,15 +115,15 @@ public class QuestionaireContentController implements Initializable
     
     public void handlePlayAction() 
     {
-        final String question = "Question" + Integer.toString(qIndex);
+        String behaviourName = QuestionaireManager.getCurrentQuestion().getBehaviourName();
         
         if(RobotManager.getRobotConnected())
         {
             //Check if current question is question 3 as there 
-            //are 2 parts to question 3's behaviour
-            if(qIndex == 3)
+            //are 2 parts to question 3's behaviour (Only for the M-CHAT-R/F)
+            if(qIndex == 3 && SettingsManager.getQuestionSet().equals("M-CHAT-R/F"))
             {
-                final String qPart = question + partIndex;
+                final String qPart = behaviourName + partIndex;
                 
                 Thread robotThread = new Thread(() -> {
                     RobotManager.runBehaviour(qPart);
@@ -139,7 +144,7 @@ public class QuestionaireContentController implements Initializable
             else
             {
                 Thread robotThread = new Thread(() -> {
-                    RobotManager.runBehaviour(question);
+                    RobotManager.runBehaviour(behaviourName);
                 });
                 robotThread.start();
                 
@@ -202,7 +207,7 @@ public class QuestionaireContentController implements Initializable
     
     private void processAnswer()
     {
-        if(qIndex != 20)
+        if(qIndex != QuestionaireManager.getCurrentQuestionSet().getNumberOfQuestions())
         {
             setQuestionText(++qIndex);
             
@@ -253,11 +258,13 @@ public class QuestionaireContentController implements Initializable
         
         if(notes.equals(""))
         {
+            Question question = QuestionaireManager.getCurrentQuestion();
+            
             //Checks whether the questions answer is a negative response by
             //checking against questions 2,5,12 which have alternate negative responses
-            if(isYes && (qIndex == 2 || qIndex == 5 || qIndex == 12))
+            if(isYes && (question.getAtRiskResponse() == QuestionAnswer.YES))
                 valid = false;
-            else if (!isYes && (qIndex != 2 && qIndex != 5 && qIndex != 12))
+            else if (!isYes && (question.getAtRiskResponse() == QuestionAnswer.NO))
                 valid = false;
             else
                 valid = true;
@@ -288,11 +295,13 @@ public class QuestionaireContentController implements Initializable
         
         if(!audioSet)
         {
+            Question question = QuestionaireManager.getCurrentQuestion();
+            
             //Checks whether the questions answer is a negative response by
             //checking against questions 2,5,12 which have alternate negative responses
-            if(isYes && (qIndex == 2 || qIndex == 5 || qIndex == 12))
+            if(isYes && (question.getAtRiskResponse() == QuestionAnswer.YES))
                 valid = false;
-            else if (!isYes && (qIndex != 2 && qIndex != 5 && qIndex != 12))
+            else if (!isYes && (question.getAtRiskResponse() == QuestionAnswer.NO))
                 valid = false;
             else
                 valid = true;
@@ -317,26 +326,28 @@ public class QuestionaireContentController implements Initializable
     private void setQuestionText(int index)
     {
         Question question = QuestionaireManager.getQuestion(index);
-        lblQuestionText.setText(question.getQuestionText());
+        lblQuestionText.setText(question.getQuestionText(setLanguage));
         lblQuestionHeader.setText(index + ":");
         
         //If the intructions arent empty and the robot is being used, load the instructions popup
-        if(!question.getQuestionInstructions().equals("") && usesNAORobot)
+        if(!question.getQuestionInstructions(setLanguage).equals("") && usesNAORobot)
         {
-            if(qIndex == 6)
+            if(SettingsManager.getQuestionSet().equals("M-CHAT-R/F") && qIndex != 6)
             {
-                //Q6 do not require a picture instruction so just output the instruction to a normal popup
                 //Load in seperate thread after other form threads have finished
                 Platform.runLater(() -> {
-                    PopupText popup = LanguageManager.getPopupText(18);
-                    StageManager.loadPopupMessage(popup.getHeader(), question.getQuestionInstructions(), ButtonTypeEnum.OK);
+                    StageManager.loadPopupInstruction(question.getQuestionInstructions(setLanguage), qIndex);
                 });
             }
             else
             {
+                //Q6 of M-CHAT-R/F does not require a picture instruction so just output the instruction to a normal popup
+                //Normal popup is used for all instructions of other question sets
                 //Load in seperate thread after other form threads have finished
                 Platform.runLater(() -> {
-                    StageManager.loadPopupInstruction(question.getQuestionInstructions(), qIndex);
+                    PopupText popup = LanguageManager.getPopupText(18);
+                    StageManager.loadPopupMessage(popup.getHeader(), question.getQuestionInstructions(setLanguage), 
+                                                    ButtonTypeEnum.OK);
                 });
             }
         }

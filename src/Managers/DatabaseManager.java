@@ -7,7 +7,10 @@ import Classes.FollowUpPart;
 import Classes.FormText;
 import Classes.PopupText;
 import Classes.Question;
+import Classes.QuestionSet;
 import Classes.ReviewData;
+import Classes.ScoringAlgorithm;
+import Classes.ScoringBound;
 import Classes.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -45,10 +48,27 @@ public class DatabaseManager
         }
     }
     
-    public void loadQuestionList(String diagnosisName)
+    public void loadQuestionSetsMap()
+    {
+        ArrayList<String> questionSetNames = QuestionaireManager.getQuestionSetNames();
+        HashMap<String, QuestionSet> questionSetsMap = new HashMap<>();
+        
+        for(String setName : questionSetNames)
+        {
+            ArrayList<String> languageList = getQuestionSetLanguages(setName);
+            HashMap<Integer, Question> questionList = loadQuestionList(setName, languageList);
+            ArrayList<String> information = loadInformationData(setName);
+            ScoringAlgorithm algorithm = loadScoringAlgorithm(setName);
+            
+            questionSetsMap.put(setName, new QuestionSet(setName, questionList.size(), 
+                                            questionList, languageList, information, algorithm));
+        }
+        QuestionaireManager.setQuestionSetsMap(questionSetsMap);
+    }
+    
+    private HashMap<Integer, Question> loadQuestionList(String diagnosisName, ArrayList<String> languageList)
     {
         HashMap<Integer, Question> questionMap = new HashMap<>();
-        String language = SettingsManager.getSetLanguage();
         
         String query = String.format("SELECT * FROM `%s`", diagnosisName);
         
@@ -56,22 +76,78 @@ public class DatabaseManager
         //in the questionaire form for the specific diagnosis.
         try(Statement stmt = conn.createStatement(); 
                 ResultSet results = stmt.executeQuery(query))
-        {   
+        {
             while(results.next())
             {
-                int qNumber = results.getInt("QuestionID");
-                String text = results.getString("QuestionText-"+language);
-                String instruction = results.getString("QuestionInstruction-"+language);
-                Question q = new Question(qNumber, text, instruction);
+                HashMap<String, String> texts = new HashMap<>();
+                HashMap<String, String> instructions = new HashMap<>();
                 
+                int qNumber = results.getInt("QuestionID");
+                String qBehaviour = results.getString("BehaviourName");
+                
+                for(String language : languageList)
+                {
+                    String text = results.getString("QuestionText-"+language);
+                    texts.put(language, text);
+                    String instruction = results.getString("QuestionInstruction-"+language);
+                    instructions.put(language, instruction);
+                }
+                
+                String riskResponse = results.getString("AtRiskResponse");
+                
+                Question q = new Question(qNumber, qBehaviour, texts, instructions, riskResponse);
                 questionMap.put(qNumber, q);
             }
-            QuestionaireManager.setQuestionMap(questionMap);
+            return questionMap;
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading questions from the db - " + ex.getMessage());
+            System.out.println("Error when reading questions from the db - " + ex.getMessage());
         }
+        return null;
+    }
+    
+    public ScoringAlgorithm loadScoringAlgorithm(String questionSet)
+    {
+        ScoringAlgorithm scoring = new ScoringAlgorithm();
+        
+        String query = "SELECT * FROM ScoringAlgorithm WHERE QuestionSetID = "
+                     + "(SELECT QuestionSetID FROM QuestionSets WHERE SetName = ?)";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {    
+            pstmt.setString(1, questionSet);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+            {
+                int riskId = results.getInt("RiskLevelID");
+                
+                switch (riskId)
+                {
+                    case 1:
+                        ScoringBound lowRisk = new ScoringBound
+                            (results.getInt("LowerBound"), results.getInt("UpperBound"), riskId);
+                        scoring.setLowRisk(lowRisk);
+                        break;
+                    case 2:
+                        ScoringBound medRisk = new ScoringBound
+                            (results.getInt("LowerBound"), results.getInt("UpperBound"), riskId);
+                        scoring.setMedRisk(medRisk);
+                        break;
+                    case 3:
+                        ScoringBound highRisk = new ScoringBound
+                            (results.getInt("LowerBound"), results.getInt("UpperBound"), riskId);
+                        scoring.setHighRisk(highRisk);
+                        break;
+                }
+            }
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when reading the scoring algorithm from the db - " + ex.getMessage());
+        }
+        return scoring;
     }
     
     public void loadFollowUpList()
@@ -125,9 +201,9 @@ public class DatabaseManager
         return null;
     }
     
-    public void loadQuestionSetList()
+    public void loadQuestionSetNames()
     {
-        ArrayList<String> questionSetList = new ArrayList<>();
+        ArrayList<String> setNames = new ArrayList<>();
         
         String query = "SELECT * FROM QuestionSets";
         
@@ -137,9 +213,9 @@ public class DatabaseManager
             while(results.next())
             {
                 String name = results.getString("SetName");
-                questionSetList.add(name);
+                setNames.add(name);
             }
-            QuestionaireManager.setQuestionSets(questionSetList);
+            QuestionaireManager.setQuestionSetNames(setNames);
         }
         catch(SQLException ex)
         {
@@ -292,7 +368,7 @@ public class DatabaseManager
     {
         ArrayList<Child> childList = new ArrayList<>();
         
-        String query = "SELECT c.ChildID, c.UserID, c.Name, c.Age, c.Gender, d.StageOneScore, "
+        String query = "SELECT c.ChildID, c.UserID, c.Name, c.Age, c.Gender, d.SetName, d.StageOneScore, "
                      + "d.StageOneRisk, d.StageTwoScore, d.OverallScreening FROM Children c "
                      + "JOIN DiagnosisResults d ON c.ChildID = d.ChildID "
                      + "WHERE d.StageOneScore IS NOT NULL AND c.UserID = ?";
@@ -310,12 +386,13 @@ public class DatabaseManager
                 int age = results.getInt("Age");
                 String gender = results.getString("Gender");
                 
+                String setName = results.getString("SetName");
                 int s1Score = results.getInt("StageOneScore");
                 String s1Risk = results.getString("StageOneRisk");
                 int s2Score = results.getInt("StageTwoScore");
                 String screening = results.getString("OverallScreening");
                 
-                DiagnosisResult result = new DiagnosisResult(s1Score, s1Risk, s2Score, screening);
+                DiagnosisResult result = new DiagnosisResult(setName, s1Score, s1Risk, s2Score, screening);
                 
                 Child child = new Child(id, userId, name, age, gender, result);
                 
@@ -346,6 +423,10 @@ public class DatabaseManager
             {
                 String infoHeader = results.getString("InfoHeading-"+language);
                 String infoText = results.getString("InfoText-"+language);
+                
+                if(infoText.equals(""))
+                    infoText = " ";
+                
                 mchatInfo.add(infoHeader + "%" + infoText);
             }
             return mchatInfo;
@@ -560,19 +641,20 @@ public class DatabaseManager
         }
     }
     
-    public void writeChildDiagnosisResult(int userId, int childId, int s1Score, String s1Risk, int s2Score, String result)
+    public void writeChildDiagnosisResult(int userId, int childId, String setName, int s1Score, String s1Risk, int s2Score, String result)
     {
-        String query = "INSERT INTO DiagnosisResults (UserID, ChildID, StageOneScore, StageOneRisk, StageTwoScore, OverallScreening) "
-                     + "VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO DiagnosisResults (UserID, ChildID, SetName, StageOneScore, StageOneRisk, StageTwoScore, OverallScreening) "
+                     + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try(PreparedStatement pstmt = conn.prepareStatement(query))
         {
             pstmt.setInt(1, userId);
             pstmt.setInt(2, childId);
-            pstmt.setInt(3, s1Score);
-            pstmt.setString(4, s1Risk);
-            pstmt.setInt(5, s2Score);
-            pstmt.setString(6, result);
+            pstmt.setString(3, setName);
+            pstmt.setInt(4, s1Score);
+            pstmt.setString(5, s1Risk);
+            pstmt.setInt(6, s2Score);
+            pstmt.setString(7, result);
             pstmt.executeUpdate();
         }
         catch(SQLException ex)
@@ -635,12 +717,13 @@ public class DatabaseManager
             
             while(results.next())
             {
+                String setName = results.getString("SetName");
                 int s1Score = results.getInt("StageOneScore");
                 String s1Risk = results.getString("StageOneRisk");
                 int s2Score = results.getInt("StageTwoScore");
                 String screening = results.getString("OverallScreening");
                 
-                result = new DiagnosisResult(s1Score, s1Risk, s2Score, screening);
+                result = new DiagnosisResult(setName, s1Score, s1Risk, s2Score, screening);
             }
         }
         catch(SQLException ex)
@@ -679,7 +762,7 @@ public class DatabaseManager
     
     public String getResultInfo(int riskId, int stage)
     {
-        String query = "SELECT * FROM ScoringRisk WHERE ScoringRiskID = ?";
+        String query = "SELECT * FROM RiskLevel WHERE RiskLevelID = ?";
         String language = LanguageManager.getLanguage();
         String resultText = "";
         
@@ -721,6 +804,26 @@ public class DatabaseManager
         {
              System.out.println("Error when setting Remembered User in the db - " + ex.getMessage());
         }
+    }
+    
+    public int getQuestionSetID(String setName)
+    {
+        String query = "SELECT * FROM QuestionSets WHERE SetName = ?";
+        int setId = 0;
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(query)) 
+        {
+            pstmt.setString(1, setName);
+            ResultSet results = pstmt.executeQuery();
+            
+            while(results.next())
+                setId = results.getInt("QuestionSetID");
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error when getting Question Set ID from the db - " + ex.getMessage());
+        }
+        return setId;
     }
     
     public String getNaoConnectionURL()

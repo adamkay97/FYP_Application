@@ -3,8 +3,6 @@ package Controllers;
 import ControlControllers.ChildReviewControlController;
 import Classes.Child;
 import Managers.DatabaseManager;
-import Managers.LanguageManager;
-import Managers.StageManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -83,8 +81,7 @@ public class ReviewContentController implements Initializable
         {
             ArrayList<Child> shortList = new ArrayList<>();
             
-            //Enable arrows for when there are more than 3 children
-            setArrowVisible(true, btnLeftArrow);
+            //Enable right arrow for when there are more than 3 children
             setArrowVisible(true, btnRightArrow);
             
             //Else for each child in the list add to a shorter list that will only ever have a max size of 3
