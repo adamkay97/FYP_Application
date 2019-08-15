@@ -6,6 +6,7 @@ import Controllers.FollowUpContentController;
 import Enums.ButtonTypeEnum;
 import Enums.FlowBranchEnum;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,6 +34,8 @@ public class ChecklistControlController implements Initializable
     
     private ArrayList<String> passFailList;
     private ArrayList<ToggleGroup> radBtnList;
+    
+    private final LogManager logManager = new LogManager();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -268,7 +271,7 @@ public class ChecklistControlController implements Initializable
         }
         catch (IOException ex)
         {
-            System.out.println("Failed when loaded Checklist examples - " + ex.getMessage());
+            logManager.ErrorLog("Failed when loaded Checklist examples - " + ex.getMessage());
         }
     }
     

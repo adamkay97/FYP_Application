@@ -8,6 +8,8 @@ public class RobotManager
     private static Application application;
     private static boolean connected;
     
+    private static final LogManager logManager = new LogManager();
+    
     public static boolean connectToRobot(String connectionURL)
     {
         connected = false;
@@ -25,7 +27,7 @@ public class RobotManager
         }
         catch(Exception ex)
         {
-            System.out.println("Error when connecting to NAO - " + ex.getMessage());
+            logManager.ErrorLog("Error when connecting to NAO - " + ex.getMessage());
             application.stop();
             System.gc();
         }
@@ -49,7 +51,7 @@ public class RobotManager
         }
         catch(Exception ex)
         {
-            System.out.println("Error when running start or end behaviour");
+            logManager.ErrorLog("Error when running start or end behaviour");
         }
     }
     
@@ -64,7 +66,7 @@ public class RobotManager
         }
         catch(Exception ex)
         {
-            System.out.println("Error when running behaviour for question " + 
+            logManager.ErrorLog("Error when running behaviour for question " + 
                     question + " - " + ex.getMessage());
         }
     }

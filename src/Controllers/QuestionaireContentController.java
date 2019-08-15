@@ -12,6 +12,7 @@ import ControlControllers.QuestionTextAnswerControlController;
 import ControlControllers.RobotActionControlController;
 import Enums.ButtonTypeEnum;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,6 +31,8 @@ public class QuestionaireContentController implements Initializable
     @FXML private Label lblQuestionHeader;
     @FXML private StackPane stkpnQuestionControl;
     @FXML private Button btnReplay;
+    
+    private final LogManager logManager = new LogManager();
     
     private Parent robotActionControl;
     private Parent questionAnswerControl;
@@ -104,7 +107,7 @@ public class QuestionaireContentController implements Initializable
         }
         catch(IOException ex)
         {
-            System.out.println("Error when loading Robot Action Control / Question Answer Control - " + ex.getMessage());
+            logManager.ErrorLog("Error when loading Robot Action Control / Question Answer Control - " + ex.getMessage());
         }
     }
     

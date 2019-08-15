@@ -4,6 +4,8 @@ import java.io.File;
 
 public class SettingsManager 
 {
+    private static final LogManager logManager = new LogManager();
+    
     private static boolean usesNaoInteraction;
     private static String robotConnectionURL;
     private static int robotVolume;
@@ -77,9 +79,9 @@ public class SettingsManager
 
             File audioFolder = new File(audioFilePath);
             if(audioFolder.delete())
-                System.out.println("Successfully deleted audio folder when leaving diagnosis");
+                logManager.InfoLog("Successfully deleted audio folder when leaving diagnosis");
             else
-                System.out.println("Failed to delete audio folder when leaving diagnosis");
+                logManager.ErrorLog("Failed to delete audio folder when leaving diagnosis");
         }
     }
     

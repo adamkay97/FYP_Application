@@ -48,6 +48,7 @@ public class LoginFormController implements Initializable
                     txtUsername.setText(user.getUsername());
                     chkRememberMe.setSelected(true);
                 }
+                dbManager.disconnect();
             }
         }
         

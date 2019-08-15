@@ -1,6 +1,7 @@
 package ControlControllers;
 
 import Controllers.QuestionaireContentController;
+import Managers.LogManager;
 import Managers.QuestionaireManager;
 import Managers.SettingsManager;
 import java.io.File;
@@ -30,6 +31,8 @@ public class QuestionAudioAnswerControlController implements Initializable
     @FXML private Button btnStop;
     @FXML private Button btnRecordAudio;
     @FXML private Button btnReset;
+    
+    private final LogManager logManager = new LogManager();
     
     private QuestionaireContentController questionaireContentController;
     
@@ -100,15 +103,15 @@ public class QuestionAudioAnswerControlController implements Initializable
             //Find the audio file from the base path and delete it
             Path filePath = Paths.get(getAudioFilePath());
             if(Files.deleteIfExists(filePath))
-                System.out.println("Successfully deleted file.");
+                logManager.InfoLog("Successfully deleted file.");
             else
-                System.out.println("Could not delete file.");
+                logManager.ErrorLog("Could not delete file.");
             
             audioSet = false;
         } 
         catch (IOException ex) 
         {
-            System.out.println("Failed when deleting audio file on reset - " + ex.getMessage());
+            logManager.ErrorLog("Failed when deleting audio file on reset - " + ex.getMessage());
         }
     }
 
@@ -136,7 +139,7 @@ public class QuestionAudioAnswerControlController implements Initializable
         }
         catch(LineUnavailableException ex)
         {
-            System.out.println("Failed when initialising the objects for audio recording - " + ex.getMessage());
+            logManager.ErrorLog("Failed when initialising the objects for audio recording - " + ex.getMessage());
         }
     }
     
@@ -184,7 +187,7 @@ public class QuestionAudioAnswerControlController implements Initializable
             }
             catch(IOException | LineUnavailableException ex)
             {
-                System.out.println("Failed when recording audio within the capture audio thread - " + ex.getMessage());
+                logManager.ErrorLog("Failed when recording audio within the capture audio thread - " + ex.getMessage());
             }
         }
     }

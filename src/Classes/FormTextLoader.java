@@ -1,5 +1,6 @@
 package Classes;
 
+import Managers.LogManager;
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
@@ -17,6 +18,7 @@ import javafx.scene.text.TextFlow;
 public class FormTextLoader 
 {
     private final VBox vboxInfoContent;
+    private final LogManager logManager = new LogManager();
     
     public FormTextLoader(VBox vbox)
     {
@@ -96,7 +98,7 @@ public class FormTextLoader
                 try {
                     Desktop.getDesktop().browse(new URI(url));
                 } catch (IOException | URISyntaxException ex) {
-                    System.out.println("Failed when loading MCHAT link - " + ex.getMessage());
+                    logManager.ErrorLog("Failed when loading MCHAT link - " + ex.getMessage());
                 }
             }
         });

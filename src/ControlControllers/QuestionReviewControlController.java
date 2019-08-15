@@ -7,6 +7,7 @@ import Managers.StageManager;
 import Controllers.QuestionReviewContentController;
 import Enums.QuestionAnswer;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import Managers.QuestionaireManager;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,8 @@ public class QuestionReviewControlController implements Initializable
     private Child currentChild;
     private ReviewData reviewData;
     
+    private final LogManager logManager = new LogManager();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {}    
     
@@ -48,7 +51,7 @@ public class QuestionReviewControlController implements Initializable
         } 
         catch (IOException ex) 
         {
-            System.out.println("Error when loading QuestionReviewContent - " + ex.getMessage());
+            logManager.ErrorLog("Error when loading QuestionReviewContent - " + ex.getMessage());
         }
     }
     

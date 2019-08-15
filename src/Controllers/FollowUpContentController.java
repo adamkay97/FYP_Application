@@ -10,6 +10,7 @@ import Classes.*;
 import Enums.FlowBranchEnum;
 import Enums.QuestionTypeEnum;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class FollowUpContentController implements Initializable
     private FollowUpFlow currentFollowUp;
     private ArrayList<String> checkListAnswers;
     private int fIndex;
+    
+    private final LogManager logManager = new LogManager();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -189,7 +192,7 @@ public class FollowUpContentController implements Initializable
         }
         catch (IOException ex) 
         {
-            System.out.println("Error when loading child view control - " + ex.getMessage());
+            logManager.ErrorLog("Error when loading child view control - " + ex.getMessage());
         }
     }
     

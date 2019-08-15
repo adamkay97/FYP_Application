@@ -6,6 +6,7 @@ import Managers.AuthenticationManager;
 import Enums.ButtonTypeEnum;
 import Classes.*;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;

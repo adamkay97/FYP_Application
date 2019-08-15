@@ -61,8 +61,6 @@ public class MainFormController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        System.out.println("Main Form Initialize");
-        
         initializeSideMenu();
         
         StageManager.setMainFormController(this);

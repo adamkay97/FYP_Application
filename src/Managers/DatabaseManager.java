@@ -24,9 +24,9 @@ import java.util.List;
 
 public class DatabaseManager 
 {
-    //private final String DBCONNSTRING = "/Database/FYP_Database.db";
     //private final String DBCONNSTRING = "C:/Users/Adam/Documents/Degree/Third Year/Final Project/Application/FYP_Database.db";
     private Connection conn;
+    private final LogManager logManager = new LogManager();
     
     public boolean connect() 
     {
@@ -36,14 +36,14 @@ public class DatabaseManager
         conn = null;
         try 
         {
-            //conn = DriverManager.getConnection("jdbc:sqlite::resource:" + getClass().getResource(DBCONNSTRING));
-            conn = DriverManager.getConnection("jdbc:sqlite:" + DBCONNSTRING);
-            System.out.println("A connection to the SQLite db has been established.");    
+            conn = DriverManager.getConnection("jdbc:sqlite:" + DBCONNSTRING);  
+            logManager.InfoLog("A connection to the SQLite db has been established.");
+            
             return true;
         } 
         catch (SQLException e) 
-        {    
-            System.out.println(e.getMessage());
+        {
+            logManager.ErrorLog("Failed when conencting to the Database - " + e.getMessage());
             return false;
         }
     }
@@ -102,7 +102,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading questions from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading questions from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -145,7 +145,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the scoring algorithm from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the scoring algorithm from the db - " + ex.getMessage());
         }
         return scoring;
     }
@@ -196,7 +196,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading follow up questions from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading follow up questions from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -219,7 +219,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the Question Sets from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the Question Sets from the db - " + ex.getMessage());
         }
     }
     
@@ -241,7 +241,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the Languages from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the Languages from the db - " + ex.getMessage());
         }
     }
     
@@ -267,7 +267,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the user from the db - " + ex.getMessage());
+             logManager.ErrorLog("Failed when reading the user from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -301,7 +301,7 @@ public class DatabaseManager
             }
             catch(SQLException ex)
             {
-                System.out.println("Error when reading the Form Text from the db - " + ex.getMessage());
+                logManager.ErrorLog("Failed when reading the Form Text from the db - " + ex.getMessage());
                 return null;
             }
         }
@@ -330,7 +330,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the Popup Text from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the Popup Text from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -359,7 +359,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the users from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the users from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -402,7 +402,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the users from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the users from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -433,7 +433,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the MCHAT information from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the MCHAT information from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -472,7 +472,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the Review Data from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the Review Data from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -503,7 +503,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the Application settings from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the Application settings from the db - " + ex.getMessage());
         }
     }
     
@@ -522,7 +522,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when checking the user exists in the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when checking the user exists in the db - " + ex.getMessage());
         }
         return exists;
     }
@@ -545,7 +545,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when checking for an existing child in the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when checking for an existing child in the db - " + ex.getMessage());
         }
         return exists;
     }
@@ -563,7 +563,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading remembered users from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading remembered users from the db - " + ex.getMessage());
         }
         return userId;
     }
@@ -585,8 +585,8 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when writing user to the db - " + ex.getMessage());
-             success = false;
+            logManager.ErrorLog("Failed when writing user to the db - " + ex.getMessage());
+            success = false;
         }
         return success;
     }
@@ -607,8 +607,8 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when writing child to the db - " + ex.getMessage());
-             success = false;
+            logManager.ErrorLog("Failed when writing child to the db - " + ex.getMessage());
+            success = false;
         }
         
         //If it doenst fail set the childs id to the auto incremented value
@@ -637,7 +637,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when writing review data to the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when writing review data to the db - " + ex.getMessage());
         }
     }
     
@@ -659,7 +659,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when writing childs diagnosis results to the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when writing childs diagnosis results to the db - " + ex.getMessage());
         }
     }
     
@@ -674,7 +674,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when creating user application settings in the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when creating user application settings in the db - " + ex.getMessage());
         }
     }
     
@@ -700,7 +700,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when updating application settings in the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when updating application settings in the db - " + ex.getMessage());
         }
     }
     
@@ -728,7 +728,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when getting the diagnosis result information from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when getting the diagnosis result information from the db - " + ex.getMessage());
         }
         return result;
     }
@@ -755,7 +755,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when getting question set languages from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when getting question set languages from the db - " + ex.getMessage());
         }
         return setLanguages;
     }
@@ -781,7 +781,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when getting the result information from the db - " + ex.getMessage());
+             logManager.ErrorLog("Failed when getting the result information from the db - " + ex.getMessage());
         }
         
         return resultText;
@@ -802,7 +802,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when setting Remembered User in the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when setting Remembered User in the db - " + ex.getMessage());
         }
     }
     
@@ -821,7 +821,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when getting Question Set ID from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when getting Question Set ID from the db - " + ex.getMessage());
         }
         return setId;
     }
@@ -841,7 +841,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when reading the users from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when reading the users from the db - " + ex.getMessage());
         }
         return url;
     }
@@ -857,7 +857,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when updating childs score to the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when updating childs score to the db - " + ex.getMessage());
         }
     }
     
@@ -875,7 +875,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when getting the next child Id from the db - " + ex.getMessage());
         }
     }
     
@@ -894,7 +894,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-            System.out.println("Error when getting the next child Id from the db - " + ex.getMessage());
+            logManager.ErrorLog("Failed when getting the next child Id from the db - " + ex.getMessage());
         }
         return id;
     }
@@ -916,7 +916,7 @@ public class DatabaseManager
         }
         catch(SQLException ex)
         {
-             System.out.println("Error when reading the Form Names in FormText from the db - " + ex.getMessage());
+             logManager.ErrorLog("Failed when reading the Form Names in FormText from the db - " + ex.getMessage());
         }
         return null;
     }
@@ -928,12 +928,12 @@ public class DatabaseManager
             if (conn != null)
             {
                 conn.close();
-                System.out.println("Successfully disconnected from the SQLite db.");
+                logManager.InfoLog("Successfully disconnected from the SQLite db.");
             }
         } 
         catch (SQLException ex) 
         {
-            System.out.println(ex.getMessage());
+            logManager.ErrorLog("Failed when disconnecting from Database - " + ex.getMessage());
         }
     }
 }

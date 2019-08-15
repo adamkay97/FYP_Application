@@ -3,6 +3,7 @@ package Controllers;
 import ControlControllers.ChildReviewControlController;
 import Classes.Child;
 import Managers.DatabaseManager;
+import Managers.LogManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class ReviewContentController implements Initializable
     @FXML private ImageView btnRightArrow;
     @FXML private StackPane stackPaneChildView;
     @FXML private Label lblNoCases;
+    
+    private final LogManager logManager = new LogManager();
     
     private ArrayList<Parent> childViewControls;
     private int controlIndex;
@@ -122,7 +125,7 @@ public class ReviewContentController implements Initializable
         } 
         catch (IOException ex) 
         {
-            System.out.println("Error when loading child view control - " + ex.getMessage());
+            logManager.ErrorLog("Error when loading child view control - " + ex.getMessage());
         }
         
     }

@@ -37,6 +37,8 @@ public class StageManager
     public static final String YNEXCONTROL = "/Control/YesNoExampleControl.fxml";
     public static final String CHECKLISTCONTROL = "/Control/ChecklistControl.fxml";
     
+    private static final LogManager logManager = new LogManager();
+    
     private static MainFormController mainFormController;
     private static User currentUser = null;
     
@@ -73,7 +75,7 @@ public class StageManager
         }
         catch(IOException ex) 
         {
-            System.out.println("Failed loading scene = " + ex.getMessage());
+            logManager.ErrorLog("Failed loading scene = " + ex.getMessage());
         }
     }
     
@@ -91,7 +93,7 @@ public class StageManager
         }
         catch(Exception ex) 
         {
-            System.out.println("Failed loading scene = " + ex.getMessage());
+            logManager.ErrorLog("Failed loading scene = " + ex.getMessage());
         }
     }
     
@@ -148,7 +150,7 @@ public class StageManager
         }
         catch(IOException ex)
         {
-            System.out.println("Failed loading pop up message - " + ex.getMessage());
+            logManager.ErrorLog("Failed loading pop up message - " + ex.getMessage());
         }
         return popupAnswer;
     }    
@@ -184,7 +186,7 @@ public class StageManager
         }
         catch(IOException ex)
         {
-            System.out.println("Failed loading pop up message - " + ex.getMessage());
+            logManager.ErrorLog("Failed loading pop up message - " + ex.getMessage());
         }
     }    
     
@@ -220,7 +222,7 @@ public class StageManager
         }
         catch(IOException ex)
         {
-            System.out.println("Failed loading other form - " + ex.getMessage());
+            logManager.ErrorLog("Failed loading other form - " + ex.getMessage());
         }
     }
     

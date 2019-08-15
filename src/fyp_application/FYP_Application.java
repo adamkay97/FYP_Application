@@ -1,9 +1,11 @@
 package FYP_Application;
 
 import Classes.User;
+import Enums.ButtonTypeEnum;
 import Managers.StageManager;
 import Managers.DatabaseManager;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import Managers.QuestionaireManager;
 import Managers.SettingsManager;
 import java.io.File;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 public class FYP_Application extends Application 
 {
     private boolean rememberedUser;
+    private final LogManager logManager = new LogManager();
     
     public static void main(String[] args) {
         launch(args);
@@ -49,12 +52,14 @@ public class FYP_Application extends Application
             
             //Append the Database location to the path
             String dbPath = path.resolve("Database/DiagnosisData.db").toString();
+            logManager.InfoLog("DB Connection String = " + dbPath);
+            System.out.println(dbPath);
             
             SettingsManager.setDBConnString(dbPath);
         } 
         catch (URISyntaxException ex) 
         {
-            System.out.println("Failed when getting localised DatabasePath");
+            logManager.ErrorLog("Failed when getting localised DatabasePath - " + ex.getMessage());
         }
     }
     

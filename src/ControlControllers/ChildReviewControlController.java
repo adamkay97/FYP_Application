@@ -4,6 +4,7 @@ import Classes.Child;
 import Managers.StageManager;
 import Controllers.IndividualReviewContentController;
 import Managers.LanguageManager;
+import Managers.LogManager;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class ChildReviewControlController implements Initializable
     private Child rightChild;
     
     private ArrayList<Child> childList;
+    
+    private final LogManager logManager = new LogManager();
  
     @Override
     public void initialize(URL url, ResourceBundle rb){}    
@@ -149,7 +152,7 @@ public class ChildReviewControlController implements Initializable
         } 
         catch (IOException ex) 
         {
-            System.out.println("Error when loading IndividualReviewContent - " + ex.getMessage());
+            logManager.ErrorLog("Error when loading IndividualReviewContent - " + ex.getMessage());
         }
     }
     

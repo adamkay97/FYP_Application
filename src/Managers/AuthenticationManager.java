@@ -18,6 +18,8 @@ public class AuthenticationManager
     //The algorithm string used for PBKDF2 hashing
     private final String HASHALGORITHM = "PBKDF2WithHmacSHA1";
     
+    private final LogManager logManager = new LogManager();
+    
     public boolean authenticateLogin(String username, String password)
     {
         DatabaseManager dbManager = new DatabaseManager();
@@ -80,7 +82,7 @@ public class AuthenticationManager
         }
         catch(NoSuchAlgorithmException | InvalidKeySpecException ex) 
         {
-            System.out.println("Error when hashing password - " + ex.getMessage());
+            logManager.ErrorLog("Failed when authenticating hashed password - " + ex.getMessage());
         }
         
         return authenticated;
@@ -111,7 +113,7 @@ public class AuthenticationManager
         }
         catch(NoSuchAlgorithmException | InvalidKeySpecException ex) 
         {
-            System.out.println("Error when hashing password - " + ex.getMessage());
+            logManager.ErrorLog("Failed when creating hashed password - " + ex.getMessage());
         }
         
         return newPassword;

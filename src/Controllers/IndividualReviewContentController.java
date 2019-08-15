@@ -6,6 +6,7 @@ import Managers.DatabaseManager;
 import Classes.ReviewData;
 import Managers.StageManager;
 import ControlControllers.QuestionReviewControlController;
+import Managers.LogManager;
 import Managers.QuestionaireManager;
 import java.io.IOException;
 import java.net.URL;
@@ -33,6 +34,8 @@ public class IndividualReviewContentController implements Initializable
     @FXML private Label lblOtherRisk;
     
     @FXML private VBox vboxReviewControls;
+    
+    private final LogManager logManager = new LogManager();
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {}    
@@ -110,7 +113,7 @@ public class IndividualReviewContentController implements Initializable
         }
         catch(IOException ex)
         {
-            System.out.println("Error when loading QuestionReviewControlController - " + ex.getMessage());
+            logManager.ErrorLog("Error when loading QuestionReviewControlController - " + ex.getMessage());
         }
     }
     
